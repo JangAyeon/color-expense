@@ -1,3 +1,66 @@
+### 🗂️ 설명:
+
+한 칸에 만 원, 색칠하듯 기록하는 지출 시각화 앱.
+지출 금액을 색으로 표현하고 예산 잔액을 직관적으로 파악할 수 있어 외부에서도 소비를 통제할 수 있음.
+모바일 기반 반응형 UI로, 유저가 예산을 설정하고, 소비 시 색으로 시각화하여 직접 소비 습관을 개선하도록 돕는 서비스.
+
+### 🔧 기술 스택
+
+- Frontend: Next.js (App Router), TypeScript, React, Zustand, TanStack Query, TailwindCSS, Framer Motion, Storybook
+
+- Backend: NestJS, Prisma, Supabase (PostgreSQL)
+
+- 기타: GitHub Actions, Vercel, ESLint/Prettier, Jest, Playwright, Sentry, GA
+
+### 📁 Monorepo 구성 (Turborepo)
+
+apps/
+
+- web: Next.js + React + TypeScript (지출 시각화 앱)
+
+- api: NestJS + Prisma + Supabase 연동 (REST or GraphQL 선택 가능)
+
+packages/
+
+- ui: 디자인 시스템 / 컴포넌트 라이브러리 (Storybook, Tailwind 사용)
+
+- utils: 공통 유틸 함수 모음
+
+- config: ESLint, Prettier, tsconfig 등 공통 설정
+
+infrastructure/ (선택):
+
+- 배포용 Dockerfile, CI/CD 설정
+
+### 핵심 기능
+
+| 기능                         | 설명                                                                      |
+| ---------------------------- | ------------------------------------------------------------------------- |
+| **색칠형 예산 시각화**       | 한 칸 = 1만 원 단위의 그리드 UI 제공, 지출 금액만큼 클릭/드래그로 칸 색칠 |
+| **지출 기록 및 관리**        | 날짜/메모 기반의 지출 기록 (REST API 연동)                                |
+| **잔액 시각화**              | 색칠된 칸 대비 남은 칸 시각화로 잔여 예산 직관적 파악                     |
+| **모바일 퍼스트 UX**         | 반응형 UI + PWA 적용으로 장보러 나갈 때도 접근 가능                       |
+| **색상/아이콘 커스터마이징** | 항목별 색상 설정으로 지출 분류 가능                                       |
+| **프로그레시브 애니메이션**  | Framer Motion 활용해 색칠 인터랙션 부드럽게 처리                          |
+| **오프라인 지원**            | 로컬 DB (IndexedDB or localStorage) 기반 캐시 기능                        |
+| **이미지형 리포트 공유**     | 색칠 결과를 이미지로 저장/공유 (canvas 기반)                              |
+
+### 핵심 기술
+
+| 카테고리           | 기술 스택                                                           |
+| ------------------ | ------------------------------------------------------------------- |
+| **Frontend**       | React, Next.js (App Router + RSC + SSR), TypeScript                 |
+| **UI/UX**          | Framer Motion, TailwindCSS, Storybook 기반 CDD, Design Token 시스템 |
+| **상태관리**       | zustand + tanstack query                                            |
+| **API 통신**       | REST API (백엔드 연동 전제)                                         |
+| **컴포넌트 구조**  | SRP 기반 아토믹 디자인 구조 + 재사용 가능한 색칠 인터랙션 컴포넌트  |
+| **에디터 경험**    | 메모 입력 시 WYSIWYG 에디터 (TipTap 또는 Slate.js) 활용             |
+| **성능 최적화**    | useTransition, useDeferredValue, React.memo, Code Splitting         |
+| **국제화 (i18n)**  | i18next 기반 다국어 적용 가능 구조 설계                             |
+| **테스트**         | Jest + React Testing Library / E2E: Cypress                         |
+| **CI/CD**          | Vercel + GitHub Actions                                             |
+| **분산 구조 고려** | Monorepo (Turborepo 기반), Core UI Library 설계                     |
+
 # Turborepo starter
 
 This Turborepo starter is maintained by the Turborepo core team.
