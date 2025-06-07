@@ -2,7 +2,14 @@ import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateExpensesDto } from './dto/create-expenses.dto';
 import { UpdateExpensesDto } from './dto/update-expenses.dto';
-
+import {
+  startOfDay,
+  endOfDay,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+} from 'date-fns';
 @Injectable()
 export class ExpensesService {
   constructor(private prisma: PrismaService) {}
@@ -60,5 +67,61 @@ export class ExpensesService {
     return this.prisma.expense.delete({
       where: { id: expenseId },
     });
+  }
+  async getDailyStats(userId: string, date: Date) {
+    const start = startOfDay(date);
+    const end = endOfDay(date);
+
+    const expenses = await this.prisma.expense.findMany({
+      where: {
+        userId,
+        expenseDate: {
+          gte: start,
+          lte: end,
+        },
+      },
+      orderBy: { expenseDate: 'asc' },
+    });
+
+    const total = expenses.reduce((sum, e) => sum + e.amount, 0);
+    return { total, expenses };
+  }
+
+  async getWeeklyStats(userId: string, date: Date) {
+    const start = startOfWeek(date, { weekStartsOn: 1 }); // 월요일 시작
+    const end = endOfWeek(date, { weekStartsOn: 1 });
+
+    const expenses = await this.prisma.expense.findMany({
+      where: {
+        userId,
+        expenseDate: {
+          gte: start,
+          lte: end,
+        },
+      },
+      orderBy: { expenseDate: 'asc' },
+    });
+
+    const total = expenses.reduce((sum, e) => sum + e.amount, 0);
+    return { total, expenses };
+  }
+
+  async getMonthlyStats(userId: string, date: Date) {
+    const start = startOfMonth(date);
+    const end = endOfMonth(date);
+
+    const expenses = await this.prisma.expense.findMany({
+      where: {
+        userId,
+        expenseDate: {
+          gte: start,
+          lte: end,
+        },
+      },
+      orderBy: { expenseDate: 'asc' },
+    });
+
+    const total = expenses.reduce((sum, e) => sum + e.amount, 0);
+    return { total, expenses };
   }
 }
