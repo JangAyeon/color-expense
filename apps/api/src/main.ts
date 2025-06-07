@@ -18,16 +18,6 @@ async function bootstrap() {
     .setTitle('color expense API')
     .setDescription(`color expense API 서버 문서입니다.`)
     .setVersion('1.0')
-    .addBearerAuth(
-      // ✅ JWT 토큰 설정
-      {
-        type: 'http',
-        scheme: 'bearer',
-        name: 'JWT',
-        in: 'header',
-      },
-      'access-token', // 이 이름을 아래 @ApiBearerAuth()에 맞춰줘야 함
-    )
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);

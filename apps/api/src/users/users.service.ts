@@ -25,7 +25,7 @@ export class UsersService {
     return user;
   }
   async findUserByPhone(phone: string) {
-    const user = await this.prisma.user.findMany({ where: { phone } });
+    const user = await this.prisma.user.findUnique({ where: { phone } });
     if (!user) {
       throw new NotFoundException(`${phone}의 유저는 존재하지 않습니다.`);
     }

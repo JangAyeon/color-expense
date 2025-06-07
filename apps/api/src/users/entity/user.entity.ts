@@ -6,11 +6,6 @@ export class UserEntity {
     example: 'ckvxyz123abc456',
   })
   id: string;
-  @ApiProperty({
-    description: '이름',
-    example: '홍길동',
-  })
-  name: string;
 
   @ApiProperty({
     description: '이메일',
