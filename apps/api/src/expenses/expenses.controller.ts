@@ -3,26 +3,39 @@ import {
   Get,
   Post,
   Body,
-  Query,
-  BadRequestException,
+  UseGuards,
+  Param,
+  Patch,
+  Delete,
 } from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiQuery,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { ExpensesEntity } from './entity/expenses.entity';
+import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
+import { getUser, AuthUser } from 'src/users/users.decorator';
+import { CreateExpensesDto } from './dto/create-expenses.dto';
+import { UpdateExpensesDto } from './dto/update-expenses.dto';
 
 @ApiTags('Expense (지출 관련 API)')
 @Controller('expenses')
 export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) {}
 
+  // ✅ 지출 생성
+  /*
+   * POST
+   */
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token') // 👈 위에서 설정한 name과 일치해야 함
   @Post()
   @ApiOperation({
     summary: '새로운 지출 생성하기',
@@ -31,7 +44,7 @@ export class ExpensesController {
   @ApiBody({
     schema: {
       type: 'object',
-      required: ['amount', 'category', 'userId', 'expenseDate'],
+      required: ['amount', 'category', 'expenseDate'],
       properties: {
         amount: {
           type: 'integer',
@@ -43,11 +56,7 @@ export class ExpensesController {
           example: '식비',
           description: '지출 카테고리',
         },
-        userId: {
-          type: 'string',
-          example: 'ckd8x1abc123456defghijk',
-          description: '지출 등록 대상 유저 ID',
-        },
+
         expenseDate: {
           type: 'string',
           format: 'date-time',
@@ -61,59 +70,110 @@ export class ExpensesController {
     type: ExpensesEntity,
   })
   create(
-    @Body()
-    body: {
-      amount: number;
-      category: string;
-      userId: string;
-      expenseDate: string;
-    },
+    @getUser() user: AuthUser,
+    @Body() createExpensesDto: CreateExpensesDto,
   ) {
-    return this.expensesService.createExpense(
-      body.amount,
-      body.category,
-      body.userId,
-      body.expenseDate,
-    );
+    return this.expensesService.createExpense(user.id, createExpensesDto);
   }
 
-  @Get('/search') // findUserByEmail findUserByPhone
+  // ✅ 사용자 지출 전체 조회
+  /*
+   * GET
+   */
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @Get()
   @ApiOperation({
-    summary: 'userId 또는 expenseId로 지출 내역 검색하기',
-    description:
-      'userId 또는 expenseId를 기준으로 지출 내역 검색합니다. 두 값 중 하나만 전달해야 합니다.',
+    summary: '요청한 유저의 전체 지출 내역 검색하기',
+    description: '요청한 유저를 기준으로 지출 내역 검색합니다.',
   })
-  @ApiQuery({
-    name: 'userId',
-    required: false,
-    type: String,
-    description: '검색할 지출내역의 userId',
-  })
-  @ApiQuery({
-    name: 'expenseId',
-    required: false,
-    type: String,
-    description: '검색할 지출 내역의 고유 id',
-  })
+  // @ApiQuery({
+  //   name: 'userId',
+  //   required: false,
+  //   type: String,
+  //   description: '검색할 지출내역의 userId',
+  // })
+  // @ApiQuery({
+  //   name: 'expenseId',
+  //   required: false,
+  //   type: String,
+  //   description: '검색할 지출 내역의 고유 id',
+  // })
   @ApiOkResponse({ type: ExpensesEntity })
-  @ApiNotFoundResponse({ description: '지출 내역를 찾을 수 없습니다' })
-  findUserByEmailOrPhone(
-    @Query('userId') userId?: string,
-    @Query('expenseId') expenseId?: string,
+  @ApiNotFoundResponse({
+    description: '해댱 유저의 지출 내역를 찾을 수 없습니다',
+  })
+  getMyExpenses(@getUser() user: AuthUser) {
+    return this.expensesService.getExpensesByUser(user.id);
+  }
+
+  // ✅ 지출 수정
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @Patch(':id')
+  @ApiOperation({
+    summary: '요청한 본인 유저의 특정 지출 내역 수정하기',
+    description: '요청한 본인 유저의 특정 지출 내역 수정합니다.',
+  })
+  @ApiParam({
+    name: 'id',
+    required: false,
+    type: String,
+    description: '수정할 지출 내역의 고유 id',
+  })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['amount', 'category', 'expenseDate'],
+      properties: {
+        amount: {
+          type: 'integer',
+          example: 15000,
+          description: '지출 금액',
+        },
+        category: {
+          type: 'string',
+          example: '식비',
+          description: '지출 카테고리',
+        },
+
+        expenseDate: {
+          type: 'string',
+          format: 'date-time',
+          example: '2025-06-07T00:00:00.000Z',
+          description: '지출이 발생한 날짜 (ISO 8601 형식)',
+        },
+      },
+    },
+  })
+  @ApiOkResponse({
+    type: ExpensesEntity,
+  })
+  @ApiNotFoundResponse()
+  updateExpense(
+    @getUser() user: AuthUser,
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateExpensesDto,
   ) {
-    if (userId && expenseId) {
-      throw new BadRequestException(
-        'userId 또는 expenseId 중 하나만 전달해야 합니다.',
-      );
-    }
-    if (userId) {
-      return this.expensesService.findAllExpenseByUser(userId);
-    }
-    if (expenseId) {
-      return this.expensesService.findExpenseById(expenseId);
-    }
-    throw new BadRequestException(
-      'userId 또는 expenseId 중 하나를 전달해야 합니다.',
-    );
+    const userId = user.id;
+    return this.expensesService.updateExpense(userId, id, updateUserDto);
+  }
+
+  // ✅ 지출 삭제
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @ApiOperation({
+    summary: '요청한 본인 유저의 특정 지출 내역 삭제하기',
+    description: '요청한 본인 유저의 특정 지출 내역 삭제합니다.',
+  })
+  @ApiParam({
+    name: 'id',
+    required: false,
+    type: String,
+    description: '삭제할 지출 내역의 고유 id',
+  })
+  @Delete(':id')
+  deleteExpense(@getUser() user: AuthUser, @Param('id') id: string) {
+    return this.expensesService.deleteExpense(user.id, id);
   }
 }
