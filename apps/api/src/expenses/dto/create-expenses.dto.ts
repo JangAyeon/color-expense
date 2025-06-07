@@ -9,9 +9,6 @@ export class CreateExpensesDto {
   @IsNonEmptyString()
   category: string;
 
-  @IsNonEmptyString()
-  userId: string;
-
   @IsISO8601() // YYYY-MM-DD or ISO DateTime
   expenseDate: string;
 }
