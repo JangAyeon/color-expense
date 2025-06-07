@@ -40,8 +40,13 @@ export class UsersController {
   @ApiBody({
     schema: {
       type: 'object',
-      required: ['email', 'phone'],
+      required: ['email', 'phone', 'name'],
       properties: {
+        name: {
+          type: 'string',
+          example: '홍길동',
+          description: '사용자 성명',
+        },
         email: {
           type: 'string',
           example: 'user@example.com',
@@ -155,6 +160,11 @@ export class UsersController {
       type: 'object',
 
       properties: {
+        name: {
+          type: 'string',
+          example: '홍길동',
+          description: '사용자 성명',
+        },
         email: {
           type: 'string',
           example: 'user@example.com',
