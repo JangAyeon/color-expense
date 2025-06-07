@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
 import {
@@ -17,6 +18,7 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { ExpensesEntity } from './entity/expenses.entity';
@@ -175,5 +177,109 @@ export class ExpensesController {
   @Delete(':id')
   deleteExpense(@getUser() user: AuthUser, @Param('id') id: string) {
     return this.expensesService.deleteExpense(user.id, id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @Get('stats/daily')
+  @ApiOperation({
+    summary: '일간 지출 통계 조회',
+    description:
+      '해당 날짜(date)에 대한 사용자의 지출 총합을 반환합니다. 예: /daily?date=2025-06-06',
+  })
+  @ApiQuery({
+    name: 'date',
+    required: true,
+    type: String,
+    description: '기준 일자 (예: 2025-06-06)',
+  })
+  @ApiOkResponse({
+    description: '총 지출 금액과 지출 목록',
+    schema: {
+      example: {
+        total: 152000,
+        expenses: [
+          {
+            id: 'abc123',
+            amount: 32000,
+            category: '식비',
+            expenseDate: '2025-06-05T13:22:00.000Z',
+            createdAt: '2025-06-05T13:25:00.000Z',
+          },
+        ],
+      },
+    },
+  })
+  getDailyStats(@getUser() user: AuthUser, @Query('date') date: string) {
+    return this.expensesService.getDailyStats(user.id, new Date(date));
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @Get('stats/weekly')
+  @ApiOperation({
+    summary: '주간 지출 통계 조회',
+    description:
+      '해당 날짜가 속한 주(월~일)에 대한 사용자의 지출 총합을 반환합니다.',
+  })
+  @ApiQuery({
+    name: 'date',
+    required: true,
+    type: String,
+    description: '기준 일자 (예: 2025-06-06)',
+  })
+  @ApiOkResponse({
+    description: '총 지출 금액과 지출 목록',
+    schema: {
+      example: {
+        total: 152000,
+        expenses: [
+          {
+            id: 'abc123',
+            amount: 32000,
+            category: '식비',
+            expenseDate: '2025-06-05T13:22:00.000Z',
+            createdAt: '2025-06-05T13:25:00.000Z',
+          },
+        ],
+      },
+    },
+  })
+  getWeeklyStats(@getUser() user: AuthUser, @Query('date') date: string) {
+    return this.expensesService.getWeeklyStats(user.id, new Date(date));
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @Get('stats/monthly')
+  @ApiOperation({
+    summary: '월간 지출 통계 조회',
+    description: '해당 날짜가 속한 달의 지출 총합을 반환합니다.',
+  })
+  @ApiQuery({
+    name: 'date',
+    required: true,
+    type: String,
+    description: '기준 일자 (예: 2025-06-06)',
+  })
+  @ApiOkResponse({
+    description: '총 지출 금액과 지출 목록',
+    schema: {
+      example: {
+        total: 152000,
+        expenses: [
+          {
+            id: 'abc123',
+            amount: 32000,
+            category: '식비',
+            expenseDate: '2025-06-05T13:22:00.000Z',
+            createdAt: '2025-06-05T13:25:00.000Z',
+          },
+        ],
+      },
+    },
+  })
+  getMonthlyStats(@getUser() user: AuthUser, @Query('date') date: string) {
+    return this.expensesService.getMonthlyStats(user.id, new Date(date));
   }
 }
