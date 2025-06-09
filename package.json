@@ -10,6 +10,7 @@
     "test": "turbo test"
   },
   "devDependencies": {
+    "dotenv": "^16.5.0",
     "prettier": "^3.5.3",
     "turbo": "^2.5.4",
     "typescript": "5.8.2"

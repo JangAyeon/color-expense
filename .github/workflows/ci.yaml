@@ -20,6 +20,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Create .env file in apps/api
+        run: |
+          mkdir -p apps/api
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> apps/api/.env
+          echo "DIRECT_URL=${{ secrets.DIRECT_URL }}" >> apps/api/.env
+          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> apps/api/.env
       - name: Install dependencies
         run: npm install
       - name: Build
