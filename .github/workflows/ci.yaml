@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: ["develop"]
+  pull_request:
+    branches: ["develop"]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Create .env file in apps/api
+        run: |
+          mkdir -p apps/api
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> apps/api/.env
+          echo "DIRECT_URL=${{ secrets.DIRECT_URL }}" >> apps/api/.env
+          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> apps/api/.env
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+#      - name: Test
+#        run: npm run test
