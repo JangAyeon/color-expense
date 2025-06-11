@@ -7,7 +7,11 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "test": "turbo test"
+    "test": "turbo test",
+    "build:api": "npm --workspace=api run build",
+    "build:web": "npm --workspace=web run build",
+    "start:api": "npm --workspace=api run start:prod",
+    "start:web": "npm --workspace=web run start"
   },
   "devDependencies": {
     "dotenv": "^16.5.0",
