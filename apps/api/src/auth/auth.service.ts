@@ -65,4 +65,25 @@ export class AuthService {
       );
     }
   }
+  // auth.service.ts
+  async signOut(accessToken: string): Promise<void> {
+    const url = `${this.supabaseUrl}/auth/v1/logout`;
+
+    try {
+      await this.httpService.axiosRef.post(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `${accessToken}`,
+            apikey: this.supabaseKey,
+          },
+        },
+      );
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `Supabase Logout 실패: ${error}, ${url}`,
+      );
+    }
+  }
 }
