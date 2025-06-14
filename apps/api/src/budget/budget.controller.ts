@@ -11,8 +11,9 @@ import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
 
 import { BudgetsService } from './budget.service';
 
-import { getUser, AuthUser } from 'src/users/users.decorator';
+import { getUser } from 'src/users/users.decorator';
 import { UpsertBudgetDto } from './dto/upsert-budget.dto';
+import { AuthUser } from '@repo/types';
 
 @ApiTags('Budget (예산 관련 API)')
 @Controller('budget')

@@ -2,7 +2,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 
-import { SupabaseSignUpResponse, SupabaseSignInResponse } from './supabase';
+import { SupabaseSignUpResponse, SupabaseSignInResponse } from '@repo/types';
 
 @Injectable()
 export class AuthService {
