@@ -27,7 +27,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 // import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
-import { getUser, AuthUser } from './users.decorator';
+import { getUser } from './users.decorator';
+import { AuthUser } from '@repo/types/src/SupabaseAuth';
 
 @ApiTags('Users (사용자 관련 API)')
 @Controller('users')

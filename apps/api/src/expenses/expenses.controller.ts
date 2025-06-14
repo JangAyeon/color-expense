@@ -23,9 +23,10 @@ import {
 } from '@nestjs/swagger';
 import { ExpensesEntity } from './entity/expenses.entity';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
-import { getUser, AuthUser } from 'src/users/users.decorator';
+import { getUser } from 'src/users/users.decorator';
 import { CreateExpensesDto } from './dto/create-expenses.dto';
 import { UpdateExpensesDto } from './dto/update-expenses.dto';
+import { AuthUser } from '@repo/types';
 
 @ApiTags('Expense (지출 관련 API)')
 @Controller('expenses')
