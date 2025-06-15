@@ -1,19 +1,10 @@
 import {
-  AuthUser,
+  SupabaseSignInRequest,
+  SupabaseSignUpRequest,
   SupabaseSignInResponse,
   SupabaseSignUpResponse,
 } from "@repo/types";
 import { ApiRoute, AuthRoute } from "../../@constant/api.route";
-
-interface SupabaseSignInRequest {
-  email: AuthUser["email"];
-  password: string;
-}
-
-interface SupabaseSignUpRequest {
-  email: AuthUser["email"];
-  password: string;
-}
 
 export const signIn = async (payload: { email: string; password: string }) => {
   const res = await fetch("/api/auth/signin", {

@@ -30,7 +30,15 @@ export interface SupabaseSignInResponse {
   refresh_token: string;
   user: SupabaseUser;
 }
+export interface SupabaseSignInRequest {
+  email: SupabaseUser["email"];
+  password: string;
+}
 
+export interface SupabaseSignUpRequest {
+  email: SupabaseUser["email"];
+  password: string;
+}
 export interface AuthUser {
   id: SupabaseUser["id"];
   email: SupabaseUser["email"];
