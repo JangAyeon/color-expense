@@ -40,7 +40,7 @@ export default function MyPage() {
         </label>
         <button onClick={handleSubmit}>수정하기</button>
       </div>
-      <button onClick={handleLogout}>로그아웃</button>
+      <button onClick={() => handleLogout()}>로그아웃</button>
     </div>
   );
 }
