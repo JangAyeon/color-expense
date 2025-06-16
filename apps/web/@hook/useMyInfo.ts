@@ -6,6 +6,7 @@ import { AuthUser } from "@repo/types";
 import { fetchMe } from "../@utils/query/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateMe } from "../@utils/query/user";
+import { queryFns, queryKeys } from "../@utils/query/query.control";
 
 export const useGetMyInfo = () => {
   const {
@@ -14,8 +15,8 @@ export const useGetMyInfo = () => {
     isError,
     refetch,
   } = useQuery<AuthUser>({
-    queryKey: ["auth", "me"],
-    queryFn: fetchMe,
+    queryKey: queryKeys.user.base,
+    queryFn: queryFns.user.getMe,
     retry: false, // 로그인 실패 시 재시도 없음
   });
 
@@ -26,10 +27,10 @@ export const useUpdateMyInfo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: updateMe,
+    mutationFn: queryFns.user.updateMe,
     onSuccess: (updatedUser) => {
       // 'auth/me' 쿼리 캐시 갱신
-      queryClient.setQueryData(["auth", "me"], updatedUser);
+      queryClient.setQueryData(queryKeys.user.base, updatedUser);
     },
   });
 };
