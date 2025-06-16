@@ -1,6 +1,6 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
-import { signIn } from "../../@utils/apis/auth";
+import { signIn } from "../../@utils/query/auth";
 
 export default function LoginPage() {
   const { mutate } = useMutation({ mutationFn: signIn });
