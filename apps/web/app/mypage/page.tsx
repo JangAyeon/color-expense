@@ -1,30 +1,45 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useGetMyInfo, useUpdateMyInfo } from "../../@hook/useMyInfo";
+import { useLogout } from "../../@hook/useAuth";
+
 export default function MyPage() {
-  const router = useRouter();
+  const { handleLogout } = useLogout();
 
-  const handleLogout = async () => {
-    await fetch("/api/auth/signout", {
-      method: "POST",
-    });
+  const { user, isLoading, isError } = useGetMyInfo();
 
-    router.replace("/"); // 홈으로 이동
+  const { mutate: updateProfile } = useUpdateMyInfo();
+
+  const [name, setName] = useState(user?.name ?? "");
+  const [phone, setPhone] = useState(user?.phone ?? "");
+  const [email, setEmail] = useState(user?.email ?? "");
+
+  const handleSubmit = () => {
+    updateProfile({ name, phone, email });
   };
 
-  //   // accessToken으로 백엔드 사용자 정보 요청
-  //   const res = await fetch(`${process.env.BACKEND_URL}/me`, {
-  //     headers: {
-  //       Authorization: `Bearer ${accessToken}`,
-  //     },
-  //     cache: "no-store",
-  //   });
-
-  //   const user = await res.json();
+  if (isLoading) return <div>로딩 중...</div>;
+  if (isError || !user) return <div>로그인이 필요합니다</div>;
 
   return (
     <div>
-      안녕하세요,
+      안녕하세요, {user.name}님 ({user.email}) ({user.name}) ({user.phone})
+      <div>
+        <label>
+          이름
+          <input value={name} onChange={(e) => setName(e.target.value)} />
+        </label>
+        <label>
+          이메일
+          <input value={email} onChange={(e) => setEmail(e.target.value)} />
+        </label>
+        <label>
+          전화번호
+          <input value={phone} onChange={(e) => setPhone(e.target.value)} />
+        </label>
+        <button onClick={handleSubmit}>수정하기</button>
+      </div>
       <button onClick={handleLogout}>로그아웃</button>
     </div>
   );
