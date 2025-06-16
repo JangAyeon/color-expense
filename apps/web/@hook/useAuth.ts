@@ -1,23 +1,33 @@
+// hooks/useLogout.ts
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signOut } from "../@utils/query/auth";
-import { queryKeys } from "../@utils/query/query.keys";
+import { queryFns, queryKeys } from "../@utils/query/query.control";
 
 export const useLogout = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const handleLogout = async () => {
-    await signOut();
+  const {
+    mutate: handleLogout,
+    isPending,
+    isError,
+    error,
+  } = useMutation({
+    mutationFn: queryFns.auth.signOut,
+    onSuccess: () => {
+      // 캐시 제거
+      queryClient.removeQueries({ queryKey: queryKeys.auth.base });
 
-    // 사용자 정보 캐시 제거
-    queryClient.removeQueries({ queryKey: queryKeys.auth.base });
+      // 홈으로 이동
+      router.replace("/");
+    },
+    onError: (error) => {
+      console.error("로그아웃 실패", error);
+    },
+  });
 
-    // 홈으로 이동
-    router.replace("/");
-  };
-
-  return { handleLogout };
+  return { handleLogout, isPending, isError, error };
 };
