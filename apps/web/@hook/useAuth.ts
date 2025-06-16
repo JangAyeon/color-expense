@@ -31,3 +31,24 @@ export const useLogout = () => {
 
   return { handleLogout, isPending, isError, error };
 };
+
+export const useSignup = () => {
+  const router = useRouter();
+
+  const {
+    mutate: signup,
+    isPending,
+    isError,
+    error,
+  } = useMutation({
+    mutationFn: queryFns.auth.signUp,
+    onSuccess: () => {
+      router.replace("/mypage"); // 회원가입 후 마이페이지로 이동
+    },
+    onError: (err) => {
+      console.error("회원가입 실패", err);
+    },
+  });
+
+  return { signup, isPending, isError, error };
+};
