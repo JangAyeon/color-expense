@@ -1,6 +1,6 @@
-import { AuthUser } from "@repo/types";
+import { AuthUser, SupabaseSignUpRequest } from "@repo/types";
 import { fetchMe, updateMe } from "./user";
-import { signOut } from "./auth";
+import { signIn, signOut, signUp } from "./auth";
 
 export enum QUERY_KEYS {
   USER = "USER",
@@ -27,5 +27,6 @@ export const queryFns = {
   },
   auth: {
     signOut: signOut as () => Promise<void>,
+    signUp: signUp as (data: SupabaseSignUpRequest) => Promise<void>,
   },
 };
