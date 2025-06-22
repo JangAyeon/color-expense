@@ -1,99 +1,88 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useBudget } from "../@hook/useBudget";
+import React, { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchBudgetStatus, upsertBudget } from "../@utils/apis/budget";
 
-export default function BudgetManager({
-  initialYear,
-  initialMonth,
-}: {
-  initialYear: number;
-  initialMonth: number;
-}) {
-  const [year, setYear] = useState<number>(initialYear);
-  const [month, setMonth] = useState<number>(initialMonth);
-  const { query, mutation } = useBudget(year, month);
+export default function BudgetManager() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const [inputAmount, setInputAmount] = useState<number>(0);
+  // year, month 가져오기 (없으면 기본값은 오늘 기준)
+  const today = new Date();
+  const year = parseInt(
+    searchParams.get("year") ?? today.getFullYear().toString()
+  );
+  const month = parseInt(
+    searchParams.get("month") ?? (today.getMonth() + 1).toString()
+  );
 
-  // 예산 데이터가 바뀌면 inputAmount 업데이트
-  useEffect(() => {
-    if (query.data) setInputAmount(query.data.budget);
-  }, [query.data]);
+  const queryClient = useQueryClient();
 
-  const handleSave = () => {
-    if (typeof inputAmount !== "number" || inputAmount < 0) {
-      alert("예산 금액은 0 이상의 숫자여야 합니다.");
-      return;
-    }
-    console.log("handlesave");
+  // 예산 상태 조회
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["budget", year, month],
+    queryFn: () => fetchBudgetStatus(year, month, ""),
+    staleTime: 1000 * 60 * 5,
+  });
 
-    //TODO
-    mutation.mutate({ year, month, budget: inputAmount });
+  // 로컬 상태로 form 데이터 관리 (수정용)
+  const [formBudget, setFormBudget] = useState<number>(data?.budget ?? 0);
+
+  // 예산 수정 뮤테이션
+  const mutation = useMutation({
+    mutationFn: () => upsertBudget({ year, month, amount: formBudget }),
+    onSuccess: (updated) => {
+      queryClient.setQueryData(["budget", year, month], updated);
+      alert("예산이 저장되었습니다!");
+    },
+    onError: () => {
+      alert("예산 저장에 실패했습니다.");
+    },
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormBudget(Number(e.target.value));
   };
 
-  return (
-    <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
-      <h2 className="text-xl font-semibold mb-4">월별 예산 관리</h2>
+  const handleSave = () => {
+    if (formBudget === undefined || isNaN(formBudget)) {
+      alert("올바른 예산 금액을 입력하세요.");
+      return;
+    }
+    mutation.mutate();
+  };
 
-      <div className="flex gap-2 mb-4">
+  if (isLoading) return <div>로딩중...</div>;
+  if (isError || !data) return <div>데이터를 불러오지 못했습니다.</div>;
+
+  return (
+    <div className="p-6 max-w-md mx-auto">
+      <h2 className="text-xl font-bold mb-4">
+        {year}년 {month}월 예산 관리
+      </h2>
+      <div className="mb-4">
+        <label className="block mb-1">예산 금액 (원):</label>
         <input
           type="number"
-          min="2000"
-          max="2100"
-          value={year}
-          onChange={(e) => setYear(Number(e.target.value))}
-          className="border rounded p-2 flex-1"
-          aria-label="년도 입력"
-        />
-        <input
-          type="number"
-          min="1"
-          max="12"
-          value={month}
-          onChange={(e) => setMonth(Number(e.target.value))}
-          className="border rounded p-2 w-20"
-          aria-label="월 입력"
+          value={formBudget ?? ""}
+          onChange={handleChange}
+          className="border rounded px-3 py-2 w-full"
+          min={0}
         />
       </div>
-
-      <label className="block mb-1 font-medium">
-        예산 금액 (원 단위){inputAmount}
-      </label>
-      <input
-        type="number"
-        value={inputAmount}
-        onChange={(e) => {
-          const val = Number(e.target.value);
-          setInputAmount(isNaN(val) ? 0 : val);
-        }}
-        className="border rounded p-2 w-full mb-4"
-        aria-label="예산 금액 입력"
-      />
-
+      <div className="mb-4">
+        <p>잔여 예산: {data.remaining}원</p>
+        <p>소비 금액: {data.spent}원</p>
+      </div>
       <button
         onClick={handleSave}
         disabled={mutation.isPending}
-        className={`w-full py-2 rounded text-white ${
-          mutation.isPending ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
-        }`}
-        aria-busy={mutation.isPending}
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
       >
-        {query.data?.hasBudget ? "예산 수정" : "예산 생성"}
+        {mutation.isPending ? "저장중..." : "저장"}
       </button>
-
-      {query.isLoading && <p className="mt-2 text-gray-500">로딩 중...</p>}
-      {query.isError && (
-        <p className="mt-2 text-red-500">
-          예산 정보를 불러오는데 실패했습니다.
-        </p>
-      )}
-      {mutation.isError && (
-        <p className="mt-2 text-red-500">예산 저장에 실패했습니다.</p>
-      )}
-      {mutation.isSuccess && (
-        <p className="mt-2 text-green-600">예산이 저장되었습니다!</p>
-      )}
     </div>
   );
 }
