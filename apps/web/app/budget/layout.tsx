@@ -11,19 +11,15 @@ import {
 import { fetchBudgetStatus } from "../../@utils/apis/budget";
 export default async function BudgetLayout({
   children,
-  searchParams,
 }: {
   children: React.ReactNode;
-  searchParams: { year?: string; month?: string };
 }) {
   const cookieStore = await cookies();
   const access_token = cookieStore.get("access_token")?.value ?? null;
 
   const today = new Date();
-  const year = parseInt(searchParams?.year ?? today.getFullYear().toString());
-  const month = parseInt(
-    searchParams?.month ?? (today.getMonth() + 1).toString()
-  );
+  const year = parseInt(today.getFullYear().toString());
+  const month = parseInt((today.getMonth() + 1).toString());
 
   if (!access_token) {
     return <div>No access token</div>;
