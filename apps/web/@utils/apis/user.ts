@@ -1,32 +1,22 @@
-// hooks/useAuth.ts
-"use client";
-
 import { AuthUser } from "@repo/types";
 
-export const fetchMe = async (): Promise<AuthUser> => {
-  const res = await fetch(`/api/users/me`, {
-    method: "GET",
+export async function fetchUserProfile(
+  access_token: string
+): Promise<AuthUser> {
+  const baseUrl = process.env.NEXT_API_BASE_URL || "http://localhost:3030";
+  const res = await fetch(`${baseUrl}/users/me`, {
     headers: {
-      "Content-Type": "application/json",
+      Authorization: `Bearer ${access_token}`,
     },
-    credentials: "include", // 쿠키로 access-token 전달
   });
 
-  if (res.status === 404) {
-    throw new Error("유저를 찾을 수 없습니다");
-  }
-
-  if (!res.ok) {
-    throw new Error("인증 실패");
-  }
-
+  if (!res.ok) throw new Error("Failed to fetch user profile");
   return res.json();
-};
-// hooks/useAuth.ts 또는 hooks/useUpdateProfile.ts
+}
 
-export const updateMe = async (
+export async function updateUserProfile(
   data: Pick<AuthUser, "name" | "email" | "phone">
-): Promise<AuthUser> => {
+): Promise<AuthUser> {
   const res = await fetch(`/api/users/me`, {
     method: "PATCH",
     headers: {
@@ -36,9 +26,6 @@ export const updateMe = async (
     body: JSON.stringify(data),
   });
 
-  if (!res.ok) {
-    throw new Error("정보 수정 실패");
-  }
-
+  if (!res.ok) throw new Error("Failed to fetch user profile");
   return res.json();
-};
+}

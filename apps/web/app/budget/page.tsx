@@ -1,31 +1,27 @@
-import {
-  QueryClient,
-  dehydrate,
-  HydrationBoundary,
-} from "@tanstack/react-query";
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import BudgetManager from "../../@component/BudgetManager";
 
-export default async function BudgetPage() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth() + 1;
-  const queryClient = new QueryClient();
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+export default function BudgetPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["budget", year, month],
-    queryFn: () =>
-      fetch(`${baseUrl}/api/budget/status?year=${year}&month=${month}`, {
-        cache: "no-store",
-      }).then((res) => {
-        if (!res.ok) throw new Error("API failed");
-        return res.json();
-      }),
-  });
-  const dehydratedState = dehydrate(queryClient);
-  return (
-    <HydrationBoundary state={dehydratedState}>
-      <BudgetManager initialYear={year} initialMonth={month} />
-    </HydrationBoundary>
-  );
+  useEffect(() => {
+    const year = searchParams.get("year");
+    const month = searchParams.get("month");
+
+    if (!year || !month) {
+      const today = new Date();
+      const currentYear = today.getFullYear();
+      const currentMonth = today.getMonth() + 1;
+
+      // 쿼리 스트링 붙여서 주소 변경 (replace: 히스토리 쌓이지 않음)
+      router.replace(`/budget?year=${currentYear}&month=${currentMonth}`);
+    }
+  }, [router, searchParams]);
+
+  return <BudgetManager />;
 }
