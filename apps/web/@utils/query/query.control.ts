@@ -1,5 +1,5 @@
 import { AuthUser, SupabaseSignUpRequest } from "@repo/types";
-import { fetchMe, updateMe } from "../apis/user";
+// import { fetchMe, updateMe } from "../apis/user";
 import { signIn, signOut, signUp } from "../apis/auth";
 
 export enum QUERY_KEYS {
@@ -19,12 +19,12 @@ export const queryKeys = {
   },
 };
 export const queryFns = {
-  user: {
-    getMe: fetchMe as () => Promise<AuthUser>,
-    updateMe: updateMe as (
-      data: Pick<AuthUser, "name" | "email" | "phone">
-    ) => Promise<AuthUser>,
-  },
+  // user: {
+  //   // getMe: fetchMe as () => Promise<AuthUser>,
+  //   // updateMe: updateMe as (
+  //   //   data: Pick<AuthUser, "name" | "email" | "phone">
+  //   // ) => Promise<AuthUser>,
+  // },
   auth: {
     signOut: signOut as () => Promise<void>,
     signUp: signUp as (data: SupabaseSignUpRequest) => Promise<void>,
