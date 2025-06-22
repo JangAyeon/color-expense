@@ -3,9 +3,9 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { AuthUser } from "@repo/types";
-import { fetchMe } from "../@utils/query/user";
+import { fetchMe } from "../@utils/apis/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateMe } from "../@utils/query/user";
+import { updateMe } from "../@utils/apis/user";
 import { queryFns, queryKeys } from "../@utils/query/query.control";
 
 export const useGetMyInfo = () => {

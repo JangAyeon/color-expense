@@ -3,7 +3,7 @@
 
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signOut } from "../@utils/query/auth";
+import { signOut } from "../@utils/apis/auth";
 import { queryFns, queryKeys } from "../@utils/query/query.control";
 
 export const useLogout = () => {

@@ -1,6 +1,6 @@
 import { AuthUser, SupabaseSignUpRequest } from "@repo/types";
-import { fetchMe, updateMe } from "./user";
-import { signIn, signOut, signUp } from "./auth";
+import { fetchMe, updateMe } from "../apis/user";
+import { signIn, signOut, signUp } from "../apis/auth";
 
 export enum QUERY_KEYS {
   USER = "USER",
