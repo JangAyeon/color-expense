@@ -28,6 +28,11 @@
     "packages/*"
   ],
   "dependencies": {
-    "@tanstack/react-query-devtools": "^5.80.7"
+    "@tailwindcss/postcss": "^4.1.10",
+    "@tanstack/react-query-devtools": "^5.80.7",
+    "framer-motion": "^12.19.1",
+    "postcss": "^8.5.6",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^4.1.10"
   }
 }
