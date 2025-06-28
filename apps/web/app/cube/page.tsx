@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import ExpenseCube from "../../@component/ExpenseCube";
+import { toYMDWithString } from "../../@utils/date/YMD";
 
 export default function ExpenseCubePage() {
   const router = useRouter();
@@ -17,13 +18,8 @@ export default function ExpenseCubePage() {
   useEffect(() => {
     if (!hasDate) {
       const today = new Date();
-      const currentYear = today.getFullYear();
-      const currentMonth = (today.getMonth() + 1).toString().padStart(2, "0");
-      const currentDay = today.getDate().toString().padStart(2, "0");
-
-      router.replace(
-        `/cube?year=${currentYear}&month=${currentMonth}&day=${currentDay}`
-      );
+      const { year, month, day } = toYMDWithString(today);
+      router.replace(`/cube?year=${year}&month=${month}&day=${day}`);
     }
   }, [router, searchParams]);
   return (
