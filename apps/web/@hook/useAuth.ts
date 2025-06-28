@@ -3,7 +3,7 @@
 
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signOut } from "../@utils/apis/auth";
+import { signIn, signOut } from "../@utils/apis/auth";
 import { queryFns, queryKeys } from "../@utils/query/query.control";
 
 export const useLogout = () => {
@@ -51,4 +51,17 @@ export const useSignup = () => {
   });
 
   return { signup, isPending, isError, error };
+};
+
+export const useSignIn = () => {
+  const router = useRouter();
+  return useMutation({
+    mutationFn: signIn,
+    onSuccess: () => {
+      router.replace("/mypage"); // 회원가입 후 마이페이지로 이동
+    },
+    onError: (err) => {
+      console.error("로그인 실패", err);
+    },
+  });
 };
