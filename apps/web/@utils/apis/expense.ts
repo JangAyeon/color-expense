@@ -1,3 +1,9 @@
+import {
+  ExpensePeriodProps,
+  UpsertExpenseInput,
+} from "../../@component/expense/useExpense";
+import { YYYYMMDDtoISO } from "../date/YMD";
+
 export interface ExpenseData {
   year: number;
   month: number;
@@ -21,7 +27,7 @@ export async function fetchExpenseStatus(
   year: string,
   month: string,
   day: string,
-  type: "daily" | "monthly" | "weekly",
+  type: ExpensePeriodProps,
   access_token: string
 ): Promise<ExpensesStatsResponse | null> {
   const baseUrl = access_token
@@ -31,9 +37,119 @@ export async function fetchExpenseStatus(
 
   console.log(
     "fetchExpenseStatus",
-    `${baseUrl}/expenses/status/${type}?date=${date}`
+    `${baseUrl}/expenses/stats/${type}?date=${date}`
   );
   const res = await fetch(`${baseUrl}/expenses/stats/${type}?date=${date}`, {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  });
+  const data = await res.json();
+  if (!data) return null;
+  return data;
+}
+
+export async function getExpense({
+  access_token,
+}: {
+  access_token: string;
+}): Promise<ExpenseRecord[] | null> {
+  const baseUrl = access_token
+    ? process.env.NEXT_API_BASE_URL || "http://localhost:3030"
+    : "/api";
+
+  const res = await fetch(`${baseUrl}/expenses`, {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  });
+  const data = await res.json();
+  if (!data) {
+    console.error("Failed to fetch expenses:", data);
+    return null;
+  }
+
+  return data;
+}
+
+export async function createExpense({
+  year,
+  month,
+  day,
+  category,
+  amount,
+  access_token,
+}: UpsertExpenseInput & {
+  access_token: string;
+}): Promise<ExpensesStatsResponse | null> {
+  const baseUrl = access_token
+    ? process.env.NEXT_API_BASE_URL || "http://localhost:3030"
+    : "/api";
+
+  const data = {
+    amount,
+    category,
+    expenseDate: YYYYMMDDtoISO(year, month, day),
+  };
+
+  const res = await fetch(`${baseUrl}/expenses`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) return null;
+  return res.json();
+}
+
+export async function updateExpense({
+  id,
+  year,
+  month,
+  day,
+  category,
+  amount,
+  access_token,
+}: UpsertExpenseInput & {
+  id: string;
+  access_token: string;
+}): Promise<ExpensesStatsResponse | null> {
+  const baseUrl = access_token
+    ? process.env.NEXT_API_BASE_URL || "http://localhost:3030"
+    : "/api";
+
+  const data = {
+    amount,
+    category,
+    expenseDate: YYYYMMDDtoISO(year, month, day),
+  };
+  console.log("updateExpense", `${baseUrl}/expenses`);
+  const res = await fetch(`${baseUrl}/expenses/${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) return null;
+  return res.json();
+}
+export async function deleteExpense({
+  id,
+
+  access_token,
+}: {
+  id: string;
+  access_token: string;
+}): Promise<ExpensesStatsResponse | null> {
+  const baseUrl = access_token
+    ? process.env.NEXT_API_BASE_URL || "http://localhost:3030"
+    : "/api";
+
+  console.log("updateExpense", `${baseUrl}/expenses`);
+  const res = await fetch(`${baseUrl}/expenses/${id}`, {
+    method: "DELETE",
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
