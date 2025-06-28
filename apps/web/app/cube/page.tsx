@@ -21,7 +21,7 @@ export default function ExpenseCubePage() {
       const { year, month, day } = toYMDWithString(today);
       router.replace(`/cube?year=${year}&month=${month}&day=${day}`);
     }
-  }, [router, searchParams]);
+  }, [router, searchParams, hasDate]);
   return (
     <div className="p-6">
       <h1 className="mb-4 font-bold text-lg">색칠형 예산 시각화</h1>
