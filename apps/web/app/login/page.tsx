@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSignIn } from "../../@hook/useAuth";
 
-export default function LoginPage() {
+export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { mutate, isPending, isError, error } = useSignIn();
