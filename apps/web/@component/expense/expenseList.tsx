@@ -1,11 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  ExpensePeriodProps,
-  useExpenses,
-  useExpensesStatus,
-} from "./useExpense";
+import { ExpensePeriodProps, useExpensesStatus } from "../../@hook/useExpense";
 import { ExpenseItem } from "./expenseItem";
 
 export function ExpenseList({
