@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const cookieStore = await cookies();
   const token = cookieStore.get("access_token")?.value;
@@ -13,10 +13,10 @@ export async function PATCH(
   }
 
   const body = await req.json();
-
+  const { id } = await params;
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/expenses/${params.id}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/expenses/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -45,18 +45,18 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const cookieStore = await cookies();
   const token = cookieStore.get("access_token")?.value;
-
+  const { id } = await params;
   if (!token) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/expenses/${params.id}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/expenses/${id}`,
       {
         method: "DELETE",
         headers: {

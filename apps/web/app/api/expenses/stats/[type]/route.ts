@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { type: string } }
+  { params }: { params: Promise<{ type: string }> }
 ) {
   const cookieStore = await cookies();
   const token = cookieStore.get("access_token")?.value;
@@ -13,9 +13,10 @@ export async function GET(
   }
   const { searchParams } = new URL(req.url);
   const date = searchParams.get("date");
-  console.log("## GET", req.url, params.type, date);
+  const { type } = await params;
+  console.log("## GET", req.url, type, date);
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/expenses/stats/${params.type}?date=${date}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/expenses/stats/${type}?date=${date}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
