@@ -4,7 +4,7 @@
 
 import React, { useState } from "react";
 import { ExpenseForm } from "./expenseForm";
-import { ExpensePeriodProps } from "./useExpense";
+import { ExpensePeriodProps } from "../../@hook/useExpense";
 import { ExpenseList } from "./expenseList";
 
 export default function ExpenseManager() {

@@ -1,7 +1,4 @@
-import {
-  ExpensePeriodProps,
-  UpsertExpenseInput,
-} from "../../@component/expense/useExpense";
+import { ExpensePeriodProps, UpsertExpenseInput } from "../../@hook/useExpense";
 import { YYYYMMDDtoISO } from "../date/YMD";
 
 export interface ExpenseData {

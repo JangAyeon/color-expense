@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useDeleteExpense } from "./useExpense";
+import { useDeleteExpense } from "../../@hook/useExpense";
 
 export function ExpenseItem({ expense }: { expense: any }) {
   const { mutate: remove } = useDeleteExpense();

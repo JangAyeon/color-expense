@@ -5,7 +5,7 @@ import {
   fetchExpenseStatus,
   getExpense,
   updateExpense,
-} from "../../@utils/apis/expense";
+} from "../@utils/apis/expense";
 
 export type ExpensePeriodProps = "daily" | "weekly" | "monthly";
 export type UpsertExpenseInput = {

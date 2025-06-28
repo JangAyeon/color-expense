@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { fetchExpenseStatus } from "../@utils/apis/expense";
-import { fetchBudgetStatus } from "../@utils/apis/budget";
+import { useMonthlyBudget } from "../@hook/useBudget";
 
 type ExpenseCubeProps = {
   year: string;
@@ -39,8 +39,6 @@ const styles = {
 };
 
 export default function ExpenseCube({ year, month, day }: ExpenseCubeProps) {
-  const queryClient = useQueryClient();
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ["expense-monthly", year, month, day],
     queryFn: () => fetchExpenseStatus(year, month, day, "monthly", ""),
@@ -51,11 +49,7 @@ export default function ExpenseCube({ year, month, day }: ExpenseCubeProps) {
     data: budget,
     isLoading: isBudgetLoading,
     isError: isBudgetError,
-  } = useQuery({
-    queryKey: ["budget", year, month],
-    queryFn: () => fetchBudgetStatus(Number(year), Number(month), ""),
-    staleTime: 1000 * 60 * 5,
-  });
+  } = useMonthlyBudget(+year, +month);
 
   const totalBudget = budget?.budget ?? 0;
   const spent = data?.total ?? 0;
