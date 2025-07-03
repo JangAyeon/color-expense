@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: 20.15.0
+          node-version: 20.18.3
       - name: Create .env file in apps/api
         run: |
           mkdir -p apps/api
