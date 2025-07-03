@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 20.15.0
       - name: Create .env file in apps/api
         run: |
           mkdir -p apps/api
@@ -28,8 +28,10 @@ jobs:
           echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> apps/api/.env
           echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> apps/api/.env
           echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> apps/api/.env
+      - name: install @parcel/watcher
+        run: npm install @parcel/watcher
       - name: Install dependencies
-        run: npm i --ignore-scripts
+        run: npm i
       - name: Build
         run: npm run build
 #      - name: Test
