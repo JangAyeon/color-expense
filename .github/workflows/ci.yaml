@@ -28,6 +28,8 @@ jobs:
           echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> apps/api/.env
           echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> apps/api/.env
           echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> apps/api/.env
+      - name: Install @parcel/watcher
+        run: npm install @parcel/watcher
       - name: Install dependencies
         run: npm install
       - name: Build
