@@ -9,16 +9,13 @@ export const useMonthlyBudget = (year: number, month: number) => {
   });
 };
 
-export const useUpsertBudget = (
-  year: number,
-  month: number,
-  formBudget: number
-) => {
+export const useUpsertBudget = (year: number, month: number) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: () => upsertBudget({ year, month, amount: formBudget }),
+    mutationFn: (formBudget: number) =>
+      upsertBudget({ year, month, amount: formBudget }),
     onSuccess: (updated) => {
-      queryClient.setQueryData(["budget", year, month], updated);
+      queryClient.invalidateQueries({ queryKey: ["budget", year, month] });
       alert("예산이 저장되었습니다!");
     },
     onError: () => {
