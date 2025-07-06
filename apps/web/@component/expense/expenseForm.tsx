@@ -70,6 +70,7 @@ export function ExpenseForm({ selectedDate }: { selectedDate: string }) {
   return (
     <>
       <div className="mb-4 space-y-2 ">
+        <div>지출 입력 폼</div>
         <input
           type="text"
           value={amount}

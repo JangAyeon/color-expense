@@ -24,8 +24,10 @@ export function ExpenseList({
   if (isError) return <div>지출 정보를 불러오지 못했습니다.</div>;
 
   return (
-    <div>
-      <h3 className="text-lg font-semibold mb-2">지출 내역 ({filterType})</h3>
+    <div className="my-4">
+      <h3 className="border-t-2 text-lg font-semibold mb-2">
+        지출 내역 ({filterType})
+      </h3>
       {data?.expenses?.length === 0 ? (
         <p className="text-gray-500">지출 내역이 없습니다.</p>
       ) : (

@@ -17,7 +17,9 @@
     "dotenv": "^16.5.0",
     "prettier": "^3.5.3",
     "turbo": "^2.5.4",
-    "typescript": "5.8.2"
+    "typescript": "5.8.2",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.1"
   },
   "engines": {
     "node": ">=18"
@@ -28,6 +30,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
     "@tailwindcss/postcss": "^4.1.10",
     "@tanstack/react-query-devtools": "^5.80.7",
     "framer-motion": "^12.19.1",

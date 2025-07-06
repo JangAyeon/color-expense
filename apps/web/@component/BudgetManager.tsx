@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMonthlyBudget, useUpsertBudget } from "../@hook/useBudget";
+
+const MIN_BUDGET = 10000;
 
 export default function BudgetManager() {
   const router = useRouter();
@@ -21,20 +23,26 @@ export default function BudgetManager() {
   const { data, isLoading, isError } = useMonthlyBudget(year, month);
 
   // 로컬 상태로 form 데이터 관리 (수정용)
-  const [formBudget, setFormBudget] = useState<number>(data?.budget ?? 0);
+  const [formBudget, setFormBudget] = useState<string>(
+    data?.budget.toString() ?? ""
+  );
 
   // 예산 수정 뮤테이션
-  const mutation = useUpsertBudget(year, month, formBudget);
+  const mutation = useUpsertBudget(year, month);
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   setFormBudget(Number(e.target.value));
   // };
 
   const handleSave = () => {
-    if (formBudget === undefined || isNaN(formBudget)) {
+    console.log();
+    const value = Number(formBudget);
+    if (formBudget === undefined || isNaN(value)) {
       alert("올바른 예산 금액을 입력하세요.");
       return;
+    } else if (value < MIN_BUDGET) {
+      alert("최소한 만원 이상을 입력하세요.");
     }
-    mutation.mutate();
+    mutation.mutate(value);
   };
   const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     router.push(`?year=${e.target.value}&month=${month}`);
@@ -43,6 +51,21 @@ export default function BudgetManager() {
   const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     router.push(`?year=${year}&month=${e.target.value}`);
   };
+
+  const handleBudgetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, "");
+
+    console.log(e.target.value, value);
+    setFormBudget(value);
+  };
+
+  useEffect(() => {
+    if (!data?.budget) {
+      setFormBudget("");
+    } else {
+      setFormBudget(data.budget.toString());
+    }
+  }, [data?.budget, year, month]);
   if (isLoading) return <div>로딩중...</div>;
   if (isError || !data) return <div>데이터를 불러오지 못했습니다.</div>;
 
@@ -80,11 +103,9 @@ export default function BudgetManager() {
       <div className="mb-4">
         <label className="block mb-1">예산 금액 (원):</label>
         <input
-          type="number"
           value={formBudget}
-          onChange={(e) => setFormBudget(Number(e.target.value))}
+          onChange={handleBudgetChange}
           className="border rounded px-3 py-2 w-full"
-          min={0}
         />
       </div>
 
