@@ -8,14 +8,14 @@
     "dist"
   ],
   "exports": {
-    "./styles.css": "./dist/styles.css",
-    "./button": "./src/button.tsx"
+    "./styles.css": "./src/styles.css",
+    "./button": "./src/button.tsx",
+    "./BlockieFace": "./src/Blockie/face.tsx",
+    "./BlockieBottom": "./src/Blockie/bottom.tsx"
   },
   "license": "MIT",
   "scripts": {
-    "build": "tailwindcss -i ./src/styles.css -o ./dist/styles.css",
     "lint": "eslint src/",
-    "dev": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch",
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
@@ -32,6 +32,6 @@
     "@repo/design-system": "*",
     "@repo/types": "*",
     "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.6"
+    "tailwindcss": "^3.4.17"
   }
 }
