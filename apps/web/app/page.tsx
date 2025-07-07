@@ -1,26 +1,26 @@
-import Image, { type ImageProps } from "next/image";
+// 스플래시 화면
 
-export default function Home() {
+import { BlockieBottom, BlockieFace } from "../@component/Blockie";
+
+// 스플래시 화면
+function SplashPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#fefefe] to-[#f5f7fa] flex items-center justify-center px-6">
-      <div className="flex flex-col items-center gap-6">
-        <Image
-          aria-hidden
-          src="/Blockie.svg"
-          alt="Window icon"
-          width={350}
-          height={538}
-          className="drop-shadow-xl transition-transform hover:scale-105 duration-300"
-        />
-        <div className="flex flex-col items-center gap-1.5">
-          <h1 className="text-4xl font-extrabold text-gray-800 tracking-tight">
-            Blockie
-          </h1>
-          <p className="text-lg text-gray-500">
-            오늘도 한 블럭, 지갑 방어 완료!
-          </p>
+    <div className="min-h-[600px] flex flex-col items-center justify-center bg-white py-8">
+      <div className="flex flex-col items-center">
+        <BlockieFace size={140} emotion="happy" />
+        <BlockieBottom size={140} />
+
+        <h1 className="text-3xl font-bold mt-8 mb-2 text-[#1F2937]">Blockie</h1>
+        <p className="text-[#4B5563] mb-2">오늘도 한 블럭, 지갑 방어 완료!</p>
+
+        <div className="mt-12 w-full max-w-xs">
+          <button className="w-full h-14 bg-blockie-yellow hover:bg-warning rounded-xl font-medium text-lg transition-all">
+            시작하기
+          </button>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
+
+export default SplashPage;
