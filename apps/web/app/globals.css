@@ -1,2 +1,4 @@
 @import "tailwindcss";
-@import "@repo/ui/styles.css";
+
+/* UI 패키지 스타일 import */
+@import "@repo/ui/styles";
