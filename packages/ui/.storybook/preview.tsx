@@ -1,28 +1,28 @@
 import type { Preview } from "@storybook/react";
-import type { Decorator } from "@storybook/react";
+// import type { Decorator } from "@storybook/react";
 import "../src/styles.css";
 
-const withThemeWrapper: Decorator = (Story, context) => {
-  const theme = context.globals.theme || "light";
+// const withThemeWrapper: Decorator = (Story, context) => {
+//   const theme = context.globals.theme || "light";
 
-  const themeStyles: Record<string, string> = {
-    light: "bg-neutral-off-white text-dark",
-    dark: "bg-neutral-black text-white",
-    colorful:
-      "bg-gradient-to-br from-blockie-yellow via-blockie-green to-blockie-blue text-dark",
-  };
+//   const themeStyles: Record<string, string> = {
+//     light: "bg-neutral-off-white text-dark",
+//     dark: "bg-neutral-black text-white",
+//     colorful:
+//       "bg-gradient-to-br from-blockie-yellow via-blockie-green to-blockie-blue text-dark",
+//   };
 
-  return (
-    <div
-      className={`min-h-screen p-8 font-sans transition-all duration-300 ${
-        themeStyles[theme] || themeStyles.light
-      }`}
-      style={{ fontFamily: "Pretendard, system-ui, sans-serif" }}
-    >
-      {Story()}
-    </div>
-  );
-};
+//   return (
+//     <div
+//       className={`min-h-screen p-8 font-sans transition-all duration-300 ${
+//         themeStyles[theme] || themeStyles.light
+//       }`}
+//       style={{ fontFamily: "Pretendard, system-ui, sans-serif" }}
+//     >
+//       {Story()}
+//     </div>
+//   );
+// };
 
 const preview: Preview = {
   parameters: {
@@ -91,7 +91,7 @@ const preview: Preview = {
     },
   },
 
-  decorators: [withThemeWrapper],
+  // decorators: [withThemeWrapper],
 };
 
 export default preview;
