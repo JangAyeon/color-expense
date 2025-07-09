@@ -3,59 +3,59 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      colors: {
-        // 기본 브랜드 색상
-        blockie: {
-          yellow: "#F4DF7D",
-          green: "#8DDBA4",
-          blue: "#7DC0F4",
-          purple: "#C89DF4",
-          pink: "#F48DAE",
-          red: "#F47D7D",
-          "red-light": "#F49B9B",
-        },
-        // 중립 색상
-        neutral: {
-          black: "#1F2937",
-          "dark-gray": "#4B5563",
-          "medium-gray": "#9CA3AF",
-          "light-gray": "#E5E7EB",
-          "off-white": "#F9FAFB",
-        },
-        // 의미론적 색상
-        success: "#34D399",
-        warning: "#FBBF24",
-        error: "#EF4444",
-        info: "#60A5FA",
-      },
-      fontFamily: {
-        sans: ["Pretendard", "sans-serif"],
-        display: ["Montserrat", "Pretendard", "sans-serif"],
-      },
-      fontSize: {
-        // 타이포그래피 시스템
-        display: ["32px", { lineHeight: "40px", fontWeight: "700" }],
-        "title-1": ["24px", { lineHeight: "32px", fontWeight: "700" }],
-        "title-2": ["20px", { lineHeight: "28px", fontWeight: "600" }],
-        "title-3": ["18px", { lineHeight: "26px", fontWeight: "600" }],
-        "body-1": ["16px", { lineHeight: "24px", fontWeight: "400" }],
-        "body-2": ["14px", { lineHeight: "20px", fontWeight: "400" }],
-        caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
-        button: ["16px", { lineHeight: "24px", fontWeight: "500" }],
-        "number-l": ["40px", { lineHeight: "48px", fontWeight: "700" }],
-        "number-m": ["24px", { lineHeight: "32px", fontWeight: "600" }],
-        "number-s": ["16px", { lineHeight: "24px", fontWeight: "500" }],
-      },
-      borderRadius: {
-        // 테두리 반경
-        sm: "4px",
-        DEFAULT: "8px",
-        md: "12px",
-        lg: "16px",
-        xl: "20px",
-        "2xl": "24px",
-        "3xl": "32px",
-      },
+      // colors: {
+      //   // 기본 브랜드 색상
+      //   blockie: {
+      //     yellow: "#F4DF7D",
+      //     green: "#8DDBA4",
+      //     blue: "#7DC0F4",
+      //     purple: "#C89DF4",
+      //     pink: "#F48DAE",
+      //     red: "#F47D7D",
+      //     "red-light": "#F49B9B",
+      //   },
+      //   // 중립 색상
+      //   neutral: {
+      //     black: "#1F2937",
+      //     "dark-gray": "#4B5563",
+      //     "medium-gray": "#9CA3AF",
+      //     "light-gray": "#E5E7EB",
+      //     "off-white": "#F9FAFB",
+      //   },
+      //   // 의미론적 색상
+      //   success: "#34D399",
+      //   warning: "#FBBF24",
+      //   error: "#EF4444",
+      //   info: "#60A5FA",
+      // },
+      // fontFamily: {
+      //   sans: ["Pretendard", "sans-serif"],
+      //   display: ["Montserrat", "Pretendard", "sans-serif"],
+      // },
+      // fontSize: {
+      //   // 타이포그래피 시스템
+      //   display: ["32px", { lineHeight: "40px", fontWeight: "700" }],
+      //   "title-1": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+      //   "title-2": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+      //   "title-3": ["18px", { lineHeight: "26px", fontWeight: "600" }],
+      //   "body-1": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+      //   "body-2": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+      //   caption: ["12px", { lineHeight: "16px", fontWeight: "400" }],
+      //   button: ["16px", { lineHeight: "24px", fontWeight: "500" }],
+      //   "number-l": ["40px", { lineHeight: "48px", fontWeight: "700" }],
+      //   "number-m": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+      //   "number-s": ["16px", { lineHeight: "24px", fontWeight: "500" }],
+      // },
+      // borderRadius: {
+      //   // 테두리 반경
+      //   sm: "4px",
+      //   DEFAULT: "8px",
+      //   md: "12px",
+      //   lg: "16px",
+      //   xl: "20px",
+      //   "2xl": "24px",
+      //   "3xl": "32px",
+      // },
       boxShadow: {
         // 그림자 시스템
         sm: "0 1px 2px rgba(0, 0, 0, 0.05)",
