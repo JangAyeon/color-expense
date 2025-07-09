@@ -1,6 +1,6 @@
 // 스플래시 화면
 
-import { BlockieBottom, BlockieFace } from "../@component/Blockie";
+import { BlockieFace, BlockieBottom } from "@repo/ui";
 
 // 스플래시 화면
 function SplashPage() {

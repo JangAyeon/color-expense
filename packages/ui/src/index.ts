@@ -1,5 +1,5 @@
 // Button 컴포넌트 export
-export { Button } from "./components/Button";
+export { Button } from "./components/Button/Button";
 
 // 내장 아이콘들 export
 export {
@@ -9,7 +9,10 @@ export {
   SettingsIcon,
   TrashIcon,
   HeartIcon,
-} from "./components/Button";
+} from "./components/Button/Button";
+
+// Blockie 컴포넌트 export
+export { BlockieFace, BlockieBottom } from "./components/Blockie";
 
 // 유틸리티 함수 export
 export {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BlockieFace } from "../../@component/Blockie";
+import { BlockieFace, BlockieBottom } from "@repo/ui";
 import { useRouter } from "next/navigation";
 
 const slides = [
@@ -104,7 +104,7 @@ function OnboardingPage() {
           {!isEndSlide ? "다음" : "시작하기"}
         </button>
 
-        <div className="mt-4 text-center">
+        <div className="mt-4 text-center text-blockie-green">
           <p className="text-sm text-neutral-dark-gray">
             이미 계정이 있으신가요?{" "}
             <a href="/signin" className="text-neutral-black font-medium">

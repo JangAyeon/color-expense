@@ -7,7 +7,7 @@ import {
   createInlineStyle,
   type ButtonVariant,
   type ButtonSize,
-} from "../utils/styles";
+} from "../../utils/styles";
 
 // 내장 아이콘 컴포넌트들
 const PlusIcon = ({ className }: { className?: string }) => (
