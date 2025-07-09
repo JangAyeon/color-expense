@@ -11,7 +11,10 @@
     "build:api": "npm --workspace=api run build",
     "build:web": "npm --workspace=web run build",
     "start:api": "npm --workspace=api run start:prod",
-    "start:web": "npm --workspace=web run start"
+    "start:web": "npm --workspace=web run start",
+    "dev:web": "turbo dev --filter=web",
+    "dev:ui": "turbo dev --filter=@repo/ui",
+    "storybook": "turbo storybook --filter=@repo/ui"
   },
   "devDependencies": {
     "@types/react": "19.1.8",
