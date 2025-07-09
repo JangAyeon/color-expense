@@ -63,35 +63,35 @@ module.exports = {
       //   md: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
       //   lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
       // },
-      spacing: {
-        // 여백 및 간격 시스템
-        "0.5": "2px",
-        "1": "4px",
-        "1.5": "6px",
-        "2": "8px",
-        "3": "12px",
-        "4": "16px",
-        "5": "20px",
-        "6": "24px",
-        "8": "32px",
-        "10": "40px",
-        "12": "48px",
-        "16": "64px",
-      },
-      animation: {
-        // 애니메이션
-        slideUp: "slideUp 0.3s ease-out forwards",
-        "bounce-slow": "bounce 3s infinite",
-        "spin-slow": "spin 3s linear infinite",
-        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-      },
-      keyframes: {
-        // 키프레임
-        slideUp: {
-          "0%": { transform: "translateY(100%)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
-        },
-      },
+      // spacing: {
+      //   // 여백 및 간격 시스템
+      //   "0.5": "2px",
+      //   "1": "4px",
+      //   "1.5": "6px",
+      //   "2": "8px",
+      //   "3": "12px",
+      //   "4": "16px",
+      //   "5": "20px",
+      //   "6": "24px",
+      //   "8": "32px",
+      //   "10": "40px",
+      //   "12": "48px",
+      //   "16": "64px",
+      // },
+      // animation: {
+      //   // 애니메이션
+      //   slideUp: "slideUp 0.3s ease-out forwards",
+      //   "bounce-slow": "bounce 3s infinite",
+      //   "spin-slow": "spin 3s linear infinite",
+      //   "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+      // },
+      // keyframes: {
+      //   // 키프레임
+      //   slideUp: {
+      //     "0%": { transform: "translateY(100%)", opacity: "0" },
+      //     "100%": { transform: "translateY(0)", opacity: "1" },
+      //   },
+      // },
     },
   },
   plugins: [require("@tailwindcss/forms")],
