@@ -32,8 +32,8 @@ jobs:
         run: npm rebuild lightningcss
       - name: remove node_modules
         run: rm -rf node_modules package-lock.json
-      - name: install @parcel/watcher
-        run: npm install @parcel/watcher
+      #      - name: install @parcel/watcher
+      #        run: npm install @parcel/watcher
       - name: Install dependencies
         run: npm i
       - name: Build
