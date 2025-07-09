@@ -71,17 +71,17 @@
   --text-number-s--line-height: 1.5rem; /* 24px */
   --text-number-s--font-weight: 500;
   /* 애니메이션 타이밍 */
-  --transition-fast: 0.2s;
+  /* --transition-fast: 0.2s;
   --transition-medium: 0.3s;
-  --transition-slow: 0.5s;
+  --transition-slow: 0.5s; */
   /* 커스텀 애니메이션 */
-  --animate-slide-up: slide-up var(--transition-medium) ease-out;
+  /* --animate-slide-up: slide-up var(--transition-medium) ease-out;
   --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-bounce-gentle: bounce 2s infinite;
+  --animate-bounce-gentle: bounce 2s infinite; */
 
   /* 그리드 컬럼 */
-  --grid-template-columns-10: repeat(10, minmax(0, 1fr));
-  --grid-template-columns-8: repeat(8, minmax(0, 1fr));
+  /* --grid-template-columns-10: repeat(10, minmax(0, 1fr));
+  --grid-template-columns-8: repeat(8, minmax(0, 1fr)); */
 
   /* 스페이싱 */
   --spacing-0_5: 2px;
@@ -118,30 +118,36 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
-}
 
-/* 키프레임 애니메이션 정의 */
-@keyframes slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
+  /* 애니메이션 */
+  --animate-slideUp: slideUp 0.3s ease-out forwards;
+  --animate-bounce-slow: bounce 3s infinite;
+  --animate-spin-slow: spin 3s linear infinite;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
-/* 버튼 애니메이션 */
-@keyframes button-press {
-  0% {
-    transform: scale(1);
+  /* 키프레임 애니메이션 정의 */
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
-  50% {
-    transform: scale(0.95);
-  }
-  100% {
-    transform: scale(1);
+
+  /* 버튼 애니메이션 */
+  @keyframes button-press {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 }
 
