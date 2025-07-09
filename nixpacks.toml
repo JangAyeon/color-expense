@@ -1,4 +1,3 @@
-# providers는 배열로 정의해야 함
 providers = ["node"]
 
 [variables]
@@ -20,7 +19,7 @@ cmds = [
   "find . -name 'package-lock.json' -delete",
   
   "echo '📦 Install with exact versions:'",
-  "npm install"
+  "npm install",
   
   "echo '✅ Installation completed'"
 ]
@@ -29,6 +28,7 @@ cmds = [
 cmds = [
   "echo '🏗️ Building in correct order:'",
   "npm run type-check -w @repo/types || echo 'Types OK'",
+  "npm run build -w @repo/utils || echo '@repo/utils OK'",
   "npm run build -w @repo/ui || echo '@repo/ui OK'",
   "npm run build -w web || echo 'web OK'",
   "echo '🎉 Build successful!'"
