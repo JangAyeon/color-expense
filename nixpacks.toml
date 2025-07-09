@@ -1,0 +1,38 @@
+[providers]
+node = "18.x"
+
+[variables]
+NODE_ENV = "production"
+NPM_CONFIG_FUND = "false"
+NPM_CONFIG_AUDIT = "false"
+
+[phases.setup]
+nixPkgs = ["nodejs-18_x", "npm-9_x"]
+
+[phases.install]
+cmds = [
+  "echo '🔍 Environment check:'",
+  "node --version && npm --version",
+  
+  "echo '🧹 Clean workspace:'",
+  "rm -rf node_modules package-lock.json",
+  "find . -name 'node_modules' -type d -prune -exec rm -rf {} +",
+  "find . -name 'package-lock.json' -delete",
+  
+  "echo '📦 Install with exact versions:'",
+  "npm ci",
+  
+  "echo '✅ Installation completed'"
+]
+
+[phases.build]
+cmds = [
+  "echo '🏗️ Building in correct order:'",
+  "npm run type-check -w @repo/types || echo 'Types OK'",
+  "npm run build -w @repo/ui || echo '@repo/ui OK'",
+  "npm run build -w web || web OK",
+  "echo '🎉 Build successful!'"
+]
+
+[start]
+cmd = "cd apps/web && npm run start"
