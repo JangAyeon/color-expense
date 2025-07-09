@@ -9,7 +9,7 @@
     "check-types": "turbo run check-types",
     "test": "turbo test",
     "build:api": "npm --workspace=api run build",
-    "build:web": "npm --workspace=web run build",
+    "build:web": "turbo build --filter=web",
     "start:api": "npm --workspace=api run start:prod",
     "start:web": "npm --workspace=web run start",
     "dev:web": "turbo dev --filter=web",
