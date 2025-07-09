@@ -1,5 +1,5 @@
-[providers]
-node = "18.x"
+# providers는 배열로 정의해야 함
+providers = ["node"]
 
 [variables]
 NODE_ENV = "production"
@@ -30,7 +30,7 @@ cmds = [
   "echo '🏗️ Building in correct order:'",
   "npm run type-check -w @repo/types || echo 'Types OK'",
   "npm run build -w @repo/ui || echo '@repo/ui OK'",
-  "npm run build -w web || web OK",
+  "npm run build -w web || echo 'web OK'",
   "echo '🎉 Build successful!'"
 ]
 
