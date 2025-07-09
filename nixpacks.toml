@@ -20,7 +20,7 @@ cmds = [
   "find . -name 'package-lock.json' -delete",
   
   "echo '📦 Install with exact versions:'",
-  "npm ci",
+  "npm install"
   
   "echo '✅ Installation completed'"
 ]
