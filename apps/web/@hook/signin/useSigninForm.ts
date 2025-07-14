@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { validateForm, authAPI, emailStorage } from "@utils/signin";
-import { SigninFormData, FormErrors, UseSigninFormReturn } from "@type/signin";
+import { validateForm, emailStorage } from "@utils/auth";
+
 import { useSignIn } from "@hook/useAuth";
+import { UseSigninFormReturn, SigninFormData, FormErrors } from "@type/auth";
 
 export function useSigninForm(): UseSigninFormReturn {
   const {
@@ -20,8 +20,6 @@ export function useSigninForm(): UseSigninFormReturn {
     rememberEmail: false,
   });
   const [errors, setErrors] = useState<FormErrors>({});
-
-  const router = useRouter();
 
   // 컴포넌트 마운트 시 저장된 이메일 불러오기
   useEffect(() => {
