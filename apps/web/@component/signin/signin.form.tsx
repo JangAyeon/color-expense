@@ -1,6 +1,7 @@
 "use client";
 import { useSigninForm } from "@hook/signin";
 import { Button, Input } from "@repo/ui";
+import { validateForm } from "@utils/auth";
 
 const SigninForm = () => {
   const { formData, errors, isLoading, handleInputChange, handleSubmit } =
@@ -56,7 +57,10 @@ const SigninForm = () => {
             onChange={handleInputChange}
             className="h-4 w-4 text-yellow-400 rounded border-gray-300 focus:ring-yellow-400"
           />
-          <label htmlFor="rememberEmail" className="ml-2 text-sm text-gray-600">
+          <label
+            htmlFor="rememberEmail"
+            className="ml-2 text-body-2 text-neutral-dark-gray"
+          >
             이메일 기억하기
           </label>
         </div>
@@ -67,7 +71,7 @@ const SigninForm = () => {
         fullWidth
         size="lg"
         loading={isLoading}
-        className="h-14 text-lg"
+        className="h-14 text-button"
       >
         로그인
       </Button>
