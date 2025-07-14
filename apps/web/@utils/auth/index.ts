@@ -46,36 +46,41 @@ export const validateForm = {
     if (password.length < 6) return "비밀번호는 최소 6자 이상이어야 합니다.";
     return "";
   },
+  confirmPassword: (password: string, confirmPassword: string): string => {
+    if (!password) return "비밀번호를 입력해주세요.";
+    if (password != confirmPassword) return "비밀번호가 일치하지 않습니다.";
+    return "";
+  },
 };
 
 // API 호출 함수들
-export const authAPI = {
-  signin: async (email: string, password: string) => {
-    // 실제 API 호출 로직
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+// export const authAPI = {
+//   signin: async (email: string, password: string) => {
+//     // 실제 API 호출 로직
+//     const response = await fetch("/api/auth/login", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ email, password }),
+//     });
 
-    if (!response.ok) {
-      throw new Error("로그인에 실패했습니다.");
-    }
+//     if (!response.ok) {
+//       throw new Error("로그인에 실패했습니다.");
+//     }
 
-    return response.json();
-  },
+//     return response.json();
+//   },
 
-  validateToken: async (token: string) => {
-    const response = await fetch("/api/auth/validate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+//   validateToken: async (token: string) => {
+//     const response = await fetch("/api/auth/validate", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
 
-    return response.ok;
-  },
-};
+//     return response.ok;
+//   },
+// };

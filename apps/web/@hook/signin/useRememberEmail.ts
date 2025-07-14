@@ -1,5 +1,5 @@
 "use client";
-import { emailStorage } from "@utils/signin";
+import { emailStorage } from "@utils/auth";
 import { useState, useEffect } from "react";
 
 export function useRememberEmail() {
