@@ -19,8 +19,8 @@ export interface BlockieSlide {
 export interface ContentContainerProps {
   currentStep: number;
   formData: FormData;
-  handleNext: () => void;
-  handleBack: () => void;
+  // handleNext: () => void;
+  // handleBack: () => void;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handlePhoneChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleBudgetChange: (e: ChangeEvent<HTMLInputElement>) => void;

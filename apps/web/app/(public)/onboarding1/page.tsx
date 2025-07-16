@@ -13,6 +13,9 @@ import ContentContainer from "@component/onboarding/contentContainer";
 import ContentProgress from "@component/onboarding/contentProgress";
 import ButtonContainer from "@component/onboarding/buttonContainer";
 import { OnboardingSlides } from "@constant/onboarding";
+import { useUserProfile, useUpdateUserProfile } from "@hook/useAuth";
+import { useSearchParams } from "next/navigation";
+import { useUpsertBudget } from "@hook/useBudget";
 // 색상 시스템
 // const colors = {
 //   yellow: "#F4DF7D",
@@ -32,17 +35,41 @@ import { OnboardingSlides } from "@constant/onboarding";
 
 export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState<number>(0);
+
   const [formData, setFormData] = useState<FormData>({
     name: "",
     phone: "",
     monthlyBudget: "500000",
   });
+  const { data, isLoading, isError } = useUserProfile();
+  const { mutate: updateProfile, isPending } = useUpdateUserProfile();
+  const searchParams = useSearchParams();
 
+  // year, month 가져오기 (없으면 기본값은 오늘 기준)
+  const today = new Date();
+  const year = parseInt(
+    searchParams.get("year") ?? today.getFullYear().toString()
+  );
+  const month = parseInt(
+    searchParams.get("month") ?? (today.getMonth() + 1).toString()
+  );
+  const budgetMutation = useUpsertBudget(year, month);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // const handleSave = () => {
+  //   console.log();
+  //   const value = Number(formBudget);
+  //   if (formBudget === undefined || isNaN(value)) {
+  //     alert("올바른 예산 금액을 입력하세요.");
+  //     return;
+  //   } else if (value < MIN_BUDGET) {
+  //     alert("최소한 만원 이상을 입력하세요.");
+  //   }
+  //   budgetMutation.mutate(value);
+  // };
   const formatCurrency = (value: string) => {
     const digits = value.replace(/\D/g, "");
     return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -70,8 +97,13 @@ export default function OnboardingPage() {
     setCurrentStep(newCurrentStep);
 
     if (newCurrentStep === OnboardingSlides.length) {
-      console.log("완료:", formData);
-      alert("환영합니다! Blockie와 함께 시작해보세요 🎉");
+      const { phone, name, monthlyBudget } = formData;
+      console.log("완료:", { ...formData, email: data?.email });
+      const userInfoForm = { phone, name, email: data?.email };
+      //  updateProfile(formData);
+      alert(
+        `환영합니다! Blockie와 함께 시작해보세요 🎉 ${{ ...formData, email: data?.email }}`
+      );
     }
   };
 
@@ -91,8 +123,8 @@ export default function OnboardingPage() {
         <ContentContainer
           currentStep={currentStep}
           formData={formData}
-          handleNext={handleNext}
-          handleBack={handleBack}
+          // handleNext={handleNext}
+          // handleBack={handleBack}
           handleChange={handleChange}
           handlePhoneChange={handlePhoneChange}
           handleBudgetChange={handleBudgetChange}

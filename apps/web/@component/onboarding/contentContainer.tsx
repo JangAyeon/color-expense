@@ -5,8 +5,8 @@ import { ContentContainerProps } from "@type/onboarding";
 const ContentContainer = ({
   currentStep,
   formData,
-  handleNext,
-  handleBack,
+  //   handleNext,
+  //   handleBack,
   handleChange,
   handlePhoneChange,
   handleBudgetChange,
