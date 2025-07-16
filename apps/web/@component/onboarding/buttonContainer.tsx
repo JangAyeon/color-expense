@@ -1,3 +1,4 @@
+import { OnboardingSlides } from "@constant/onboarding";
 import { Button } from "@repo/ui";
 import { ButtonContainerProps } from "@type/onboarding";
 
@@ -8,6 +9,8 @@ const ButtonContainer: React.FC<ButtonContainerProps> = ({
   handleNext,
   setCurrentStep,
 }) => {
+  const prevSlideData = OnboardingSlides[currentStep - 1];
+  const currentlideData = OnboardingSlides[currentStep];
   return (
     <>
       <div className="w-full space-x-6 flex flex-row items-end justify-between ">
@@ -15,24 +18,28 @@ const ButtonContainer: React.FC<ButtonContainerProps> = ({
           <Button
             type="submit"
             fullWidth
+            variant="outline"
+            color={prevSlideData?.buttonColor}
             size="lg"
             loading={false}
             onClick={handleBack}
-            className="h-14 text-button"
+            className="text-button"
           >
-            ← 이전
+            뒤로 가기
           </Button>
         )}
 
         <Button
           type="submit"
+          variant="primary"
           fullWidth
           size="lg"
+          color={currentlideData?.buttonColor}
           loading={false}
           onClick={handleNext}
-          className="h-14 text-button"
+          className="text-button "
         >
-          다음 →
+          다음으로
         </Button>
       </div>
     </>

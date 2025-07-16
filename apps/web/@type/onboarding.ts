@@ -14,6 +14,7 @@ export interface BlockieSlide {
   stepName: string;
   description: string;
   backgroundColor: string;
+  buttonColor: string;
   emotion: Emotion;
 }
 export interface ContentContainerProps {

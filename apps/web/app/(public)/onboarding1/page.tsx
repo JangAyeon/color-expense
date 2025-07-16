@@ -14,7 +14,7 @@ import ContentProgress from "@component/onboarding/contentProgress";
 import ButtonContainer from "@component/onboarding/buttonContainer";
 import { OnboardingSlides } from "@constant/onboarding";
 import { useUserProfile, useUpdateUserProfile } from "@hook/useAuth";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useUpsertBudget } from "@hook/useBudget";
 // 색상 시스템
 // const colors = {
@@ -44,7 +44,7 @@ export default function OnboardingPage() {
   const { data, isLoading, isError } = useUserProfile();
   const { mutate: updateProfile, isPending } = useUpdateUserProfile();
   const searchParams = useSearchParams();
-
+  const router = useRouter();
   // year, month 가져오기 (없으면 기본값은 오늘 기준)
   const today = new Date();
   const year = parseInt(
@@ -92,18 +92,30 @@ export default function OnboardingPage() {
     setFormData((prev) => ({ ...prev, phone: formatted }));
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     const newCurrentStep = currentStep + 1;
-    setCurrentStep(newCurrentStep);
+    console.log(data, formData);
 
     if (newCurrentStep === OnboardingSlides.length) {
+      if (!data?.email) return;
       const { phone, name, monthlyBudget } = formData;
-      console.log("완료:", { ...formData, email: data?.email });
-      const userInfoForm = { phone, name, email: data?.email };
-      //  updateProfile(formData);
+      const userInfoForm = { phone, name, email: data!.email };
+
+      try {
+        const res = await Promise.all([
+          updateProfile(userInfoForm),
+          budgetMutation.mutate(Number(monthlyBudget)),
+        ]);
+        console.log(res);
+      } catch (err) {
+        console.error("업데이트 중 에러", err);
+      }
       alert(
         `환영합니다! Blockie와 함께 시작해보세요 🎉 ${{ ...formData, email: data?.email }}`
       );
+      router.push("/mypage");
+    } else {
+      setCurrentStep(newCurrentStep);
     }
   };
 
@@ -117,8 +129,8 @@ export default function OnboardingPage() {
   const canGoBack = currentStep > 0;
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center bg-white px-4 py-6">
-      <div className="flex flex-col justify-between min-w-md h-full">
+    <div className="h-screen w-screen flex flex-col items-center justify-center bg-white px-4 py-6">
+      <div className="flex flex-col justify-between w-full h-full">
         <ContentProgress /*steps={progressSteps} */ currentStep={currentStep} />
         <ContentContainer
           currentStep={currentStep}

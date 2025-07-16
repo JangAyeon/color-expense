@@ -1,17 +1,17 @@
 import { OnboardingSlides } from "@constant/onboarding";
 import { ContentProgressProps } from "@type/onboarding";
-import { ProgressbarStepTitle } from "@utils/onboarding";
 
 const ContentProgress = ({ currentStep }: ContentProgressProps) => {
   const progressPercentage =
     (currentStep / (OnboardingSlides.length - 1)) * 100;
-
+  const currentSlideData = OnboardingSlides[currentStep];
+  const activeBgColor = currentSlideData?.backgroundColor ?? "bg-blockie-green";
   return (
-    <div className="w-full py-4">
+    <div className="w-full">
       {/* 프로그레스 바 */}
       <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
         <div
-          className="h-full transition-all duration-300 bg-blockie-green"
+          className={`h-full transition-all duration-300 ${activeBgColor}`}
           style={{
             width: `${progressPercentage}%`,
             // backgroundColor: "bg-blockie-green",
@@ -32,7 +32,7 @@ const ContentProgress = ({ currentStep }: ContentProgressProps) => {
                   : "text-neutral-light-gray"
             }`}
           >
-            {ProgressbarStepTitle(item.stepName)}
+            {item.stepName}
           </span>
         ))}
       </div>
