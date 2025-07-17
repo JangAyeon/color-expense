@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import ContentProgress from "@component/onboarding/contentProgress";
 import ContentSection from "@component/onboarding/contentSection";
+import { Suspense } from "react";
 
 export default function OnboardingPage() {
   // const [currentStep, setCurrentStep] = useState<number>(0);
@@ -19,7 +19,10 @@ export default function OnboardingPage() {
     <div className="h-screen w-screen flex flex-col items-center justify-center bg-white px-4 py-6">
       <div className="flex flex-col justify-between w-full h-full">
         <ContentProgress />
-        <ContentSection />
+        <Suspense>
+          {" "}
+          <ContentSection />
+        </Suspense>
       </div>
     </div>
   );
