@@ -1,7 +1,9 @@
 import { OnboardingSlides } from "@constant/onboarding";
+import { useProgressStepStore } from "@store/useProgressStepStore";
 import { ContentProgressProps } from "@type/onboarding";
 
-const ContentProgress = ({ currentStep }: ContentProgressProps) => {
+const ContentProgress = () => {
+  const { currentStep } = useProgressStepStore();
   const progressPercentage =
     (currentStep / (OnboardingSlides.length - 1)) * 100;
   const currentSlideData = OnboardingSlides[currentStep];

@@ -17,22 +17,35 @@ export interface BlockieSlide {
   buttonColor: string;
   emotion: Emotion;
 }
+
+export interface ContentSectionProps {
+  // currentStep: number;
+  // setCurrentStep: Dispatch<SetStateAction<number>>;
+  // formData: FormData;
+  // handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  // handlePhoneChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  // handleBudgetChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  // formatCurrency: (value: string) => string;
+  // handleNext: () => void;
+  // handleBack: () => void;
+}
+
 export interface ContentContainerProps {
-  currentStep: number;
+  // currentStep: number;
   formData: FormData;
   // handleNext: () => void;
   // handleBack: () => void;
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handlePhoneChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleBudgetChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  formatCurrency: (value: string) => string;
-  setCurrentStep: Dispatch<SetStateAction<number>>;
+  // formatCurrency: (value: string) => string;
+  // setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
 export interface ButtonContainerProps {
-  currentStep: number;
-  setCurrentStep: Dispatch<SetStateAction<number>>;
-  canGoBack: boolean;
+  // currentStep: number;
+  // setCurrentStep: Dispatch<SetStateAction<number>>;
+  // canGoBack: boolean;
   handleNext: () => void;
   handleBack: () => void;
 }

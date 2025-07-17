@@ -1,20 +1,19 @@
 import { OnboardingSlides } from "@constant/onboarding";
 import { Button } from "@repo/ui";
+import { useProgressStepStore } from "@store/useProgressStepStore";
 import { ButtonContainerProps } from "@type/onboarding";
 
 const ButtonContainer: React.FC<ButtonContainerProps> = ({
-  currentStep,
-  canGoBack,
   handleBack,
   handleNext,
-  setCurrentStep,
 }) => {
+  const { currentStep, canGoBack } = useProgressStepStore();
   const prevSlideData = OnboardingSlides[currentStep - 1];
   const currentlideData = OnboardingSlides[currentStep];
   return (
     <>
       <div className="w-full space-x-6 flex flex-row items-end justify-between ">
-        {canGoBack && (
+        {canGoBack() && (
           <Button
             type="submit"
             fullWidth
