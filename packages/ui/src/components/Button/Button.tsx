@@ -336,13 +336,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       `,
       outline: `
         bg-transparent border-2 border-current
-        hover:bg-current hover:bg-opacity-10 hover:-translate-y-0.5 
+        hover:bg-current hover:text-white  hover:-translate-y-0.5 
         active:scale-95 
         focus:ring-2 focus:ring-current focus:ring-offset-2
       `,
       ghost: `
         bg-transparent 
-        hover:bg-current hover:bg-opacity-10 hover:-translate-y-0.5 
+        hover:bg-current hover:text-white hover:-translate-y-0.5 
         active:scale-95 
         focus:ring-2 focus:ring-current focus:ring-offset-2
       `,
@@ -381,14 +381,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         focus:ring-2 focus:ring-gray-500 focus:ring-offset-2
       `,
           outline: `
-        bg-transparent border-2 
-        hover:bg-current hover:bg-opacity-10 hover:-translate-y-0.5 
+        bg-white border-2 
+        hover:bg-current/10 hover:text-white  hover:-translate-y-0.5 
         active:scale-95 
         focus:ring-2 focus:ring-offset-2
       `,
           ghost: `
-        bg-transparent 
-        hover:bg-current hover:bg-opacity-10 hover:-translate-y-0.5 
+        bg-white 
+        hover:bg-current/10 hover:text-white  hover:-translate-y-0.5 
         active:scale-95 
         focus:ring-2 focus:ring-offset-2
       `,
