@@ -17,6 +17,7 @@ import { UpsertBudgetDto } from './dto/upsert-budget.dto';
 import { AuthUser } from '@repo/types';
 import { GetBudgetHistoryDto } from './dto/get-budget-history.dto';
 import { BudgetHistoryResponseEntity } from './entity/budget-history.entity';
+import { EnhancedBudgetStatusEntity } from './entity/budget-status.entity';
 
 @ApiTags('Budget (예산 관련 API)')
 @Controller('budget')
@@ -24,7 +25,7 @@ export class BudgetsController {
   constructor(private readonly budgetsService: BudgetsService) {}
 
   @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth('access-token') // 👈 위에서 설정한 name과 일치해야 함
+  @ApiBearerAuth('access-token')
   @Get('status')
   @ApiQuery({
     name: 'year',
@@ -39,8 +40,14 @@ export class BudgetsController {
     description: '월 (1~12)',
   })
   @ApiOperation({
-    summary: '월별 예산 현황 조회',
-    description: '해당 연/월의 예산과 실제 지출을 확인합니다.',
+    summary: '월별 예산 현황 조회 (향상된 버전)',
+    description: `해당 연/월의 상세한 예산 현황을 확인합니다. 
+    기본 정보뿐만 아니라 일일 지출 분석, 트렌드, 권장 지출액 등 
+    풍부한 정보를 제공합니다.`,
+  })
+  @ApiOkResponse({
+    type: EnhancedBudgetStatusEntity,
+    description: '향상된 예산 현황 조회 성공',
   })
   async getStatus(
     @getUser() user: AuthUser,
