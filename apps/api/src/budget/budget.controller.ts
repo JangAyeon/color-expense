@@ -5,6 +5,7 @@ import {
   ApiOperation,
   ApiQuery,
   ApiTags,
+  ApiOkResponse,
 } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
@@ -14,6 +15,8 @@ import { BudgetsService } from './budget.service';
 import { getUser } from 'src/users/users.decorator';
 import { UpsertBudgetDto } from './dto/upsert-budget.dto';
 import { AuthUser } from '@repo/types';
+import { GetBudgetHistoryDto } from './dto/get-budget-history.dto';
+import { BudgetHistoryResponseEntity } from './entity/budget-history.entity';
 
 @ApiTags('Budget (예산 관련 API)')
 @Controller('budget')
@@ -80,5 +83,62 @@ export class BudgetsController {
   })
   upsertBudget(@getUser() user: AuthUser, @Body() dto: UpsertBudgetDto) {
     return this.budgetsService.upsert(user.id, dto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @Get('history')
+  @ApiOperation({
+    summary: '예산 내역 조회',
+    description:
+      '사용자의 월별 예산 및 지출 내역을 조회합니다. History 탭에서 사용됩니다.',
+  })
+  @ApiQuery({
+    name: 'months',
+    type: Number,
+    required: false,
+    description: '조회할 최근 월 수 (기본값: 6, 최대: 24)',
+    example: 6,
+  })
+  @ApiQuery({
+    name: 'startYear',
+    type: Number,
+    required: false,
+    description: '시작 연도 (endYear, startMonth, endMonth와 함께 사용)',
+    example: 2024,
+  })
+  @ApiQuery({
+    name: 'startMonth',
+    type: Number,
+    required: false,
+    description: '시작 월 (1~12)',
+    example: 1,
+  })
+  @ApiQuery({
+    name: 'endYear',
+    type: Number,
+    required: false,
+    description: '종료 연도',
+    example: 2025,
+  })
+  @ApiQuery({
+    name: 'endMonth',
+    type: Number,
+    required: false,
+    description: '종료 월 (1~12)',
+    example: 7,
+  })
+  @ApiOkResponse({
+    type: BudgetHistoryResponseEntity,
+    description: '예산 내역 조회 성공',
+  })
+  getHistory(@getUser() user: AuthUser, @Query() dto: GetBudgetHistoryDto) {
+    return this.budgetsService.getHistory(user.id, {
+      months: dto.months,
+      startYear: dto.startYear,
+      startMonth: dto.startMonth,
+      endYear: dto.endYear,
+      endMonth: dto.endMonth,
+    });
   }
 }
