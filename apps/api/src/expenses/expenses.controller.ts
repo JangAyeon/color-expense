@@ -27,7 +27,7 @@ import { getUser } from 'src/users/users.decorator';
 import { CreateExpensesDto } from './dto/create-expenses.dto';
 import { UpdateExpensesDto } from './dto/update-expenses.dto';
 import { AuthUser } from '@repo/types';
-import { GetCategoryStatsDto } from './dto/category-stats.dto';
+// import { GetCategoryStatsDto } from './dto/category-stats.dto';
 import { CategoryStatsResponseEntity } from './entity/category-stats.entity';
 
 @ApiTags('Expense (지출 관련 API)')
