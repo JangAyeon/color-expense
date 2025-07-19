@@ -1,4 +1,4 @@
-import { calculateBlocks } from "@utils/budget/block";
+import { calculateBlocks } from "@utils/budget";
 import { formatCurrency } from "@utils/onboarding/formatter";
 import { FormData } from "@type/onboarding";
 import BlockVisualization from "./blockVisualization";
