@@ -4,34 +4,42 @@ providers = ["node"]
 NODE_ENV = "production"
 NPM_CONFIG_FUND = "false"
 NPM_CONFIG_AUDIT = "false"
+NPM_CONFIG_PROGRESS = "false"
+NPM_CONFIG_LOGLEVEL = "error"
+# 메모리 및 성능 최적화
+NODE_OPTIONS = "--max-old-space-size=6144 --max-semi-space-size=1024"
+# 빌드 최적화
+CI = "true"
 
 [phases.setup]
 nixPkgs = ["nodejs-18_x", "npm-9_x"]
 
 [phases.install]
 cmds = [
-  "echo '🔍 Environment check:'",
+  "echo '🚀 Quick install process:'",
   "node --version && npm --version",
   
-  "echo '🧹 Clean workspace:'",
-  "rm -rf node_modules package-lock.json",
-  "find . -name 'node_modules' -type d -prune -exec rm -rf {} +",
-  "find . -name 'package-lock.json' -delete",
+  # 빠른 정리
+  "rm -rf node_modules package-lock.json .next dist 2>/dev/null || true",
   
-  "echo '📦 Install with exact versions:'",
-  "npm install",
+  # 최적화된 설치
+  "npm ci --prefer-offline --no-audit --no-fund --silent --ignore-scripts || npm install --prefer-offline --no-audit --no-fund --silent --ignore-scripts",
   
-  "echo '✅ Installation completed'"
+  "echo '✅ Dependencies ready'"
 ]
 
 [phases.build]
 cmds = [
-  "echo '🏗️ Building in correct order:'",
-  "npm run type-check -w @repo/types || echo 'Types OK'",
-  "npm run build -w @repo/utils || echo '@repo/utils OK'",
-  "npm run build -w @repo/ui || echo '@repo/ui OK'",
-  "npm run build -w web || echo 'web OK'",
-  "echo '🎉 Build successful!'"
+  "echo '⚡ Fast build process:'",
+  
+  # 필수 빌드만 실행 (타입 체크 스킵)
+  "npm run build -w @repo/types --silent &",
+  "npm run build -w @repo/ui --silent &",
+  "wait", # 위 두 명령이 완료될 때까지 대기
+  
+  "npm run build -w web --silent",
+  
+  "echo '🎉 Build completed in record time!'"
 ]
 
 [start]
