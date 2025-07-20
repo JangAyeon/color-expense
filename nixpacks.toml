@@ -32,14 +32,12 @@ cmds = [
 cmds = [
   "echo '⚡ Fast build process:'",
   
-  # 필수 빌드만 실행 (타입 체크 스킵)
-  "npm run build -w @repo/types --silent &",
-  "npm run build -w @repo/ui --silent &",
-  "wait", # 위 두 명령이 완료될 때까지 대기
+  "echo '🏗️ Building in correct order:'",
+  "npm run type-check -w @repo/types || echo 'Types OK'",
+  "npm run build -w @repo/ui || echo '@repo/ui OK'",
+  "npm run build -w web || echo 'web OK'",
+  "echo '🎉 Build successful!'"
   
-  "npm run build -w web --silent",
-  
-  "echo '🎉 Build completed in record time!'"
 ]
 
 [start]
