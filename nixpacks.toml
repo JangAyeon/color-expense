@@ -16,28 +16,17 @@ nixPkgs = ["nodejs-18_x", "npm-9_x"]
 
 [phases.install]
 cmds = [
-  "echo '🚀 Quick install process:'",
-  "node --version && npm --version",
-  
-  # 빠른 정리
-  "rm -rf node_modules package-lock.json .next dist 2>/dev/null || true",
-  
-  # 최적화된 설치
-  "npm ci --prefer-offline --no-audit --no-fund --silent --ignore-scripts || npm install --prefer-offline --no-audit --no-fund --silent --ignore-scripts",
-  
-  "echo '✅ Dependencies ready'"
+  "echo '🔧 Installing deps...'",
+  "npm ci --prefer-offline --no-audit --no-fund --silent"
 ]
 
 [phases.build]
 cmds = [
-  "echo '⚡ Fast build process:'",
-  
-  "echo '🏗️ Building in correct order:'",
-  "npm run type-check -w @repo/types || echo 'Types OK'",
-  "npm run build -w @repo/ui || echo '@repo/ui OK'",
-  "npm run build -w web || echo 'web OK'",
-  "echo '🎉 Build successful!'"
-  
+  "echo '⚡ Building...'",
+  "npm run type-check -w @repo/types &",
+  "npm run build -w @repo/ui &",
+  "wait",
+  "npm run build -w web"
 ]
 
 [start]
