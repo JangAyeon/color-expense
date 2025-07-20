@@ -25,9 +25,8 @@ cmds = [
 cmds = [
   "echo '⚡ Building...'",
   "npm run type-check -w @repo/types &",
-  "npm run build -w @repo/ui &",
-  "wait",
-  "npm run build -w web"
+  "npm run build -w @repo/ui",
+  "npm run build --workspace=web"
 ]
 
 [start]
