@@ -441,9 +441,9 @@ export default function BudgetPage() {
           <button
             className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === "insights" ? "bg-blockie-yellow text-neutral-black" : "text-gray-500 hover:bg-gray-100"}`}
             onClick={() => changeTab("insights")}
-            aria-label="지출 분석 탭"
+            aria-label="예산 분석 탭"
           >
-            지출 분석
+            예산 분석
           </button>
         </nav>
       </div>
