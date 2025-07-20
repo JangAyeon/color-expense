@@ -12,11 +12,12 @@ NODE_OPTIONS = "--max-old-space-size=6144 --max-semi-space-size=1024"
 CI = "true"
 
 [phases.setup]
-nixPkgs = ["nodejs-18_x", "npm-9_x"]
+nixPkgs = ["nodejs-20_x", "npm-9_x"]
 
 [phases.install]
 cmds = [
   "echo '🔧 Installing deps...'",
+  "rm -rf node_modules package-lock.json .next dist 2>/dev/null || true",
   "npm ci --prefer-offline --no-audit --no-fund --silent"
 ]
 
