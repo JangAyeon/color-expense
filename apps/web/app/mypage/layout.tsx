@@ -21,7 +21,7 @@ export default async function MyPageLayout({
       queryKey={queryKeys.user.base}
       queryFn={() => fetchUserProfile(access_token)}
     >
-      <div>토큰: {access_token}</div>
+      {/* <div>토큰: {access_token}</div> */}
       {children}
     </HydrationProvider>
   );
