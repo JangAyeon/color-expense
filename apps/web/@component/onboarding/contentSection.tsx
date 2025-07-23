@@ -2,11 +2,12 @@ import { ContentSectionProps } from "@type/onboarding";
 import ButtonContainer from "./buttonContainer";
 import ContentContainer from "./contentContainer";
 import { OnboardingSlides } from "@constant/onboarding";
-import { useUserProfile, useUpdateUserProfile } from "@hook/useAuth";
+// import { useUserProfile, useUpdateUserProfile } from "@hook/useAuth";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useUpsertBudget } from "@hook/useBudget";
 import { useOnboardingForm } from "@hook/onboarding/useOnboardingForm";
 import { useProgressStepStore } from "@store/useProgressStepStore";
+import { useMyProfile, useUpdateMyProfile } from "@hook/api/user/useUser";
 
 const ContentSection: React.FC<ContentSectionProps> = () => {
   const { currentStep, setCurrentStep, goToNext, goToPrevious } =
@@ -18,8 +19,8 @@ const ContentSection: React.FC<ContentSectionProps> = () => {
   //     phone: "",
   //     monthlyBudget: "500000",
   //   });
-  const { data, isLoading, isError } = useUserProfile();
-  const { mutate: updateProfile, isPending } = useUpdateUserProfile();
+  const { data, isLoading, isError } = useMyProfile();
+  const updateMutation = useUpdateMyProfile();
   const searchParams = useSearchParams();
   const router = useRouter();
   // year, month 가져오기 (없으면 기본값은 오늘 기준)
@@ -57,7 +58,7 @@ const ContentSection: React.FC<ContentSectionProps> = () => {
 
       try {
         const res = await Promise.all([
-          updateProfile(userInfoForm),
+          updateMutation.mutate(userInfoForm),
           budgetMutation.mutate(Number(monthlyBudget)),
         ]);
         console.log(res);
