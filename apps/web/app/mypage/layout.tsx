@@ -1,9 +1,9 @@
 // app/mypage/layout.tsx
 import { cookies } from "next/headers";
 import React from "react";
-import { queryKeys } from "../../@utils/query/query.control";
-import { fetchUserProfile } from "../../@utils/apis/user";
-import HydrationProvider from "../../@provider/hydration";
+import { queryKeys } from "../../@utils/tanstack-query/query.control";
+import HydrationProvider from "../../@provider/hydration1";
+import { userService } from "@utils/apis/services/user";
 export default async function MyPageLayout({
   children,
 }: {
@@ -15,11 +15,25 @@ export default async function MyPageLayout({
   if (!access_token) {
     return <div>No access token</div>;
   }
-
+  const prefetchQueries = [
+    {
+      queryKey: queryKeys.user.profile(),
+      queryFn: () => userService.getMyProfile(),
+    },
+    {
+      queryKey: queryKeys.user.budgetHistory(6),
+      queryFn: () => userService.getBudgetHistory(6),
+    },
+    {
+      queryKey: queryKeys.user.recentExpenses(),
+      queryFn: () => userService.getRecentExpenses(),
+    },
+  ];
   return (
     <HydrationProvider
-      queryKey={queryKeys.user.base}
-      queryFn={() => fetchUserProfile(access_token)}
+      queries={prefetchQueries}
+      // queryKey={queryKeys.user.base}
+      // queryFn={() => fetchUserProfile(access_token)}
     >
       {/* <div>토큰: {access_token}</div> */}
       {children}
