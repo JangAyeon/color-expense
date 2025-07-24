@@ -1,8 +1,8 @@
 // app/mypage/layout.tsx
 import { cookies } from "next/headers";
 import React from "react";
-import { queryKeys } from "../../@utils/tanstack-query/query.control";
-import HydrationProvider from "../../@provider/hydration1";
+import { queryKeys } from "../../@utils/query/query.key";
+import HydrationProvider from "../../@provider/query/parallel.hydration";
 import { userService } from "@utils/apis/services/user";
 export default async function MyPageLayout({
   children,

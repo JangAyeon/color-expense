@@ -18,9 +18,9 @@ import {
 } from "chart.js";
 import { Doughnut, Bar, Line, Radar } from "react-chartjs-2";
 import { Emotion } from "@type/onboarding";
-import useBudgetTab from "@hook/budget/useBudgetTab";
+import useBudgetTab from "@hook/business/budget/useBudgetTab";
 
-import useAnimatedFrame from "@hook/budget/useAnimationFrame";
+import useAnimatedFrame from "@hook/business/budget/useAnimationFrame";
 import { BudgetStatus, BudgetHistory } from "@type/budget";
 import { ExpenseCategory } from "@type/expense";
 import {

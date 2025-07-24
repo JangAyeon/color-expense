@@ -4,7 +4,7 @@
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { signIn, signOut } from "../@utils/apis/auth";
-import { queryFns, queryKeys } from "../@utils/tanstack-query/query.control";
+import { queryFns, queryKeys } from "../@utils/query/query.key";
 // import { fetchUserProfile, updateUserProfile } from "../@utils/apis/_user";
 // import { userFormData } from "../@component/_UserProfile";
 

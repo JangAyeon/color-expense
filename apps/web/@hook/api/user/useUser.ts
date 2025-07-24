@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { User } from "@type/user";
 import { userService } from "@utils/apis/services/user";
-import { queryKeys } from "@utils/tanstack-query/query.control";
+import { queryKeys } from "@utils/query/query.key";
 
 // 내 프로필 조회
 export const useMyProfile = () => {

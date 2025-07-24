@@ -5,7 +5,7 @@ import { OnboardingSlides } from "@constant/onboarding";
 // import { useUserProfile, useUpdateUserProfile } from "@hook/useAuth";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useUpsertBudget } from "@hook/useBudget";
-import { useOnboardingForm } from "@hook/onboarding/useOnboardingForm";
+import { useOnboardingForm } from "@hook/business/onboarding/useOnboardingForm";
 import { useProgressStepStore } from "@store/useProgressStepStore";
 import { useMyProfile, useUpdateMyProfile } from "@hook/api/user/useUser";
 

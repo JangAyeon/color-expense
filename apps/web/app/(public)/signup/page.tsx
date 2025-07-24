@@ -1,6 +1,6 @@
 "use client";
 
-import SignupForm from "@component/signup/signup.form";
+import SignupForm from "@component/features/signup/signup.form";
 import SignupHeader from "@component/common/auth.header";
 import WelcomeHeader from "@component/common/welcome.header";
 import AuthSwitchLink from "@component/common/authSwitch.link";

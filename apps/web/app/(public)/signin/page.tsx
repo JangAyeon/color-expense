@@ -1,7 +1,7 @@
 // "use client";
 
 import WelcomeHeader from "@component/common/welcome.header";
-import SigninForm from "@component/signin/signin.form";
+import SigninForm from "@component/features/signin/signin.form";
 
 import AuthSwitchLink from "@component/common/authSwitch.link";
 import AuthHeader from "@component/common/auth.header";

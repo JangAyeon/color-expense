@@ -1,4 +1,4 @@
-import { useSignupForm } from "@hook/signup/useSignupForm";
+import { useSignupForm } from "@hook/business/signup/useSignupForm";
 import { Button, Input } from "@repo/ui";
 interface SignupFormProps {}
 

@@ -1,7 +1,7 @@
 "use client";
 
-import ContentProgress from "@component/onboarding/contentProgress";
-import ContentSection from "@component/onboarding/contentSection";
+import ContentProgress from "@component/features/onboarding/contentProgress";
+import ContentSection from "@component/features/onboarding/contentSection";
 import { Suspense } from "react";
 
 export default function OnboardingPage() {
