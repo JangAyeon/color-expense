@@ -4,8 +4,9 @@
 
 import React, { useState } from "react";
 import { ExpenseForm } from "./expenseForm";
-import { ExpensePeriodProps } from "../../@hook/useExpense";
+
 import { ExpenseList } from "./expenseList";
+import { ExpensePeriodProps } from "@hook/useExpense";
 
 export default function ExpenseManager() {
   const [filterType, setFilterType] = useState<ExpensePeriodProps>("monthly");
