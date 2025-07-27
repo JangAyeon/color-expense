@@ -1,18 +1,19 @@
-import { ExpenseCategorySummary } from "@type/expense";
-import { apiClient } from "../api.client";
+import { ExpenseCategorySummary, ExpenseItemListResponse } from "@type/expense";
+
+import { YearMonthDayProps, YearMonthProps } from "@type/date";
+import { apiClient } from "@utils/apis/api.client";
 
 export const expenseService = {
   // 내 현황 조회
-  getCategoryStatus: ({ month, year }: { month: string; year: string }) =>
+  getCategoryStatus: ({ month, year }: YearMonthProps) =>
     apiClient.get<ExpenseCategorySummary>("/expenses/stats/category", {
       year,
       month,
     }),
-
-  // 예산 업데이트
-  //   updateBudget: (data: MonthlyBudget) => apiClient.post<void>("/budget", data),
-
-  //   // 예산 히스토리 조회 (CubePage용)
-  //   getBudgetHistory: (months = 6) =>
-  //     apiClient.get<BudgetHistoryResponse>("/budget/history", { months }),
+  getMonthlyStatus: ({ month, year, day }: YearMonthDayProps) =>
+    apiClient.get<ExpenseItemListResponse>("/expenses/stats/monthly", {
+      year,
+      month,
+      day,
+    }),
 };

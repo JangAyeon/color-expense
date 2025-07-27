@@ -3,11 +3,12 @@ import {
   BudgetSummary,
   MonthlyBudget,
 } from "@type/budget";
-import { apiClient } from "../api.client";
+import { apiClient } from "@utils/apis/api.client";
+import { YearMonthProps } from "@type/date";
 
 export const budgetService = {
   // 내 현황 조회
-  getBudgetStatus: ({ month, year }: { month: string; year: string }) =>
+  getBudgetStatus: ({ month, year }: YearMonthProps) =>
     apiClient.get<BudgetSummary>("/budget/status", { year, month }),
 
   // 예산 업데이트
