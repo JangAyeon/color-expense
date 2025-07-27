@@ -1,4 +1,4 @@
-import { BudgetHistoryResponse } from "@type/user";
+import { BudgetHistoryResponse } from "@type/budget";
 
 export const useUserEmotion = (budgetHistory?: BudgetHistoryResponse) => {
   if (!budgetHistory?.history.length) return "neutral" as const;
