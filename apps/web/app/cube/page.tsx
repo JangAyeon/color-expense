@@ -11,6 +11,7 @@ import InsightExpense from "@component/features/cube/insight.expense";
 import BlockExpense from "@component/features/cube/block.monthly.expense";
 import ListMonthlyExpense from "@component/features/cube/list.monthly.expense";
 import { toYMDWithString } from "@utils/date/YMD";
+import StreakCard from "@component/features/cube/streak.expense";
 
 export default function ExpenseCubePage() {
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function ExpenseCubePage() {
     budgetQuery: { data: budgetStatus },
     expenseCategoryQuery: { data: expenseCategory },
     expensesQuery: { data: expenses },
+    streakQuery: { data: streak },
     isLoading,
     hasError,
     errors,
@@ -48,14 +50,14 @@ export default function ExpenseCubePage() {
         <main className="p-6 space-y-6">
           {/* 연속 기록 배지 */}
           <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full -translate-y-12 translate-x-12 group-hover:scale-110 transition-transform duration-500" />
+            {/* <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full -translate-y-12 translate-x-12 group-hover:scale-110 transition-transform duration-500" />
             <div className="flex items-center relative z-10">
               <div className="w-14 h-14 rounded-full flex items-center justify-center mr-4 bg-gradient-to-br from-yellow-400 to-orange-400 group-hover:rotate-12 transition-transform duration-300">
                 <span className="text-2xl">🔥</span>
               </div>
               <div className="flex-1">
                 <h3 className="font-bold text-lg text-gray-800">
-                  {7}일 연속 기록 중!
+                  {streak?.currentStreak}일 연속 기록 중!
                 </h3>
                 <p className="text-sm text-gray-600">
                   꾸준히 기록하면 특별한 보상이 기다려요
@@ -64,10 +66,11 @@ export default function ExpenseCubePage() {
               <div className="text-right">
                 <div className="text-xs text-gray-500">다음 보상까지</div>
                 <div className="text-sm font-bold text-yellow-600">
-                  {7 - (7 % 7)}일
+                  {streak?.nextRewardTarget}일
                 </div>
               </div>
-            </div>
+            </div> */}
+            <StreakCard streak={streak!} />
           </div>
 
           {/* 예산 카드 */}
