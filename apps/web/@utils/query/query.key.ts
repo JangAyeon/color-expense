@@ -26,6 +26,7 @@ export enum BUDGET_SUB_QUERY {
 export enum EXPENSE_SUB_QUERY {
   CATEGORY = "CATEGORY",
   MONTHLY = "MONTHLY",
+  STREAK = "STREAK",
 }
 
 export const queryKeys = {
@@ -75,6 +76,8 @@ export const queryKeys = {
         EXPENSE_SUB_QUERY.MONTHLY,
         { month, year, day },
       ] as const,
+    streak: () =>
+      [...queryKeys.expense.base, EXPENSE_SUB_QUERY.STREAK] as const,
   },
 };
 export const queryFns = {
