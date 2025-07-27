@@ -1,3 +1,5 @@
+export const MIN_BUDGET_BLOCK = 10000;
+
 export const BudgetPageVariants = {
   initial: (direction: number) => ({
     x: direction > 0 ? "100%" : direction < 0 ? "-100%" : 0,

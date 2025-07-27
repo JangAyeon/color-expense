@@ -12,6 +12,7 @@ import BlockExpense from "@component/features/cube/block.monthly.expense";
 import ListMonthlyExpense from "@component/features/cube/list.monthly.expense";
 import { toYMDWithString } from "@utils/date/YMD";
 import StreakCard from "@component/features/cube/streak.expense";
+import { MIN_BUDGET_BLOCK } from "@constant/budget";
 
 export default function ExpenseCubePage() {
   const router = useRouter();
@@ -50,26 +51,6 @@ export default function ExpenseCubePage() {
         <main className="p-6 space-y-6">
           {/* 연속 기록 배지 */}
           <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow">
-            {/* <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-yellow-200/30 to-orange-200/30 rounded-full -translate-y-12 translate-x-12 group-hover:scale-110 transition-transform duration-500" />
-            <div className="flex items-center relative z-10">
-              <div className="w-14 h-14 rounded-full flex items-center justify-center mr-4 bg-gradient-to-br from-yellow-400 to-orange-400 group-hover:rotate-12 transition-transform duration-300">
-                <span className="text-2xl">🔥</span>
-              </div>
-              <div className="flex-1">
-                <h3 className="font-bold text-lg text-gray-800">
-                  {streak?.currentStreak}일 연속 기록 중!
-                </h3>
-                <p className="text-sm text-gray-600">
-                  꾸준히 기록하면 특별한 보상이 기다려요
-                </p>
-              </div>
-              <div className="text-right">
-                <div className="text-xs text-gray-500">다음 보상까지</div>
-                <div className="text-sm font-bold text-yellow-600">
-                  {streak?.nextRewardTarget}일
-                </div>
-              </div>
-            </div> */}
             <StreakCard streak={streak!} />
           </div>
 
@@ -79,8 +60,8 @@ export default function ExpenseCubePage() {
           <BlockExpense
             expensesInfo={expenses?.expenses!}
             categoryInfo={expenseCategory?.categories!}
-            totalBlocks={budgetStatus?.spent! / 10000}
-            maxBlocks={Math.floor(budgetStatus?.budget! / 10000)}
+            totalBlocks={budgetStatus?.spent! / MIN_BUDGET_BLOCK}
+            maxBlocks={Math.floor(budgetStatus?.budget! / MIN_BUDGET_BLOCK)}
           />
 
           {/* 인사이트 카드 */}

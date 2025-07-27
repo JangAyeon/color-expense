@@ -1,3 +1,4 @@
+import { MIN_BUDGET_BLOCK } from "@constant/budget";
 import { RecentExpense } from "@type/user";
 import {
   getCategoryColor,
@@ -22,45 +23,44 @@ const ListMonthlyExpense: React.FC<{
       </div>
 
       <div className="space-y-3">
-        {expensesInfo.slice(0, 4).map((expense, index) => (
-          <div
-            key={expense.id}
-            className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200 group"
-            style={{ animationDelay: `${index * 100}ms` }}
-          >
-            <div className="flex items-center">
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mr-4 shadow-sm group-hover:scale-110 transition-transform"
-                style={{
-                  backgroundColor: `${getCategoryColor(expense.category)}40`,
-                }}
-              >
-                <span className="text-xl">
-                  {getCategoryIcon(expense.category)}
-                </span>
-              </div>
-              <div>
-                <div className="font-medium text-gray-800 group-hover:text-gray-900 transition-colors">
-                  {expense.category}
+        {expensesInfo
+          .slice(0, Math.min(expensesInfo.length, 4))
+          .map((expense, index) => (
+            <div
+              key={expense.id}
+              className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200 group"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              <div className="flex items-center">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mr-4 shadow-sm group-hover:scale-110 transition-transform"
+                  style={{
+                    backgroundColor: `${getCategoryColor(expense.category)}40`,
+                  }}
+                >
+                  <span className="text-xl">
+                    {getCategoryIcon(expense.category)}
+                  </span>
                 </div>
-                <div className="text-xs text-gray-500 flex items-center">
-                  {toYMDWithString(new Date(expense.expenseDate)).formatted}
-                  {/* <span className="text-xs px-2 py-0.5 bg-gray-100 rounded-full">
-                              {expense.category}
-                            </span> */}
+                <div>
+                  <div className="font-medium text-gray-800 group-hover:text-gray-900 transition-colors">
+                    {expense.category}
+                  </div>
+                  <div className="text-xs text-gray-500 flex items-center">
+                    {toYMDWithString(new Date(expense.expenseDate)).formatted}
+                  </div>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="font-bold text-gray-800">
+                  {formatWithCurrencySymbol(expense.amount)}
+                </div>
+                <div className="text-xs text-gray-400">
+                  {Math.ceil(expense.amount / MIN_BUDGET_BLOCK)} 블록
                 </div>
               </div>
             </div>
-            <div className="text-right">
-              <div className="font-bold text-gray-800">
-                {formatWithCurrencySymbol(expense.amount)}
-              </div>
-              <div className="text-xs text-gray-400">
-                {Math.ceil(expense.amount / 10000)} 블록
-              </div>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
 
       {/* 더보기 버튼 */}
