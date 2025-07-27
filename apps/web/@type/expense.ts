@@ -3,3 +3,31 @@ export type ExpenseCategory = {
   amount: number;
   color: string;
 };
+
+export interface ExpenseCategoryItem {
+  category: string;
+  amount: number;
+  count: number;
+  percentage: number;
+}
+
+export interface ExpenseCategorySummary {
+  totalAmount: number;
+  totalCount: number;
+  categories: ExpenseCategoryItem[];
+}
+// 개별 지출 항목
+export interface ExpenseItem {
+  id: string;
+  amount: number;
+  category: string;
+  userId: string;
+  createdAt: string; // ISO string
+  expenseDate: string; // ISO string
+}
+
+// 전체 응답 구조
+export interface ExpenseItemListResponse {
+  total: number;
+  expenses: ExpenseItem[];
+}

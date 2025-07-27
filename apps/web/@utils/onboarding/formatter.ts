@@ -1,9 +1,20 @@
 // utils/formatters.ts
-export const formatCurrency = (value: string): string => {
+
+// ₩123,456 형식
+export const formatWithCurrencySymbol = (amount: number): string => {
+  return new Intl.NumberFormat("ko-KR", {
+    style: "currency",
+    currency: "KRW",
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
+
+export const formatNumberWithCommas = (value: string): string => {
   const digits = value.replace(/\D/g, "");
   return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+// 123,456 형식
 export const formatPhoneNumber = (value: string): string => {
   const digits = value.replace(/\D/g, "");
   if (digits.length <= 3) return digits;

@@ -76,9 +76,14 @@ export class ExpensesService {
       where: { id: expenseId },
     });
   }
-  async getDailyStats(userId: string, date: Date) {
-    const start = startOfDay(date);
-    const end = endOfDay(date);
+  async getDailyStats(
+    userId: string,
+    year: number,
+    month: number,
+    day: number,
+  ) {
+    const start = startOfMonth(new Date(year, month - 1, day));
+    const end = endOfMonth(new Date(year, month - 1, day));
 
     const expenses = await this.prisma.expense.findMany({
       where: {
@@ -95,9 +100,16 @@ export class ExpensesService {
     return { total, expenses };
   }
 
-  async getWeeklyStats(userId: string, date: Date) {
-    const start = startOfWeek(date, { weekStartsOn: 1 }); // 월요일 시작
-    const end = endOfWeek(date, { weekStartsOn: 1 });
+  async getWeeklyStats(
+    userId: string,
+    year: number,
+    month: number,
+    day: number,
+  ) {
+    const start = startOfWeek(new Date(year, month - 1, 1), {
+      weekStartsOn: 1,
+    }); // 월요일 시작
+    const end = endOfWeek(new Date(year, month - 1, 1), { weekStartsOn: 1 });
 
     const expenses = await this.prisma.expense.findMany({
       where: {
@@ -114,9 +126,14 @@ export class ExpensesService {
     return { total, expenses };
   }
 
-  async getMonthlyStats(userId: string, date: Date) {
-    const start = startOfMonth(date);
-    const end = endOfMonth(date);
+  async getMonthlyStats(
+    userId: string,
+    year: number,
+    month: number,
+    day: number,
+  ) {
+    const start = startOfMonth(new Date(year, month - 1, 1));
+    const end = endOfMonth(new Date(year, month - 1, 1));
 
     const expenses = await this.prisma.expense.findMany({
       where: {
@@ -130,6 +147,8 @@ export class ExpensesService {
     });
 
     const total = expenses.reduce((sum, e) => sum + e.amount, 0);
+    console.log('#######', start, end);
+    console.log(expenses);
     return { total, expenses };
   }
   async getCategoryStats(userId: string, year: number, month: number) {

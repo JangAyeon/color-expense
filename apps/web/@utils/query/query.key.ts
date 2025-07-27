@@ -1,37 +1,83 @@
-import { AuthUser, SupabaseSignUpRequest } from "@repo/types";
-// import { fetchMe, updateMe } from "../apis/user";
-import { signIn, signOut, signUp } from "../apis/auth";
+import { SupabaseSignUpRequest } from "@repo/types";
+
+import { YearMonthDayProps, YearMonthProps } from "@type/date";
+import { signOut, signUp } from "@utils/apis/auth";
 
 export enum QUERY_KEYS {
   USER = "USER",
-  ME = "ME",
-  DETAIL = "DETAIL",
+  BUDGET = "BUDGET",
+  EXPENSE = "EXPENSE",
+  // ME = "ME",
+  // DETAIL = "DETAIL",
   AUTH = "AUTH",
+}
+
+export enum USER_SUB_QUERY {
+  PROFILE = "PROFILE",
+  BUDGET_HISTORY = "BUDGET_HISTORY",
+  RECENT_EXPENSES = "RECENT_EXPENSES",
+}
+
+export enum BUDGET_SUB_QUERY {
+  STATUS = "STATUS",
+  HISTORY = "HISTORY",
+}
+
+export enum EXPENSE_SUB_QUERY {
+  CATEGORY = "CATEGORY",
+  MONTHLY = "MONTHLY",
 }
 
 export const queryKeys = {
   auth: {
     base: [QUERY_KEYS.AUTH] as const,
   },
-  // user: {
-  //   base: [QUERY_KEYS.USER, QUERY_KEYS.ME] as const,
-  //   detail: (id: string) => [...queryKeys.user.base, "detail", id] as const, // 안 쓰는 거
-  // },
+
   user: {
-    base: ["user"] as const,
-    profile: () => [...queryKeys.user.base, "profile"] as const,
+    base: [QUERY_KEYS.USER] as const,
+    profile: () => [...queryKeys.user.base, USER_SUB_QUERY.PROFILE] as const,
     budgetHistory: (months?: number) =>
-      [...queryKeys.user.base, "budget-history", { months }] as const,
-    recentExpenses: () => [...queryKeys.user.base, "recent-expenses"] as const,
+      [
+        ...queryKeys.user.base,
+        USER_SUB_QUERY.BUDGET_HISTORY,
+        { months },
+      ] as const,
+    recentExpenses: () =>
+      [...queryKeys.user.base, USER_SUB_QUERY.RECENT_EXPENSES] as const,
+  },
+  budget: {
+    base: [QUERY_KEYS.BUDGET] as const,
+    status: ({ month, year }: YearMonthProps) =>
+      [
+        ...queryKeys.budget.base,
+        BUDGET_SUB_QUERY.STATUS,
+        { month, year },
+      ] as const,
+    history: (months?: number) =>
+      [
+        ...queryKeys.budget.base,
+        BUDGET_SUB_QUERY.HISTORY,
+        ,
+        { months },
+      ] as const,
+  },
+  expense: {
+    base: [QUERY_KEYS.EXPENSE] as const,
+    category: ({ month, year }: YearMonthProps) =>
+      [
+        ...queryKeys.expense.base,
+        EXPENSE_SUB_QUERY.CATEGORY,
+        { month, year },
+      ] as const,
+    monthly: ({ month, year, day }: YearMonthDayProps) =>
+      [
+        ...queryKeys.expense.base,
+        EXPENSE_SUB_QUERY.MONTHLY,
+        { month, year, day },
+      ] as const,
   },
 };
 export const queryFns = {
-  // user: {
-  //   // getMe: fetchMe as () => Promise<AuthUser>,
-  //   // updateMe: updateMe as (
-  //   //   data: Pick<AuthUser, "name" | "email" | "phone">
-  //   // ) => Promise<AuthUser>,
-  // },
   auth: {
     signOut: signOut as () => Promise<void>,
     signUp: signUp as (data: SupabaseSignUpRequest) => Promise<void>,

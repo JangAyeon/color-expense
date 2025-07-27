@@ -1,5 +1,5 @@
 import { calculateBlocks } from "@utils/budget";
-import { formatCurrency } from "@utils/onboarding/formatter";
+import { formatNumberWithCommas } from "@utils/onboarding/formatter";
 import { FormData } from "@type/onboarding";
 import BlockVisualization from "./blockVisualization";
 import { Input } from "@repo/ui";
@@ -29,7 +29,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({
             type="text"
             id="monthlyBudget"
             name="monthlyBudget"
-            value={formatCurrency(formData.monthlyBudget)}
+            value={formatNumberWithCommas(formData.monthlyBudget)}
             onChange={onBudgetChange}
             size="lg"
             placeholder="500,000"

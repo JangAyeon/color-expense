@@ -27,7 +27,6 @@ import { getUser } from 'src/users/users.decorator';
 import { CreateExpensesDto } from './dto/create-expenses.dto';
 import { UpdateExpensesDto } from './dto/update-expenses.dto';
 import { AuthUser } from '@repo/types';
-// import { GetCategoryStatsDto } from './dto/category-stats.dto';
 import { CategoryStatsResponseEntity } from './entity/category-stats.entity';
 import { GetTrendAnalysisDto } from './dto/trend-analysis.dto';
 import { TrendAnalysisEntity } from './entity/trend-analysis.entity';
@@ -193,10 +192,25 @@ export class ExpensesController {
       '해당 날짜(date)에 대한 사용자의 지출 총합을 반환합니다. 예: /daily?date=2025-06-06',
   })
   @ApiQuery({
-    name: 'date',
+    name: 'year',
+    type: Number,
     required: true,
-    type: String,
-    description: '기준 일자 (예: 2025-06-06)',
+    description: '조회할 연도 (예: 2025)',
+    example: 2025,
+  })
+  @ApiQuery({
+    name: 'month',
+    type: Number,
+    required: true,
+    description: '조회할 월 (1~12)',
+    example: 7,
+  })
+  @ApiQuery({
+    name: 'day',
+    type: Number,
+    required: true,
+    description: '일',
+    example: 7,
   })
   @ApiOkResponse({
     description: '총 지출 금액과 지출 목록',
@@ -215,8 +229,18 @@ export class ExpensesController {
       },
     },
   })
-  getDailyStats(@getUser() user: AuthUser, @Query('date') date: string) {
-    return this.expensesService.getDailyStats(user.id, new Date(date));
+  getDailyStats(
+    @getUser() user: AuthUser,
+    @Query('year') year: number,
+    @Query('month') month: number,
+    @Query('day') day: number,
+  ) {
+    return this.expensesService.getDailyStats(
+      user.id,
+      Number(year),
+      Number(month),
+      Number(day),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -228,10 +252,25 @@ export class ExpensesController {
       '해당 날짜가 속한 주(월~일)에 대한 사용자의 지출 총합을 반환합니다.',
   })
   @ApiQuery({
-    name: 'date',
+    name: 'year',
+    type: Number,
     required: true,
-    type: String,
-    description: '기준 일자 (예: 2025-06-06)',
+    description: '조회할 연도 (예: 2025)',
+    example: 2025,
+  })
+  @ApiQuery({
+    name: 'month',
+    type: Number,
+    required: true,
+    description: '조회할 월 (1~12)',
+    example: 7,
+  })
+  @ApiQuery({
+    name: 'day',
+    type: Number,
+    required: true,
+    description: '일',
+    example: 7,
   })
   @ApiOkResponse({
     description: '총 지출 금액과 지출 목록',
@@ -250,8 +289,18 @@ export class ExpensesController {
       },
     },
   })
-  getWeeklyStats(@getUser() user: AuthUser, @Query('date') date: string) {
-    return this.expensesService.getWeeklyStats(user.id, new Date(date));
+  getWeeklyStats(
+    @getUser() user: AuthUser,
+    @Query('year') year: number,
+    @Query('month') month: number,
+    @Query('day') day: number,
+  ) {
+    return this.expensesService.getWeeklyStats(
+      user.id,
+      Number(year),
+      Number(month),
+      Number(day),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -262,10 +311,25 @@ export class ExpensesController {
     description: '해당 날짜가 속한 달의 지출 총합을 반환합니다.',
   })
   @ApiQuery({
-    name: 'date',
+    name: 'year',
+    type: Number,
     required: true,
-    type: String,
-    description: '기준 일자 (예: 2025-06-06)',
+    description: '조회할 연도 (예: 2025)',
+    example: 2025,
+  })
+  @ApiQuery({
+    name: 'month',
+    type: Number,
+    required: true,
+    description: '조회할 월 (1~12)',
+    example: 7,
+  })
+  @ApiQuery({
+    name: 'day',
+    type: Number,
+    required: true,
+    description: '일',
+    example: 7,
   })
   @ApiOkResponse({
     description: '총 지출 금액과 지출 목록',
@@ -284,8 +348,18 @@ export class ExpensesController {
       },
     },
   })
-  getMonthlyStats(@getUser() user: AuthUser, @Query('date') date: string) {
-    return this.expensesService.getMonthlyStats(user.id, new Date(date));
+  getMonthlyStats(
+    @getUser() user: AuthUser,
+    @Query('year') year: number,
+    @Query('month') month: number,
+    @Query('day') day: number,
+  ) {
+    return this.expensesService.getMonthlyStats(
+      user.id,
+      Number(year),
+      Number(month),
+      Number(day),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
