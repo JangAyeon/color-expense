@@ -30,6 +30,7 @@ import { AuthUser } from '@repo/types';
 import { CategoryStatsResponseEntity } from './entity/category-stats.entity';
 import { GetTrendAnalysisDto } from './dto/trend-analysis.dto';
 import { TrendAnalysisEntity } from './entity/trend-analysis.entity';
+import { StreakStatsEntity } from './entity/streak-stats.entity';
 
 @ApiTags('Expense (지출 관련 API)')
 @Controller('expenses')
@@ -470,5 +471,21 @@ export class ExpensesController {
       endYear: dto.endYear,
       endMonth: dto.endMonth,
     });
+  }
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @Get('stats/streak')
+  @ApiOperation({
+    summary: '연속 기록 통계 조회',
+    description: `사용자의 지출 기록 연속 일수와 관련 통계를 조회합니다.
+연속 기록은 하루라도 지출 기록이 있으면 카운트됩니다.
+보상 시스템과 레벨 시스템이 포함되어 있습니다.`,
+  })
+  @ApiOkResponse({
+    type: StreakStatsEntity,
+    description: '연속 기록 통계 조회 성공',
+  })
+  getStreakStats(@getUser() user: AuthUser) {
+    return this.expensesService.getStreakStats(user.id);
   }
 }
