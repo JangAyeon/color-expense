@@ -1,4 +1,8 @@
-import { ExpenseCategorySummary, ExpenseItemListResponse } from "@type/expense";
+import {
+  ExpenseCategorySummary,
+  ExpenseItemListResponse,
+  StreakInfoResponse,
+} from "@type/expense";
 
 import { YearMonthDayProps, YearMonthProps } from "@type/date";
 import { apiClient } from "@utils/apis/api.client";
@@ -16,4 +20,5 @@ export const expenseService = {
       month,
       day,
     }),
+  getStreak: () => apiClient.get<StreakInfoResponse>("/expenses/stats/streak"),
 };
