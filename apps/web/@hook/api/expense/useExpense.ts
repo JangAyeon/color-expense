@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { YearMonthProps } from "@type/date";
 import { expenseService } from "@utils/apis/services/expense";
 import { userService } from "@utils/apis/services/user";
 import { queryKeys } from "@utils/query/query.key";
@@ -55,16 +56,19 @@ export const useMonthlyExpenses = ({
   });
 };
 
-export const useExpensesCategory = ({
-  year,
-  month,
-}: {
-  year: string;
-  month: string;
-}) => {
+export const useExpensesCategory = ({ year, month }: YearMonthProps) => {
   return useQuery({
     queryKey: queryKeys.expense.category({ year, month }),
     queryFn: () => expenseService.getCategoryStatus({ year, month }),
+    select: (response) => response,
+    staleTime: 5 * 60 * 1000, // 5분
+  });
+};
+
+export const useExpensesStreak = () => {
+  return useQuery({
+    queryKey: queryKeys.expense.streak(),
+    queryFn: () => expenseService.getStreak(),
     select: (response) => response,
     staleTime: 5 * 60 * 1000, // 5분
   });
