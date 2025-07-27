@@ -1,11 +1,11 @@
-import { useExpenses } from "@hook/api/expense/useExpense";
+import { useRecentExpenses } from "@hook/api/expense/useExpense";
 import { useBudgetHistory } from "@hook/api/budget/useBudgetHistory";
 import { useMyProfile } from "@hook/api/user/useUser";
 
 export const useMyPage = () => {
   const profileQuery = useMyProfile();
   const budgetHistoryQuery = useBudgetHistory(6);
-  const recentExpensesQuery = useExpenses(4);
+  const recentExpensesQuery = useRecentExpenses(4);
 
   const isLoading =
     profileQuery.isLoading ||
