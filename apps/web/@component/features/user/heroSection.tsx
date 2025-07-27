@@ -1,5 +1,6 @@
 import { BlockieFace, BlockieBottom } from "@repo/ui";
-import { BudgetHistoryResponse, RecentExpense, User } from "@type/user";
+import { BudgetHistoryResponse } from "@type/budget";
+import { RecentExpense, User } from "@type/user";
 
 // 히어로 섹션 컴포넌트
 const HeroSection = ({
