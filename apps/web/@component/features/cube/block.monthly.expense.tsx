@@ -4,7 +4,7 @@ import { RecentExpense } from "@type/user";
 import { getCategoryColor } from "@utils/common/getCategoryConfig";
 import { memo, useMemo } from "react";
 
-interface ExpenseBlock {
+export interface ExpenseBlock {
   id: string;
   color: string;
   categoryId: string;

@@ -6,17 +6,19 @@ import {
 } from "@utils/common/getCategoryConfig";
 import { toYMDWithString } from "@utils/date/YMD";
 import { formatWithCurrencySymbol } from "@utils/onboarding/formatter";
+import { useRouter } from "next/navigation";
 
 const ListMonthlyExpense: React.FC<{
   expensesInfo: RecentExpense[];
 }> = ({ expensesInfo }) => {
+  const router = useRouter();
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-lg text-gray-800">최근 지출</h2>
         <button
           className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline transition-colors"
-          onClick={() => alert("전체 지출 내역 보기")}
+          onClick={() => router.push("/expense")}
         >
           전체보기
         </button>
@@ -65,7 +67,7 @@ const ListMonthlyExpense: React.FC<{
 
       {/* 더보기 버튼 */}
       <button
-        onClick={() => alert("더 많은 지출 내역 보기")}
+        onClick={() => router.push("/expense")}
         className="w-full p-4 border-2 border-dashed border-gray-200 rounded-xl text-gray-500 hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50/50 transition-all duration-200"
       >
         <span className="text-sm font-medium">더 많은 지출 내역 보기</span>

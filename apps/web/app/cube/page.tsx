@@ -13,6 +13,9 @@ import ListMonthlyExpense from "@component/features/cube/list.monthly.expense";
 import { toYMDWithString } from "@utils/date/YMD";
 import StreakCard from "@component/features/cube/streak.expense";
 import { MIN_BUDGET_BLOCK } from "@constant/budget";
+import EmptyBlockExpense from "@component/features/cube/empty/block.monthly.expnese";
+import EmptyMonthlyExpense from "@component/features/cube/empty/list.monthly.expense";
+import EmptyMonthlyBudget from "@component/features/cube/empty/monthly.budget.expense";
 
 export default function ExpenseCubePage() {
   const router = useRouter();
@@ -55,14 +58,26 @@ export default function ExpenseCubePage() {
           </div>
 
           {/* 예산 카드 */}
-          <MonthlyBudget budgetStatus={budgetStatus!} />
+          {budgetStatus!.hasBudget ? (
+            <MonthlyBudget budgetStatus={budgetStatus!} />
+          ) : (
+            <EmptyMonthlyBudget />
+          )}
+
           {/* 블록 컬렉션 */}
-          <BlockExpense
-            expensesInfo={expenses?.expenses!}
-            categoryInfo={expenseCategory?.categories!}
-            totalBlocks={budgetStatus?.spent! / MIN_BUDGET_BLOCK}
-            maxBlocks={Math.floor(budgetStatus?.budget! / MIN_BUDGET_BLOCK)}
-          />
+          {expenses!.expenses.length > 0 && budgetStatus!.hasBudget ? (
+            <BlockExpense
+              expensesInfo={expenses?.expenses!}
+              categoryInfo={expenseCategory?.categories!}
+              totalBlocks={budgetStatus?.spent! / MIN_BUDGET_BLOCK}
+              maxBlocks={Math.floor(budgetStatus?.budget! / MIN_BUDGET_BLOCK)}
+            />
+          ) : (
+            <EmptyBlockExpense
+              hasBudget={budgetStatus?.hasBudget!}
+              maxBlocks={Math.floor(budgetStatus?.budget! / MIN_BUDGET_BLOCK)}
+            />
+          )}
 
           {/* 인사이트 카드 */}
           <InsightExpense
@@ -71,7 +86,11 @@ export default function ExpenseCubePage() {
           />
 
           {/* 최근 지출 목록 */}
-          <ListMonthlyExpense expensesInfo={expenses?.expenses!} />
+          {expenses!.expenses.length > 0 ? (
+            <ListMonthlyExpense expensesInfo={expenses?.expenses!} />
+          ) : (
+            <EmptyMonthlyExpense />
+          )}
         </main>
       </main>
     </div>
