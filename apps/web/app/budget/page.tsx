@@ -21,7 +21,7 @@ import { Emotion } from "@type/onboarding";
 import useBudgetTab from "@hook/business/budget/useBudgetTab";
 
 import useAnimatedFrame from "@hook/business/budget/useAnimationFrame";
-import { BudgetStatus, BudgetHistory } from "@type/budget";
+// import { BudgetStatus, BudgetHistory } from "@type/budget";
 import { ExpenseCategory } from "@type/expense";
 import {
   BarOptionsAnimation,
@@ -29,6 +29,11 @@ import {
   DoughnutOptionsAnimation,
 } from "@constant/budget";
 import { getExpenseStateWithBudget, getMonthName } from "@utils/budget";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toYMDWithString } from "@utils/date/YMD";
+import Card from "@component/budget/card";
+import HistoryTab from "@component/budget/historyTab";
+import { BudgetStatus } from "@type/budget";
 
 // Chart.js 등록
 ChartJS.register(
@@ -336,46 +341,14 @@ const SavingsAchievements: React.FC = () => {
 };
 
 // Mock 데이터 - 예산이 설정되지 않은 상태로 시작
-const MOCK_CURRENT_BUDGET: BudgetStatus = {
-  year: 2025,
-  month: 7, // 7월
-  hasBudget: true, // 예산이 설정되지 않음
-  budget: 0,
-  spent: 320000, // 지출은 있음
-  remaining: -320000,
-};
-
-// Mock 예산 내역 데이터
-const MOCK_BUDGET_HISTORY: BudgetHistory[] = [
-  {
-    year: 2025,
-    month: 6, // 6월
-    budget: 500000,
-    spent: 480000,
-    remaining: 20000,
-  },
-  {
-    year: 2025,
-    month: 5, // 5월
-    budget: 450000,
-    spent: 470000,
-    remaining: -20000,
-  },
-  {
-    year: 2025,
-    month: 4, // 4월
-    budget: 450000,
-    spent: 420000,
-    remaining: 30000,
-  },
-  {
-    year: 2025,
-    month: 3, // 3월
-    budget: 400000,
-    spent: 390000,
-    remaining: 10000,
-  },
-];
+// const MOCK_CURRENT_BUDGET: BudgetStatus = {
+//   year: 2025,
+//   month: 7, // 7월
+//   hasBudget: true, // 예산이 설정되지 않음
+//   budget: 0,
+//   spent: 320000, // 지출은 있음
+//   remaining: -320000,
+// };
 
 // Mock 지출 카테고리 데이터
 const MOCK_EXPENSE_CATEGORIES: ExpenseCategory[] = [
@@ -389,28 +362,34 @@ const MOCK_EXPENSE_CATEGORIES: ExpenseCategory[] = [
 // 애니메이션 배리언트
 
 // 컴포넌트: 카드
-const Card = ({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <motion.div
-    className={`bg-white rounded-lg shadow-lg p-6 ${className}`}
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3 }}
-  >
-    {children}
-  </motion.div>
-);
+// const Card = ({
+//   children,
+//   className = "",
+// }: {
+//   children: React.ReactNode;
+//   className?: string;
+// }) => (
+//   <motion.div
+//     className={`bg-white rounded-lg shadow-lg p-6 ${className}`}
+//     initial={{ opacity: 0, y: 20 }}
+//     animate={{ opacity: 1, y: 0 }}
+//     transition={{ duration: 0.3 }}
+//   >
+//     {children}
+//   </motion.div>
+// );
 
 export default function BudgetPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const year = searchParams.get("year");
+  const month = searchParams.get("month")?.padStart(2, "0");
+  const day = searchParams.get("day")?.padStart(2, "0");
+  const hasDate = year && month && day;
   const [loading, setLoading] = useState(true);
   const { activeTab, changeTab, direction } = useBudgetTab();
   const [budgetStatus, setBudgetStatus] = useState<BudgetStatus | null>(null);
-  const [budgetHistory, setBudgetHistory] = useState<BudgetHistory[]>([]);
+
   const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(
     []
   );
@@ -427,25 +406,31 @@ export default function BudgetPage() {
   useEffect(() => {
     // API 호출을 시뮬레이션하기 위한 타임아웃
     const timer = setTimeout(() => {
-      setBudgetStatus(MOCK_CURRENT_BUDGET);
+      // setBudgetStatus(MOCK_CURRENT_BUDGET);
       setExpenseCategories(MOCK_EXPENSE_CATEGORIES);
       setLoading(false);
     }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
-
-  // Mock 예산 내역 불러오기
   useEffect(() => {
-    if (activeTab !== "history") return;
+    if (!hasDate) {
+      const today = new Date();
+      const { year, month, day } = toYMDWithString(today);
+      router.replace(`/budget?year=${year}&month=${month}&day=${day}`);
+    }
+  }, [router, searchParams, hasDate]);
+  // Mock 예산 내역 불러오기
+  // useEffect(() => {
+  //   if (activeTab !== "history") return;
 
-    // API 호출을 시뮬레이션하기 위한 타임아웃
-    const timer = setTimeout(() => {
-      setBudgetHistory(MOCK_BUDGET_HISTORY);
-    }, 800);
+  //   // API 호출을 시뮬레이션하기 위한 타임아웃
+  //   const timer = setTimeout(() => {
+  //     setBudgetHistory(MOCK_BUDGET_HISTORY);
+  //   }, 800);
 
-    return () => clearTimeout(timer);
-  }, [activeTab]);
+  //   return () => clearTimeout(timer);
+  // }, [activeTab]);
 
   // Mock 예산 설정하기
   const handleSetBudget = async () => {
@@ -456,7 +441,6 @@ export default function BudgetPage() {
       // 새 예산 설정
       const budget = parseInt(newBudget, 10);
       const updatedBudget = {
-        ...MOCK_CURRENT_BUDGET,
         hasBudget: true, // 예산이 설정됨
         budget: budget,
         remaining: budget - MOCK_CURRENT_BUDGET.spent,
@@ -503,23 +487,6 @@ export default function BudgetPage() {
   // };
 
   // 차트 데이터 - 바 차트 (예산 내역)
-  const barData = {
-    labels: budgetHistory.map((item) => `${item.year}년 ${item.month}월`),
-    datasets: [
-      {
-        label: "예산",
-        data: budgetHistory.map((item) => item.budget),
-        backgroundColor: "#8DDBA4", // blockie-green
-        borderRadius: 6,
-      },
-      {
-        label: "지출",
-        data: budgetHistory.map((item) => item.spent),
-        backgroundColor: "#F47D7D", // blockie-red
-        borderRadius: 6,
-      },
-    ],
-  };
 
   // 차트 옵션
 
@@ -1025,104 +992,7 @@ export default function BudgetPage() {
           </motion.div>
         )}
         {/* 예산 내역 탭 */}
-        {activeTab === "history" && (
-          <motion.div
-            key="history"
-            custom={direction}
-            // variants={pageVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          >
-            <Card>
-              <h2 className="text-xl font-semibold mb-6">월별 예산 내역</h2>
-
-              <div className="h-80 mb-6">
-                <Bar data={barData} options={BarOptionsAnimation} />
-              </div>
-
-              {budgetHistory.length > 0 ? (
-                <div className="space-y-4">
-                  {budgetHistory.map((item, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="bg-gray-50 rounded-lg p-4 hover:shadow-md transition-shadow"
-                    >
-                      <div className="flex justify-between items-center mb-2">
-                        <h3 className="font-medium">
-                          {item.year}년 {getMonthName(item.month)}
-                        </h3>
-                        <span
-                          className={`text-sm font-medium px-2 py-1 rounded-full ${item.remaining < 0 ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}
-                        >
-                          {item.remaining < 0 ? "예산 초과" : "예산 내 지출"}
-                        </span>
-                      </div>
-
-                      <div className="grid grid-cols-3 gap-2 mb-2 text-sm">
-                        <div>
-                          <p className="text-gray-500">예산</p>
-                          <p className="font-medium">
-                            {item.budget.toLocaleString()}원
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-gray-500">지출</p>
-                          <p className="font-medium">
-                            {item.spent.toLocaleString()}원
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-gray-500">잔액</p>
-                          <p
-                            className={`font-medium ${item.remaining < 0 ? "text-red-500" : ""}`}
-                          >
-                            {item.remaining.toLocaleString()}원
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="mt-2">
-                        <div className="bg-gray-200 h-2 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full ${(item.spent / item.budget) * 100 > 90 ? "bg-red-500" : "bg-blockie-green"}`}
-                            style={{
-                              width: `${Math.min((item.spent / item.budget) * 100, 100)}%`,
-                            }}
-                          />
-                        </div>
-                        <p className="text-right text-xs mt-1">
-                          {((item.spent / item.budget) * 100).toFixed(0)}% 사용
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-40 text-gray-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-12 w-12 mb-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                  <p>과거 예산 내역이 없습니다</p>
-                </div>
-              )}
-            </Card>
-          </motion.div>
-        )}
+        {activeTab === "history" && <HistoryTab />}
         {/* 지출 분석 탭 */}
         {activeTab === "insights" && (
           <motion.div
