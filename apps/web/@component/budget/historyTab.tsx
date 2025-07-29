@@ -9,7 +9,6 @@ import { BudgetHistoryItem } from "@type/budget";
 import { useBudgetHistory } from "@hook/api/budget/useBudgetHistory";
 
 const HistoryTab = () => {
-  const { direction } = useBudgetTab();
   const { data } = useBudgetHistory(4);
   console.log(data?.history);
 
