@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { signIn, signOut } from "../@utils/apis/auth";
 import { queryFns, queryKeys } from "../@utils/query/query.key";
+import { pageUrl } from "@constant/page.route";
 // import { fetchUserProfile, updateUserProfile } from "../@utils/apis/_user";
 // import { userFormData } from "../@component/_UserProfile";
 
@@ -40,7 +41,7 @@ export const useLogout = () => {
       queryClient.removeQueries({ queryKey: queryKeys.auth.base });
 
       // 홈으로 이동
-      router.replace("/");
+      router.replace(`${pageUrl.root}`);
     },
     onError: (error) => {
       console.error("로그아웃 실패", error);
@@ -54,7 +55,7 @@ export const useSignUp = () => {
   return useMutation({
     mutationFn: queryFns.auth.signUp,
     onSuccess: () => {
-      router.replace("/mypage"); // 회원가입 후 마이페이지로 이동
+      router.push(`${pageUrl.mypage}`); // 회원가입 후 마이페이지로 이동
     },
     onError: (err) => {
       console.error("회원가입 실패", err);
@@ -67,7 +68,7 @@ export const useSignIn = () => {
   return useMutation({
     mutationFn: signIn,
     onSuccess: () => {
-      router.replace("/mypage"); // 회원가입 후 마이페이지로 이동
+      router.push(`${pageUrl.mypage}`); // 회원가입 후 마이페이지로 이동
     },
     onError: (err) => {
       console.error("로그인 실패", err);

@@ -1,3 +1,4 @@
+import { pageUrl } from "@constant/page.route";
 import { useRouter } from "next/navigation";
 
 // Empty State 컴포넌트
@@ -56,7 +57,7 @@ const EmptyMonthlyExpense = () => {
 
           {/* 버튼 */}
           <button
-            onClick={() => router.push("/expense")}
+            onClick={() => router.push(`${pageUrl.expense}`)}
             className="inline-flex items-center px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-sm transform transition-all duration-200 hover:scale-105 hover:shadow-md hover:from-blue-600 hover:to-purple-600"
           >
             <svg

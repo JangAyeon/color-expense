@@ -16,6 +16,7 @@ import { MIN_BUDGET_BLOCK } from "@constant/budget";
 import EmptyBlockExpense from "@component/features/cube/empty/block.monthly.expnese";
 import EmptyMonthlyExpense from "@component/features/cube/empty/list.monthly.expense";
 import EmptyMonthlyBudget from "@component/features/cube/empty/monthly.budget.expense";
+import { pageUrl } from "@constant/page.route";
 
 export default function ExpenseCubePage() {
   const router = useRouter();
@@ -43,7 +44,7 @@ export default function ExpenseCubePage() {
     if (!hasDate) {
       const today = new Date();
       const { year, month, day } = toYMDWithString(today);
-      router.replace(`/cube?year=${year}&month=${month}&day=${day}`);
+      router.replace(`/${pageUrl.cube}?year=${year}&month=${month}&day=${day}`);
     }
   }, [router, searchParams, hasDate]);
   if (isLoading || hasError || !hasDate) return <MyPageLoading />;
