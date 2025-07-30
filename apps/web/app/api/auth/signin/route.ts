@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { cookies } from "next/headers";
-import { fetchSignIn } from "../../../../@utils/apis/sb.auth";
+import { fetchSignIn } from "@utils/apis/services/sb.auth";
 
 export async function POST(req: NextRequest) {
   try {

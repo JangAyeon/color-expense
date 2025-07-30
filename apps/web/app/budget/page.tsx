@@ -38,6 +38,7 @@ import TabMenu from "@component/budget/tabMenu";
 import CurrentBudget from "@component/budget/currentBudget";
 import Insight from "@component/budget/insight";
 import BudgetSetModal from "@component/budget/budgetSetModal";
+import { pageUrl } from "@constant/page.route";
 
 // Chart.js 등록
 ChartJS.register(
@@ -276,7 +277,9 @@ export default function BudgetPage() {
     if (!hasDate) {
       const today = new Date();
       const { year, month, day } = toYMDWithString(today);
-      router.replace(`/budget?year=${year}&month=${month}&day=${day}`);
+      router.replace(
+        `/${pageUrl.budget}?year=${year}&month=${month}&day=${day}`
+      );
     }
   }, [router, searchParams, hasDate]);
   // Mock 예산 내역 불러오기

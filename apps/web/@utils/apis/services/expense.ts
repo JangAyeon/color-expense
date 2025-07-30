@@ -6,19 +6,27 @@ import {
 
 import { YearMonthDayProps, YearMonthProps } from "@type/date";
 import { apiClient } from "@utils/apis/api.client";
+import { ApiRoute } from "@constant/api.route";
 
 export const expenseService = {
-  // 내 현황 조회
+  // /expenses/stats/category
   getCategoryStatus: ({ month, year }: YearMonthProps) =>
-    apiClient.get<ExpenseCategorySummary>("/expenses/stats/category", {
-      year,
-      month,
-    }),
+    apiClient.get<ExpenseCategorySummary>(
+      `${ApiRoute.expenses.GET_CATEGORY_STATUS}`,
+      {
+        year,
+        month,
+      }
+    ),
   getMonthlyStatus: ({ month, year, day }: YearMonthDayProps) =>
-    apiClient.get<ExpenseItemListResponse>("/expenses/stats/monthly", {
-      year,
-      month,
-      day,
-    }),
-  getStreak: () => apiClient.get<StreakInfoResponse>("/expenses/stats/streak"),
+    apiClient.get<ExpenseItemListResponse>(
+      `${ApiRoute.expenses.GET_MONTHLY_STATUS}`,
+      {
+        year,
+        month,
+        day,
+      }
+    ),
+  getStreak: () =>
+    apiClient.get<StreakInfoResponse>(`${ApiRoute.expenses.GET_STREAK}`),
 };

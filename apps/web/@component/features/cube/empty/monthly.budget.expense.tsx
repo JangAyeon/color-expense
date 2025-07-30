@@ -1,3 +1,4 @@
+import { pageUrl } from "@constant/page.route";
 import { BlockieFace } from "@repo/ui";
 import { useRouter } from "next/navigation";
 
@@ -65,7 +66,7 @@ const EmptyMonthlyBudget = () => {
 
             {/* 액션 버튼 */}
             <button
-              onClick={() => router.push("/budget")}
+              onClick={() => router.push(`${pageUrl.budget}`)}
               className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-yellow-500 text-white text-sm font-medium rounded-lg hover:from-orange-600 hover:to-yellow-600 transition-all duration-200 transform hover:scale-105 shadow-sm hover:shadow-md"
             >
               <svg

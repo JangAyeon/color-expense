@@ -8,6 +8,7 @@ import { useUpsertBudget } from "@hook/useBudget";
 import { useOnboardingForm } from "@hook/business/onboarding/useOnboardingForm";
 import { useProgressStepStore } from "@store/useProgressStepStore";
 import { useMyProfile, useUpdateMyProfile } from "@hook/api/user/useUser";
+import { pageUrl } from "@constant/page.route";
 
 const ContentSection: React.FC<ContentSectionProps> = () => {
   const { currentStep, setCurrentStep, goToNext, goToPrevious } =
@@ -68,7 +69,7 @@ const ContentSection: React.FC<ContentSectionProps> = () => {
       alert(
         `환영합니다! Blockie와 함께 시작해보세요 🎉 ${{ ...formData, email: data?.email }}`
       );
-      router.push("/mypage");
+      router.push(`${pageUrl.mypage}`);
     } else {
       goToNext();
     }
