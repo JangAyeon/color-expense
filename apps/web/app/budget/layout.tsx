@@ -1,7 +1,7 @@
 // app/budget/layout.tsx
 import { cookies } from "next/headers";
 
-import HydrationProvider from "../../@provider/query/parallel.hydration";
+import HydrationProvider from "@provider/query/parallel.hydration";
 import { queryKeys } from "@utils/query/query.key";
 import { budgetService } from "@utils/apis/services/budget";
 export default async function BudgetLayout({

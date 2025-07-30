@@ -4,7 +4,7 @@ import {
   SupabaseSignInResponse,
   SupabaseSignUpResponse,
 } from "@repo/types";
-import { ApiRoute } from "../../@constant/api.route";
+import { ApiRoute } from "@constant/api.route";
 
 export const fetchSignIn = async (
   data: SupabaseSignInRequest
