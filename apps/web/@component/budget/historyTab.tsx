@@ -6,7 +6,7 @@ import Card from "./card";
 import useBudgetTab from "@hook/business/budget/useBudgetTab";
 import { BudgetHistoryItem } from "@type/budget";
 
-import { useBudgetHistory } from "@hook/api/budget/useBudgetHistory";
+import { useBudgetHistory } from "@hook/api/budget/useBudget";
 
 const HistoryTab = () => {
   const { data } = useBudgetHistory(4);

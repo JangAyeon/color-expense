@@ -1,5 +1,6 @@
+import { useBudgetHistory } from "@hook/api/budget/useBudget";
 import { useRecentExpenses } from "@hook/api/expense/useExpense";
-import { useBudgetHistory } from "@hook/api/budget/useBudgetHistory";
+
 import { useMyProfile } from "@hook/api/user/useUser";
 
 export const useMyPage = () => {

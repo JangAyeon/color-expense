@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 
 import { Emotion } from "@type/onboarding";
 import useAnimatedFrame from "@hook/business/budget/useAnimationFrame";
-import { getExpenseStateWithBudget, getMonthName } from "@utils/budget";
-import { useSearchParams } from "next/navigation";
+import { getMonthName } from "@utils/budget";
+
 import Card from "@component/budget/card";
 import { useBudgetStatus } from "@hook/api/budget/useBudget";
 import SavingsAchievements from "./savingsAchievements";

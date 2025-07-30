@@ -58,7 +58,10 @@ export const useMonthlyExpenses = ({
 
 export const useExpensesCategory = ({ year, month }: YearMonthProps) => {
   return useQuery({
-    queryKey: queryKeys.expense.category({ year, month }),
+    queryKey: queryKeys.expense.category({
+      year,
+      month: month.padStart(2, "0"),
+    }),
     queryFn: () => expenseService.getCategoryStatus({ year, month }),
     select: (response) => response,
     staleTime: 5 * 60 * 1000, // 5분

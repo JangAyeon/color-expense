@@ -16,7 +16,6 @@ export const useCube = ({
 }) => {
   const budgetQuery = useBudgetStatus({ year, month });
   const expenseCategoryQuery = useExpensesCategory({ year, month });
-  //   const budgetHistoryQuery = useBudgetHistory(6);
   const expensesQuery = useMonthlyExpenses({
     year,
     month,
