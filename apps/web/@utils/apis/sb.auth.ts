@@ -4,13 +4,13 @@ import {
   SupabaseSignInResponse,
   SupabaseSignUpResponse,
 } from "@repo/types";
-import { ApiRoute, AuthRoute } from "../../@constant/api.route";
+import { ApiRoute } from "../../@constant/api.route";
 
 export const fetchSignIn = async (
   data: SupabaseSignInRequest
 ): Promise<SupabaseSignInResponse> => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}${ApiRoute.AUTH}${AuthRoute.SIGN_IN}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}${ApiRoute.auth.SIGN_IN}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -25,7 +25,7 @@ export const fetchSignUp = async (
   data: SupabaseSignUpRequest
 ): Promise<SupabaseSignUpResponse> => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}${ApiRoute.AUTH}${AuthRoute.SIGN_UP}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}${ApiRoute.auth.SIGN_UP}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },

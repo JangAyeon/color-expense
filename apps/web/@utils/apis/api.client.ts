@@ -1,3 +1,5 @@
+import { ApiMethod } from "@constant/api.route";
+
 type ApiResponse<T> = {
   data: T;
   message?: string;
@@ -36,25 +38,27 @@ class ApiClient {
 
   get<T>(endpoint: string, params?: Record<string, any>) {
     const searchParams = params ? `?${new URLSearchParams(params)}` : "";
-    return this.request<T>(`${endpoint}${searchParams}`);
+    return this.request<T>(`${endpoint}${searchParams}`, {
+      method: ApiMethod.get,
+    });
   }
 
   post<T>(endpoint: string, data?: any) {
     return this.request<T>(endpoint, {
-      method: "POST",
+      method: ApiMethod.post,
       body: data ? JSON.stringify(data) : undefined,
     });
   }
 
   patch<T>(endpoint: string, data?: any) {
     return this.request<T>(endpoint, {
-      method: "PATCH",
+      method: ApiMethod.patch,
       body: data ? JSON.stringify(data) : undefined,
     });
   }
 
   delete<T>(endpoint: string) {
-    return this.request<T>(endpoint, { method: "DELETE" });
+    return this.request<T>(endpoint, { method: ApiMethod.delete });
   }
 }
 
