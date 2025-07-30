@@ -1,8 +1,9 @@
 // app/budget/layout.tsx
 import { cookies } from "next/headers";
 
-import { fetchBudgetStatus } from "../../@utils/apis/budget";
-import HydrationProvider from "../../@provider/query/single.hydration";
+import HydrationProvider from "../../@provider/query/parallel.hydration";
+import { queryKeys } from "@utils/query/query.key";
+import { budgetService } from "@utils/apis/services/budget";
 export default async function BudgetLayout({
   children,
 }: {
@@ -12,21 +13,20 @@ export default async function BudgetLayout({
   const access_token = cookieStore.get("access_token")?.value ?? null;
 
   const today = new Date();
-  const year = parseInt(today.getFullYear().toString());
-  const month = parseInt((today.getMonth() + 1).toString());
+  const year = today.getFullYear().toString();
+  const month = (today.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 +1 필요
+  const day = today.getDate().toString().padStart(2, "0"); // 일을 2자리로 맞추기 위해 padStart 사용
 
   if (!access_token) {
     return <div>No access token</div>;
   }
-
+  const prefetchQueries = [
+    {
+      queryKey: queryKeys.budget.status({ year, month }),
+      queryFn: () => budgetService.getBudgetStatus({ year, month }),
+    },
+  ];
   return (
-    // <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>
-
-    <HydrationProvider
-      queryKey={["budget", year, month]}
-      queryFn={() => fetchBudgetStatus(year, month, access_token)}
-    >
-      {children}
-    </HydrationProvider>
+    <HydrationProvider queries={prefetchQueries}>{children}</HydrationProvider>
   );
 }
