@@ -34,33 +34,33 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
   const animatedSpent = useAnimatedFrame(budgetStatus?.spent ?? 0);
   const animatedRemaining = useAnimatedFrame(budgetStatus?.remaining ?? 0);
 
-  const [budgetStateDetail, setBudgetStateDetail] = useState<
-    | {
-        usageRate: number;
-        usageRateDisplay: number;
-        isOverBudget: boolean;
-        isNearLimit: boolean;
-        emotion: string;
-        status: string;
-        statusColor: string;
-        barColor: string;
-      }
-    | undefined
-  >(undefined);
+  // const [budgetStateDetail, setBudgetStateDetail] = useState<
+  //   | {
+  //       usageRate: number;
+  //       usageRateDisplay: number;
+  //       isOverBudget: boolean;
+  //       isNearLimit: boolean;
+  //       emotion: string;
+  //       status: string;
+  //       statusColor: string;
+  //       barColor: string;
+  //     }
+  //   | undefined
+  // >(undefined);
 
-  useEffect(() => {
-    console.log("@@@", budgetStatus?.spent, budgetStatus?.budget);
-    if (!isSuccess) return;
-    console.log(
-      getExpenseStateWithBudget(budgetStatus!.spent, budgetStatus!.budget)
-    );
-    setBudgetStateDetail(
-      getExpenseStateWithBudget(budgetStatus!.spent, budgetStatus!.budget)
-    );
-  }, [budgetStatus?.spent, budgetStatus?.budget]);
+  // useEffect(() => {
+  //   console.log("@@@", budgetStatus?.spent, budgetStatus?.budget);
+  //   if (!isSuccess) return;
+  //   console.log(
+  //     getExpenseStateWithBudget(budgetStatus!.spent, budgetStatus!.budget)
+  //   );
+  //   setBudgetStateDetail(
+  //     getExpenseStateWithBudget(budgetStatus!.spent, budgetStatus!.budget)
+  //   );
+  // }, [budgetStatus?.spent, budgetStatus?.budget]);
 
   //   console.log(budgetStateDetail, budgetStatus);
-  if (!budgetStatus || !budgetStateDetail) return <></>;
+  if (!budgetStatus) return <></>;
   return (
     <motion.div
       key="current"
@@ -85,7 +85,7 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                 <div className="relative flex flex-col items-center">
                   <BlockieFace
                     size={70}
-                    emotion={budgetStateDetail.emotion as Emotion}
+                    emotion={budgetStatus.emotion as Emotion}
                   />
                   <BlockieBottom size={70} />
                 </div>
@@ -97,9 +97,9 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                   className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-white shadow-lg flex items-center justify-center"
                 >
                   <span className="text-xs">
-                    {budgetStateDetail.emotion === "happy"
+                    {budgetStatus.emotion === "happy"
                       ? "😊"
-                      : budgetStateDetail.emotion === "sad"
+                      : budgetStatus.emotion === "sad"
                         ? "😞"
                         : "😐"}
                   </span>
@@ -114,9 +114,9 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className={`text-sm font-semibold ${budgetStateDetail.statusColor} flex items-center bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full w-fit border`}
+                    className={`text-sm font-semibold ${budgetStatus.statusColor} flex items-center bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full w-fit border`}
                   >
-                    예산 {budgetStateDetail.status} 상태
+                    예산 {budgetStatus.status} 상태
                   </motion.p>
                 ) : (
                   <motion.p
@@ -261,7 +261,7 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                   </div>
                   <div className="text-right">
                     <p className="text-2xl font-bold text-gray-800 mb-1">
-                      {budgetStateDetail.usageRate.toFixed(1)}%
+                      {budgetStatus.usageRate.toFixed(1)}%
                     </p>
                     <p className="text-xs text-gray-500">
                       {budgetStatus.budget > 0
@@ -275,10 +275,10 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                 <div className="relative">
                   <div className="h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner">
                     <motion.div
-                      className={`h-full rounded-full ${budgetStateDetail.barColor} relative overflow-hidden`}
+                      className={`h-full rounded-full ${budgetStatus.barColor} relative overflow-hidden`}
                       initial={{ width: 0 }}
                       animate={{
-                        width: `${budgetStateDetail.usageRateDisplay}%`,
+                        width: `${budgetStatus.usageRateDisplay}%`,
                       }}
                       transition={{ duration: 1.5, ease: "easeOut" }}
                     >
@@ -296,18 +296,18 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                   </div>
 
                   {/* 사용률 표시 포인터 */}
-                  {budgetStateDetail.usageRateDisplay > 0 && (
+                  {budgetStatus.usageRateDisplay > 0 && (
                     <motion.div
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: 1.2, type: "spring" }}
                       className="absolute top-0 h-6 w-0.5 bg-gray-600 rounded-full"
                       style={{
-                        left: `${Math.min(budgetStateDetail.usageRateDisplay, 98)}%`,
+                        left: `${Math.min(budgetStatus.usageRateDisplay, 98)}%`,
                       }}
                     >
                       <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
-                        {budgetStateDetail.usageRate.toFixed(0)}%
+                        {budgetStatus.usageRate.toFixed(0)}%
                       </div>
                     </motion.div>
                   )}
@@ -339,9 +339,9 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                       }`}
                     ></div> */}
                     <p className="text-gray-600 leading-relaxed">
-                      {budgetStateDetail.isOverBudget
+                      {budgetStatus.isOverBudget
                         ? "⚠️ 예산을 초과했습니다. 지출을 줄이거나 예산을 조정해 보세요."
-                        : budgetStateDetail.isNearLimit
+                        : budgetStatus.isNearLimit
                           ? "⚡ 예산의 80% 이상을 사용했습니다. 지출에 주의하세요."
                           : "✅ 예산 내에서 지출이 이루어지고 있습니다. 잘 하고 계세요!"}
                     </p>
