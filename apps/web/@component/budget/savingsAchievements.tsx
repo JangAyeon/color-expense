@@ -1,42 +1,8 @@
 "use client";
-import { useEffect, useState, useRef, useMemo } from "react";
-import { Button, BlockieFace, BlockieBottom } from "@repo/ui";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Title,
-  PolarAreaController,
-  RadialLinearScale,
-} from "chart.js";
-import { Doughnut, Bar, Line, Radar } from "react-chartjs-2";
-import { Emotion } from "@type/onboarding";
-import useBudgetTab from "@hook/business/budget/useBudgetTab";
 
-import useAnimatedFrame from "@hook/business/budget/useAnimationFrame";
-// import { BudgetStatus, BudgetHistory } from "@type/budget";
-import { ExpenseCategory } from "@type/expense";
-import {
-  BarOptionsAnimation,
-  BudgetPageVariants,
-  DoughnutOptionsAnimation,
-} from "@constant/budget";
-import { getExpenseStateWithBudget, getMonthName } from "@utils/budget";
-import { useRouter, useSearchParams } from "next/navigation";
-import { toYMDWithString } from "@utils/date/YMD";
+import { motion, AnimatePresence } from "framer-motion";
+
 import Card from "@component/budget/card";
-import HistoryTab from "@component/budget/historyTab";
-import { BudgetStatus } from "@type/budget";
-import TabMenu from "@component/budget/tabMenu";
-import CurrentBudget from "@component/budget/currentBudget";
-import { useBudgetStatus } from "@hook/api/budget/useBudget";
 
 interface Achievement {
   title: string;

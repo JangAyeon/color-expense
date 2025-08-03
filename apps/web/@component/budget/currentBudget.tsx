@@ -34,32 +34,6 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
   const animatedSpent = useAnimatedFrame(budgetStatus?.spent ?? 0);
   const animatedRemaining = useAnimatedFrame(budgetStatus?.remaining ?? 0);
 
-  // const [budgetStateDetail, setBudgetStateDetail] = useState<
-  //   | {
-  //       usageRate: number;
-  //       usageRateDisplay: number;
-  //       isOverBudget: boolean;
-  //       isNearLimit: boolean;
-  //       emotion: string;
-  //       status: string;
-  //       statusColor: string;
-  //       barColor: string;
-  //     }
-  //   | undefined
-  // >(undefined);
-
-  // useEffect(() => {
-  //   console.log("@@@", budgetStatus?.spent, budgetStatus?.budget);
-  //   if (!isSuccess) return;
-  //   console.log(
-  //     getExpenseStateWithBudget(budgetStatus!.spent, budgetStatus!.budget)
-  //   );
-  //   setBudgetStateDetail(
-  //     getExpenseStateWithBudget(budgetStatus!.spent, budgetStatus!.budget)
-  //   );
-  // }, [budgetStatus?.spent, budgetStatus?.budget]);
-
-  //   console.log(budgetStateDetail, budgetStatus);
   if (!budgetStatus) return <></>;
   return (
     <motion.div

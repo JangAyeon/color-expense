@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, useRef, useMemo } from "react";
-import { Button, BlockieFace, BlockieBottom } from "@repo/ui";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Chart as ChartJS,
@@ -19,13 +18,10 @@ import {
 
 import useBudgetTab from "@hook/business/budget/useBudgetTab";
 
-// import { BudgetStatus, BudgetHistory } from "@type/budget";
-import { ExpenseCategory } from "@type/expense";
-
 import { useRouter, useSearchParams } from "next/navigation";
 import { toYMDWithString } from "@utils/date/YMD";
 
-import HistoryTab from "@component/budget/historyTab";
+import HistorySection from "@component/budget/history/historySection";
 
 import TabMenu from "@component/budget/tabMenu";
 import CurrentBudget from "@component/budget/currentBudget";
@@ -34,6 +30,7 @@ import BudgetSetModal from "@component/budget/budgetSetModal";
 import { pageUrl } from "@constant/page.route";
 import FullLoader from "@component/budget/loading/FullLoader";
 import { useUpdateBudget } from "@hook/api/budget/useBudget";
+import { BUDGET_TAB_MENU } from "@constant/budget";
 
 // Chart.js 등록
 ChartJS.register(
@@ -52,15 +49,6 @@ ChartJS.register(
   ArcElement,
   Title
 );
-
-// Mock 지출 카테고리 데이터
-const MOCK_EXPENSE_CATEGORIES: ExpenseCategory[] = [
-  { name: "식비", amount: 150000, color: "#F4DF7D" }, // blockie-yellow
-  { name: "교통비", amount: 50000, color: "#8DDBA4" }, // blockie-green
-  { name: "쇼핑", amount: 80000, color: "#7DC0F4" }, // blockie-blue
-  { name: "여가", amount: 30000, color: "#C89DF4" }, // blockie-purple
-  { name: "주거", amount: 10000, color: "#F48DAE" }, // blockie-pink
-];
 
 export default function BudgetPage() {
   const router = useRouter();
@@ -132,7 +120,7 @@ export default function BudgetPage() {
       <AnimatePresence mode="wait" custom={direction}>
         {/* 현재 예산 탭 */}
 
-        {activeTab === "current" && hasDate && (
+        {activeTab === BUDGET_TAB_MENU.CURRENT && hasDate && (
           <CurrentBudget
             direction={direction}
             setShowSetBudget={setShowSetBudget}
@@ -142,9 +130,9 @@ export default function BudgetPage() {
           />
         )}
         {/* 예산 내역 탭 */}
-        {activeTab === "history" && <HistoryTab />}
+        {activeTab === BUDGET_TAB_MENU.HISTORY && <HistorySection />}
         {/* 지출 분석 탭 */}
-        {activeTab === "insights" && hasDate && (
+        {activeTab === BUDGET_TAB_MENU.INSIGHTS && hasDate && (
           <Insight
             direction={direction}
             setNewBudget={setNewBudget}

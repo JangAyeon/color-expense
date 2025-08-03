@@ -1,5 +1,5 @@
 export const MIN_BUDGET_BLOCK = 10000;
-
+export const BUDGET_ITEM_COUNT = 5;
 export const BudgetPageVariants = {
   initial: (direction: number) => ({
     x: direction > 0 ? "100%" : direction < 0 ? "-100%" : 0,
@@ -32,34 +32,8 @@ export const DoughnutOptionsAnimation = {
   maintainAspectRatio: false,
 };
 
-export const BarOptionsAnimation = {
-  plugins: {
-    legend: {
-      position: "top" as const,
-    },
-    title: {
-      display: true,
-      text: "최근 4개월 예산 비교",
-    },
-  },
-  responsive: true,
-  // scales: {
-  //   x: {
-  //     grid: {
-  //       display: false,
-  //     },
-  //   },
-  //   y: {
-  //     grid: {
-  //       display: true,
-  //       color: "rgba(0, 0, 0, 0.05)",
-  //     },
-  //     ticks: {
-  //       callback: function (value: number) {
-  //         return value.toLocaleString() + "원";
-  //       },
-  //     },
-  //   },
-  // },
-  maintainAspectRatio: false,
-};
+export const BUDGET_TAB_MENU = {
+  CURRENT: "CURRENT",
+  HISTORY: "HISTORY",
+  INSIGHTS: "INSIGHTS",
+} as const;
