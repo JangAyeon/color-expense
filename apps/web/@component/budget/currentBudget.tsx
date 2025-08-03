@@ -13,14 +13,14 @@ import SavingsAchievements from "./savingsAchievements";
 
 interface CurrentBudgetProps {
   direction: number;
-  setShowSetBudget: Dispatch<SetStateAction<boolean>>;
+  setShowBudgetModal: Dispatch<SetStateAction<boolean>>;
   setBudgetAdvisor: Dispatch<SetStateAction<boolean>>;
   year: string;
   month: string;
 }
 const CurrentBudget: React.FC<CurrentBudgetProps> = ({
   direction,
-  setShowSetBudget,
+  setShowBudgetModal,
   setBudgetAdvisor,
   year,
   month,
@@ -33,8 +33,8 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
   const animatedBudget = useAnimatedFrame(budgetStatus?.budget ?? 0);
   const animatedSpent = useAnimatedFrame(budgetStatus?.spent ?? 0);
   const animatedRemaining = useAnimatedFrame(budgetStatus?.remaining ?? 0);
-
   if (!budgetStatus) return <></>;
+  console.log(budgetStatus);
   return (
     <motion.div
       key="current"
@@ -112,7 +112,7 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
             >
               <Button
                 variant={budgetStatus.hasBudget ? "outline" : "primary"}
-                onClick={() => setShowSetBudget(true)}
+                onClick={() => setShowBudgetModal(true)}
                 className="shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
               >
                 {budgetStatus.hasBudget ? (
@@ -233,7 +233,7 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                       예산 사용률
                     </p>
                   </div>
-                  <div className="text-right">
+                  {/* <div className="text-right">
                     <p className="text-2xl font-bold text-gray-800 mb-1">
                       {budgetStatus.usageRate.toFixed(1)}%
                     </p>
@@ -243,15 +243,16 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                         : "0%"}{" "}
                       소비됨
                     </p>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="relative">
                   <div className="h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner">
                     <motion.div
-                      className={`h-full rounded-full ${budgetStatus.barColor} relative overflow-hidden`}
+                      className={`h-full rounded-full  relative overflow-hidden`}
                       initial={{ width: 0 }}
                       animate={{
+                        backgroundColor: budgetStatus.barColor,
                         width: `${budgetStatus.usageRateDisplay}%`,
                       }}
                       transition={{ duration: 1.5, ease: "easeOut" }}
@@ -270,7 +271,7 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                   </div>
 
                   {/* 사용률 표시 포인터 */}
-                  {budgetStatus.usageRateDisplay > 0 && (
+                  {budgetStatus.usageRateDisplay >= 0 && (
                     <motion.div
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}

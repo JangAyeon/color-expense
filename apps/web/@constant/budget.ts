@@ -37,3 +37,10 @@ export const BUDGET_TAB_MENU = {
   HISTORY: "HISTORY",
   INSIGHTS: "INSIGHTS",
 } as const;
+
+// 예산 추천 배율 상수들
+export const BUDGET_MULTIPLIERS = {
+  RECOMMENDED: 1.2,
+  CONSERVATIVE: 1.5,
+  AGGRESSIVE: 0.8,
+} as const;

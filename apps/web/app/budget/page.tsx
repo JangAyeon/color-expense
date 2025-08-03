@@ -26,7 +26,7 @@ import HistorySection from "@component/budget/history/historySection";
 import TabMenu from "@component/budget/tabMenu";
 import CurrentBudget from "@component/budget/currentBudget";
 import Insight from "@component/budget/insight";
-import BudgetSetModal from "@component/budget/budgetSetModal";
+import BudgetSetModal from "@component/budget/modal/budgetSetModal";
 import { pageUrl } from "@constant/page.route";
 import FullLoader from "@component/budget/loading/FullLoader";
 import { useUpdateBudget } from "@hook/api/budget/useBudget";
@@ -58,6 +58,7 @@ export default function BudgetPage() {
   const day = searchParams.get("day")?.padStart(2, "0");
   const hasDate = year && month && day;
   const [loading, setLoading] = useState(true);
+  const [showBudgetModal, setShowBudgetModal] = useState(false);
   const { activeTab, changeTab, direction } = useBudgetTab();
   // const [budgetStatus, setBudgetStatus] = useState<BudgetStatus | null>(null);
   const mutateBudget = useUpdateBudget(
@@ -66,34 +67,40 @@ export default function BudgetPage() {
       : { year: 0, month: 0 }
   );
 
-  const [showSetBudget, setShowSetBudget] = useState(false);
   const [newBudget, setNewBudget] = useState("");
   const [budgetAdvisor, setBudgetAdvisor] = useState(false);
 
   useEffect(() => {
+    // url에 날짜가 없으면 오늘 날짜로 리다이렉트
     if (!hasDate) {
       const today = new Date();
       const { year, month, day } = toYMDWithString(today);
       router.replace(
         `${pageUrl.budget}?year=${year}&month=${month}&day=${day}`
       );
-    }
-  }, [router, searchParams, hasDate]);
-
-  const handleSetBudget = async () => {
-    // 로딩 상태 시뮬레이션
-    if (!hasDate || !newBudget) return;
-    setLoading(true);
-    mutateBudget.mutate({
-      year: Number(year),
-      month: Number(month),
-      amount: Number(newBudget),
-    });
-    setTimeout(() => {
-      setShowSetBudget(false);
-      setNewBudget("");
+    } else {
       setLoading(false);
-    }, 800);
+    }
+  }, [router, hasDate]);
+
+  // 예산 저장
+  const handleBudgetSave = async (amount: number) => {
+    // 로딩 상태 시뮬레이션
+    if (!hasDate) return;
+    setLoading(true);
+    try {
+      // mutateAsync - 저장 완료된 후 모달이 닫혀야 하기 때문에 mutateAsync 사용해야 함
+      await mutateBudget.mutateAsync({
+        year: Number(year),
+        month: Number(month),
+        amount,
+      });
+    } catch (error) {
+      console.error("예산 저장 실패:", error);
+    } finally {
+      setLoading(false);
+      setShowBudgetModal(false);
+    }
   };
 
   if (loading || !hasDate) {
@@ -123,7 +130,7 @@ export default function BudgetPage() {
         {activeTab === BUDGET_TAB_MENU.CURRENT && hasDate && (
           <CurrentBudget
             direction={direction}
-            setShowSetBudget={setShowSetBudget}
+            setShowBudgetModal={setShowBudgetModal}
             setBudgetAdvisor={setBudgetAdvisor}
             year={year}
             month={month}
@@ -136,7 +143,7 @@ export default function BudgetPage() {
           <Insight
             direction={direction}
             setNewBudget={setNewBudget}
-            setShowSetBudget={setShowSetBudget}
+            setShowBudgetModal={setShowBudgetModal}
             year={year}
             month={month}
           />
@@ -145,16 +152,12 @@ export default function BudgetPage() {
 
       {/* 예산 설정 모달 */}
       <AnimatePresence>
-        {showSetBudget && hasDate && (
+        {showBudgetModal && (
           <BudgetSetModal
-            year={year}
-            month={month}
-            newBudget={newBudget}
-            budgetAdvisor={budgetAdvisor}
-            setNewBudget={setNewBudget}
-            setShowSetBudget={setShowSetBudget}
-            setBudgetAdvisor={setBudgetAdvisor}
-            handleSetBudget={handleSetBudget}
+            year={Number(year)}
+            month={Number(month)}
+            onSave={handleBudgetSave}
+            onClose={() => setShowBudgetModal(false)}
           />
         )}
       </AnimatePresence>

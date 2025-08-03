@@ -13,7 +13,7 @@ interface InsightProps {
   year: string;
   month: string;
   setNewBudget: Dispatch<SetStateAction<string>>;
-  setShowSetBudget: Dispatch<SetStateAction<boolean>>;
+  setShowBudgetModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const getRecommendedBudget = (history: BudgetHistoryItem[]) => {
@@ -39,7 +39,7 @@ const Insight: React.FC<InsightProps> = ({
   year,
   month,
   setNewBudget,
-  setShowSetBudget,
+  setShowBudgetModal,
 }) => {
   const { data: budgetHistory } = useBudgetHistory();
   const { data: expenseCategory } = useExpensesCategory({ year, month });
@@ -360,7 +360,7 @@ const Insight: React.FC<InsightProps> = ({
             className="w-full"
             onClick={() => {
               setNewBudget(getRecommendedBudget(budgetHistory.history));
-              setShowSetBudget(true);
+              setShowBudgetModal(true);
             }}
           >
             추천 예산으로 설정하기
