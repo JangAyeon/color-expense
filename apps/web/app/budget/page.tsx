@@ -24,7 +24,7 @@ import { toYMDWithString } from "@utils/date/YMD";
 import HistorySection from "@component/budget/history/historySection";
 
 import TabMenu from "@component/budget/tabMenu";
-import CurrentBudget from "@component/budget/currentBudget";
+import CurrentBudget from "@component/budget/current/currentBudget";
 import Insight from "@component/budget/insight";
 import BudgetSetModal from "@component/budget/modal/budgetSetModal";
 import { pageUrl } from "@constant/page.route";

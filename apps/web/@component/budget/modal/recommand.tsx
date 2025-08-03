@@ -1,10 +1,11 @@
 import { BUDGET_MULTIPLIERS } from "@constant/budget";
 import { Button } from "@repo/ui";
+import { BudgetSummary } from "@type/budget";
 import { motion } from "framer-motion";
 import { FC, useCallback } from "react";
 
 interface BudgetRecommendSectionProps {
-  budgetStatus: any;
+  budgetStatus: BudgetSummary;
   onSelectAmount: (amount: number) => void;
 }
 

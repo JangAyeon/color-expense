@@ -1,7 +1,8 @@
+import { BudgetSummary } from "@type/budget";
 import { FC, Dispatch, SetStateAction } from "react";
 
 interface BudgetInputSectionProps {
-  budgetStatus: any;
+  budgetStatus: BudgetSummary;
   budgetAmount: string;
   setBudgetAmount: Dispatch<SetStateAction<string>>;
   isSubmitting: boolean;
