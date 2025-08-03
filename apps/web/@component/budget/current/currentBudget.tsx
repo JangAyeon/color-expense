@@ -9,6 +9,7 @@ import { getMonthName } from "@utils/budget";
 
 import Card from "@component/budget/card";
 import { useBudgetStatus } from "@hook/api/budget/useBudget";
+import FullLoader from "../loading/FullLoader";
 // import SavingsAchievements from "./_savingsAchievements";
 
 interface CurrentBudgetProps {
@@ -33,7 +34,12 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
   const animatedBudget = useAnimatedFrame(budgetStatus?.budget ?? 0);
   const animatedSpent = useAnimatedFrame(budgetStatus?.spent ?? 0);
   const animatedRemaining = useAnimatedFrame(budgetStatus?.remaining ?? 0);
-  if (!budgetStatus) return <></>;
+  if (!budgetStatus)
+    return (
+      <>
+        <FullLoader />
+      </>
+    );
   console.log(budgetStatus);
   return (
     <motion.div
@@ -98,7 +104,7 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
-                      className="text-sm font-semibold text-amber-600 flex items-center bg-amber-50/80 backdrop-blur-sm px-3 py-1.5 rounded-full border w-fit border-amber-200"
+                      className="text-sm font-semibold text-amber-600 flex items-center bg-amber-50/80 backdrop-blur-sm px-2 py-1.5 rounded-full border w-fit border-amber-200"
                     >
                       예산 미설정 상태
                     </motion.p>
@@ -111,19 +117,9 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                     <Button
                       variant={budgetStatus.hasBudget ? "outline" : "primary"}
                       onClick={() => setShowBudgetModal(true)}
-                      className={`shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 text-sm font-semibold flex items-center bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full w-fit border`}
+                      className={`shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 text-sm font-semibold flex items-center bg-white/60 backdrop-blur-sm px-2 py-1.5 rounded-full w-fit border`}
                     >
-                      {budgetStatus.hasBudget ? (
-                        <>
-                          <span className="mr-2">✏️</span>
-                          예산 수정
-                        </>
-                      ) : (
-                        <>
-                          <span className="mr-2">💰</span>
-                          예산 설정
-                        </>
-                      )}
+                      {budgetStatus.hasBudget ? <>예산 수정</> : <>예산 설정</>}
                     </Button>
                   </motion.div>
                 </div>

@@ -25,7 +25,7 @@ import HistorySection from "@component/budget/history/historySection";
 
 import TabMenu from "@component/budget/tabMenu";
 import CurrentBudget from "@component/budget/current/currentBudget";
-import Insight from "@component/budget/insight";
+import Insight from "@component/budget/insight/insight";
 import BudgetSetModal from "@component/budget/modal/budgetSetModal";
 import { pageUrl } from "@constant/page.route";
 import FullLoader from "@component/budget/loading/FullLoader";

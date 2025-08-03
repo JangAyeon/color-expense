@@ -1,3 +1,4 @@
+import { BUDGET_ITEM_COUNT } from "@constant/budget";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { BudgetHistoryResponse, BudgetSummary } from "@type/budget";
 import { budgetService } from "@utils/apis/services/budget";
@@ -22,7 +23,7 @@ export const useBudgetStatus = ({
   });
 };
 
-export const useBudgetHistory = (months = 6) => {
+export const useBudgetHistory = (months = BUDGET_ITEM_COUNT) => {
   return useQuery({
     queryKey: queryKeys.user.budgetHistory(months),
     queryFn: () => budgetService.getBudgetHistory(months),
