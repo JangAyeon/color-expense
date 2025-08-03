@@ -67,6 +67,7 @@ const BudgetSetModal: FC<BudgetSetModalProps> = ({
   // 입력값 검증
   const isValidAmount = Boolean(budgetAmount && Number(budgetAmount) > 0);
   const hasSpentAmount = Boolean(budgetStatus?.spent && budgetStatus.spent > 0);
+  if (!budgetStatus) return <></>;
 
   return (
     <motion.div
