@@ -21,16 +21,17 @@ import useBudgetTab from "@hook/business/budget/useBudgetTab";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toYMDWithString } from "@utils/date/YMD";
 
-import HistorySection from "@component/budget/history/historySection";
-
-import TabMenu from "@component/budget/tabMenu";
-import CurrentBudget from "@component/budget/current/currentBudget";
-import Insight from "@component/budget/insight/insight";
-import BudgetSetModal from "@component/budget/modal/budgetSetModal";
 import { pageUrl } from "@constant/page.route";
-import FullLoader from "@component/budget/loading/FullLoader";
+
 import { useUpdateBudget } from "@hook/api/budget/useBudget";
 import { BUDGET_TAB_MENU } from "@constant/budget";
+import CurrentBudget from "@component/features/budget/current/currentBudget";
+import Footer from "@component/features/budget/footer";
+import HistorySection from "@component/features/budget/history/historySection";
+import Insight from "@component/features/budget/insight/insight";
+import FullLoader from "@component/features/budget/loading/FullLoader";
+import BudgetSetModal from "@component/features/budget/modal/budgetSetModal";
+import TabMenu from "@component/features/budget/tabMenu";
 
 // Chart.js 등록
 ChartJS.register(
@@ -162,10 +163,7 @@ export default function BudgetPage() {
         )}
       </AnimatePresence>
 
-      <footer className="mt-12 text-center text-sm text-gray-500">
-        <p>효율적인 예산 관리로 건강한 재정 상태를 유지하세요.</p>
-        <p className="mt-1">© 2025 Blockie - 모든 권리 보유</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
