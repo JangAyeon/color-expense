@@ -1,8 +1,8 @@
 // app/budget/layout.tsx
 import { cookies } from "next/headers";
-import HydrationProvider from "../../@provider/hydration";
-import { fetchExpenseStatus } from "../../@utils/apis/expense";
-import { toYMDWithString } from "../../@utils/date/YMD";
+import HydrationProvider from "@provider/query/single.hydration";
+import { fetchExpenseStatus } from "@utils/apis/expense";
+import { toYMDWithString } from "@utils/date/YMD";
 export default async function ExpenseLayout({
   children,
 }: {

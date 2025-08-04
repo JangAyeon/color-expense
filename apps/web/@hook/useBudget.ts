@@ -1,13 +1,5 @@
-import { fetchBudgetStatus, upsertBudget } from "../@utils/apis/budget";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-
-export const useMonthlyBudget = (year: number, month: number) => {
-  return useQuery({
-    queryKey: ["budget", year, month],
-    queryFn: () => fetchBudgetStatus(year, month, ""),
-    staleTime: 1000 * 60 * 5,
-  });
-};
+import { upsertBudget } from "../@utils/apis/budget";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useUpsertBudget = (year: number, month: number) => {
   const queryClient = useQueryClient();
