@@ -1,26 +1,27 @@
 "use client";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Button, BlockieFace, BlockieBottom } from "@repo/ui";
 import { motion } from "framer-motion";
 
 import { Emotion } from "@type/onboarding";
 import useAnimatedFrame from "@hook/business/budget/useAnimationFrame";
-import { getExpenseStateWithBudget, getMonthName } from "@utils/budget";
-import { useSearchParams } from "next/navigation";
+import { getMonthName } from "@utils/budget";
+
 import Card from "@component/budget/card";
 import { useBudgetStatus } from "@hook/api/budget/useBudget";
-import SavingsAchievements from "./savingsAchievements";
+import FullLoader from "../loading/FullLoader";
+// import SavingsAchievements from "./_savingsAchievements";
 
 interface CurrentBudgetProps {
   direction: number;
-  setShowSetBudget: Dispatch<SetStateAction<boolean>>;
+  setShowBudgetModal: Dispatch<SetStateAction<boolean>>;
   setBudgetAdvisor: Dispatch<SetStateAction<boolean>>;
   year: string;
   month: string;
 }
 const CurrentBudget: React.FC<CurrentBudgetProps> = ({
   direction,
-  setShowSetBudget,
+  setShowBudgetModal,
   setBudgetAdvisor,
   year,
   month,
@@ -33,34 +34,13 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
   const animatedBudget = useAnimatedFrame(budgetStatus?.budget ?? 0);
   const animatedSpent = useAnimatedFrame(budgetStatus?.spent ?? 0);
   const animatedRemaining = useAnimatedFrame(budgetStatus?.remaining ?? 0);
-
-  // const [budgetStateDetail, setBudgetStateDetail] = useState<
-  //   | {
-  //       usageRate: number;
-  //       usageRateDisplay: number;
-  //       isOverBudget: boolean;
-  //       isNearLimit: boolean;
-  //       emotion: string;
-  //       status: string;
-  //       statusColor: string;
-  //       barColor: string;
-  //     }
-  //   | undefined
-  // >(undefined);
-
-  // useEffect(() => {
-  //   console.log("@@@", budgetStatus?.spent, budgetStatus?.budget);
-  //   if (!isSuccess) return;
-  //   console.log(
-  //     getExpenseStateWithBudget(budgetStatus!.spent, budgetStatus!.budget)
-  //   );
-  //   setBudgetStateDetail(
-  //     getExpenseStateWithBudget(budgetStatus!.spent, budgetStatus!.budget)
-  //   );
-  // }, [budgetStatus?.spent, budgetStatus?.budget]);
-
-  //   console.log(budgetStateDetail, budgetStatus);
-  if (!budgetStatus) return <></>;
+  if (!budgetStatus)
+    return (
+      <>
+        <FullLoader />
+      </>
+    );
+  console.log(budgetStatus);
   return (
     <motion.div
       key="current"
@@ -70,7 +50,7 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
       transition={{ duration: 0.4 }}
       className="grid grid-cols-1 lg:grid-cols-3 gap-8"
     >
-      <Card className="lg:col-span-2 relative overflow-hidden">
+      <Card className="lg:col-span-3 relative overflow-hidden">
         {/* 장식적 배경 요소 */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100/50 to-purple-100/50 rounded-full -translate-y-16 translate-x-16 blur-2xl"></div>
         <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-green-100/50 to-blue-100/50 rounded-full translate-y-12 -translate-x-12 blur-xl"></div>
@@ -109,51 +89,42 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                 <h2 className="text-3xl md:text-4xl font-bold mb-2">
                   {budgetStatus.year}년 {getMonthName(Number(month))}
                 </h2>
-                {budgetStatus.hasBudget ? (
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className={`text-sm font-semibold ${budgetStatus.statusColor} flex items-center bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full w-fit border`}
+                <div className="flex flex-row gap-2">
+                  {budgetStatus.hasBudget ? (
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className={`text-sm font-semibold ${budgetStatus.statusColor} flex items-center bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full w-fit border`}
+                    >
+                      예산 {budgetStatus.status} 상태
+                    </motion.p>
+                  ) : (
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="text-sm font-semibold text-amber-600 flex items-center bg-amber-50/80 backdrop-blur-sm px-2 py-1.5 rounded-full border w-fit border-amber-200"
+                    >
+                      예산 미설정 상태
+                    </motion.p>
+                  )}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 }}
                   >
-                    예산 {budgetStatus.status} 상태
-                  </motion.p>
-                ) : (
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="text-sm font-semibold text-amber-600 flex items-center bg-amber-50/80 backdrop-blur-sm px-3 py-1.5 rounded-full border w-fit border-amber-200"
-                  >
-                    예산 미설정 상태
-                  </motion.p>
-                )}
+                    <Button
+                      variant={budgetStatus.hasBudget ? "outline" : "primary"}
+                      onClick={() => setShowBudgetModal(true)}
+                      className={`shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 text-sm font-semibold flex items-center bg-white/60 backdrop-blur-sm px-2 py-1.5 rounded-full w-fit border`}
+                    >
+                      {budgetStatus.hasBudget ? <>예산 수정</> : <>예산 설정</>}
+                    </Button>
+                  </motion.div>
+                </div>
               </div>
             </div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              <Button
-                variant={budgetStatus.hasBudget ? "outline" : "primary"}
-                onClick={() => setShowSetBudget(true)}
-                className="shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
-              >
-                {budgetStatus.hasBudget ? (
-                  <>
-                    <span className="mr-2">✏️</span>
-                    예산 수정
-                  </>
-                ) : (
-                  <>
-                    <span className="mr-2">💰</span>
-                    예산 설정
-                  </>
-                )}
-              </Button>
-            </motion.div>
           </div>
 
           {budgetStatus.hasBudget ? (
@@ -259,7 +230,7 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                       예산 사용률
                     </p>
                   </div>
-                  <div className="text-right">
+                  {/* <div className="text-right">
                     <p className="text-2xl font-bold text-gray-800 mb-1">
                       {budgetStatus.usageRate.toFixed(1)}%
                     </p>
@@ -269,15 +240,16 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                         : "0%"}{" "}
                       소비됨
                     </p>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="relative">
                   <div className="h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner">
                     <motion.div
-                      className={`h-full rounded-full ${budgetStatus.barColor} relative overflow-hidden`}
+                      className={`h-full rounded-full  relative overflow-hidden`}
                       initial={{ width: 0 }}
                       animate={{
+                        backgroundColor: budgetStatus.barColor,
                         width: `${budgetStatus.usageRateDisplay}%`,
                       }}
                       transition={{ duration: 1.5, ease: "easeOut" }}
@@ -296,7 +268,7 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
                   </div>
 
                   {/* 사용률 표시 포인터 */}
-                  {budgetStatus.usageRateDisplay > 0 && (
+                  {budgetStatus.usageRateDisplay >= 0 && (
                     <motion.div
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
@@ -468,7 +440,7 @@ const CurrentBudget: React.FC<CurrentBudgetProps> = ({
         </div>
       </Card>
 
-      <SavingsAchievements />
+      {/* <SavingsAchievements /> */}
     </motion.div>
   );
 };

@@ -1,4 +1,5 @@
 import { MIN_BUDGET_BLOCK } from "@constant/budget";
+import { pageUrl } from "@constant/page.route";
 import { useRouter } from "next/navigation";
 
 // Empty State 컴포넌트
@@ -27,7 +28,7 @@ const EmptyBlockMonthlyExpense = ({
             </div>
           ) : (
             <button
-              onClick={() => router.push("/budget")}
+              onClick={() => router.push(`${pageUrl.budget}`)}
               className="text-sm px-3 py-1.5 rounded-full bg-blue-50 text-blue-700 font-medium"
             >
               예산 설정하기
@@ -76,7 +77,7 @@ const EmptyBlockMonthlyExpense = ({
 
             {/* 액션 버튼 */}
             <button
-              onClick={() => router.push("/expense")}
+              onClick={() => router.push(`${pageUrl.expense}`)}
               className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-200 transform hover:scale-105 shadow-sm hover:shadow-md"
             >
               지출 추가하기

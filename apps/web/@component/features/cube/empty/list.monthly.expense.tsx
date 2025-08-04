@@ -15,13 +15,13 @@ const EmptyMonthlyExpense = () => {
       </div>
 
       {/* Empty State 메인 카드 */}
-      <div className="relative p-8 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="relative p-6 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         {/* 배경 장식 */}
         <div className="absolute top-0 right-0 w-20 h-20 rounded-full blur-lg bg-gradient-to-br from-green-100/50 to-blue-100/50 -translate-y-4 translate-x-4" />
         <div className="absolute bottom-0 left-0 w-16 h-16 rounded-full blur-md bg-gradient-to-tr from-purple-100/40 to-pink-100/40 translate-y-3 -translate-x-3" />
 
         {/* 콘텐츠 */}
-        <div className="relative py-8  bg-gray-50/50 rounded-xl border-2 border-dashed border-gray-200 z-10 text-center">
+        <div className="relative py-8 px-2  bg-gray-50/50 rounded-xl border-2 border-dashed border-gray-200 z-10 text-center">
           <div
             className="opacity-10 "
             style={{

@@ -44,7 +44,7 @@ export default function ExpenseCubePage() {
     if (!hasDate) {
       const today = new Date();
       const { year, month, day } = toYMDWithString(today);
-      router.replace(`/${pageUrl.cube}?year=${year}&month=${month}&day=${day}`);
+      router.replace(`${pageUrl.cube}?year=${year}&month=${month}&day=${day}`);
     }
   }, [router, searchParams, hasDate]);
   if (isLoading || hasError || !hasDate) return <MyPageLoading />;
