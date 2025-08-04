@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-import Card from "@component/budget/card";
+import Card from "@component/features/budget/card";
 
 import { useBudgetHistory } from "@hook/api/budget/useBudget";
 

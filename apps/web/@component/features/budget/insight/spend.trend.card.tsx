@@ -1,5 +1,5 @@
 import { BudgetHistoryResponse } from "@type/budget";
-import Card from "@component/budget/card";
+import Card from "@component/features/budget/card";
 import { Line } from "react-chartjs-2";
 
 interface SpendingTrendCardProps {
