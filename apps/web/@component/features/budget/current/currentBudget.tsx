@@ -7,9 +7,9 @@ import { Emotion } from "@type/onboarding";
 import useAnimatedFrame from "@hook/business/budget/useAnimationFrame";
 import { getMonthName } from "@utils/budget";
 
-import Card from "@component/budget/card";
 import { useBudgetStatus } from "@hook/api/budget/useBudget";
-import FullLoader from "../loading/FullLoader";
+import FullLoader from "@component/features/budget/loading/FullLoader";
+import Card from "@component/features/budget/card";
 // import SavingsAchievements from "./_savingsAchievements";
 
 interface CurrentBudgetProps {
