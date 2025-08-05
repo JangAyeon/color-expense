@@ -14,8 +14,9 @@ import {
   LineElement,
 } from "chart.js";
 import { Doughnut, Bar, Line } from "react-chartjs-2";
-import { BlockieFace, BlockieBottom } from "@repo/ui";
+import { BlockieFace, BlockieBottom, Button } from "@repo/ui";
 import { categoryConfig } from "@constant/expense.category";
+import Card from "@component/common/card";
 
 // Chart.js 등록
 ChartJS.register(
@@ -159,22 +160,22 @@ const initialBudget = {
 };
 
 // 컴포넌트: 카드
-const Card = ({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <motion.div
-    className={`bg-white rounded-lg shadow-lg p-6 ${className}`}
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3 }}
-  >
-    {children}
-  </motion.div>
-);
+// const Card = ({
+//   children,
+//   className = "",
+// }: {
+//   children: React.ReactNode;
+//   className?: string;
+// }) => (
+//   <motion.div
+//     className={`bg-white rounded-lg shadow-lg p-6 ${className}`}
+//     initial={{ opacity: 0, y: 20 }}
+//     animate={{ opacity: 1, y: 0 }}
+//     transition={{ duration: 0.3 }}
+//   >
+//     {children}
+//   </motion.div>
+// );
 
 // 커스텀 훅: 탭 변경 애니메이션
 function useExpenseTab() {
@@ -386,6 +387,7 @@ function ExpenseManagementPage() {
 
     setEditingExpense(null);
   };
+  // const firstExpense = expenses[0];
 
   // 차트 데이터 준비
   const doughnutData = {
@@ -563,59 +565,75 @@ function ExpenseManagementPage() {
                       >
                         {budget.year}년 {budget.month}월 지출
                       </motion.h2>
-                      <motion.p
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4 }}
-                        className={`text-sm font-semibold px-4 py-2 rounded-full inline-flex items-center ${
-                          budget.remaining >= 0
-                            ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
-                            : "bg-red-100 text-red-700 border border-red-200"
-                        }`}
-                      >
-                        <motion.span
+                      <div className="flex flex-row gap-2">
+                        <motion.div
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.4 }}
+                          className={`text-sm font-semibold p-2 py-1.5 rounded-full  items-center ${
+                            budget.remaining >= 0
+                              ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
+                              : "bg-red-100 text-red-700 border border-red-200"
+                          }`}
+                        >
+                          {/* <motion.span
                           animate={{ scale: [1, 1.2, 1] }}
                           transition={{ duration: 2, repeat: Infinity }}
                           className="w-2 h-2 rounded-full bg-current mr-2"
-                        ></motion.span>
-                        {budget.remaining >= 0 ? "예산 내 지출" : "예산 초과"}
-                      </motion.p>
+                        ></motion.span> */}
+                          {budget.remaining >= 0 ? "예산 내 지출" : "예산 초과"}
+                        </motion.div>
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 0.6, type: "spring" }}
+                          whileHover={{
+                            scale: 1.05,
+                            boxShadow: "0 10px 30px -10px rgba(0,0,0,0.3)",
+                          }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => setShowAddForm(true)}
+                          className=" text-gray-800 rounded-xl font-semibold transition-all duration-200 flex flex-row items-center gap-3 shadow-lg hover:shadow-xl"
+                        >
+                          <Button
+                            variant="outline"
+                            color="warning"
+                            onClick={() => setShowAddForm(true)}
+                            className={`drop-shadow-sm transform hover:scale-105 transition-all duration-200 text-sm font-semibold flex items-center bg-white/60 backdrop-blur-sm px-2 py-1.5 rounded-full w-fit`}
+                          >
+                            <div className="flex flex-row gap-2">
+                              <motion.div
+                                animate={{ rotate: [0, 90, 0] }}
+                                transition={{
+                                  duration: 2,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                }}
+                              >
+                                <PlusIcon className="w-5 h-5" />
+                              </motion.div>
+                              <div>지출 추가</div>
+                            </div>
+                          </Button>
+                        </motion.div>
+                      </div>
                     </div>
                   </div>
-
-                  <motion.button
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.6, type: "spring" }}
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: "0 10px 30px -10px rgba(0,0,0,0.3)",
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setShowAddForm(true)}
-                    className="bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-gray-800 px-6 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center gap-3 shadow-lg hover:shadow-xl"
-                  >
-                    <motion.div
-                      animate={{ rotate: [0, 90, 0] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <PlusIcon className="w-5 h-5" />
-                    </motion.div>
-                    지출 추가
-                  </motion.button>
                 </div>
 
                 {/* 예산 통계 카드들 */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                   {[
                     {
-                      label: "예산",
-                      value: budget.budget,
-                      icon: "🎯",
+                      label: "하루 권장 지출",
+                      value: `${
+                        budget.remaining > 0
+                          ? Math.floor(
+                              budget.remaining / (31 - new Date().getDate() + 1)
+                            ).toLocaleString()
+                          : 0
+                      }`,
+                      icon: "📅",
                       gradient: "from-blue-500 to-indigo-600",
                       bgGradient: "from-blue-50 to-indigo-50",
                       borderColor: "border-blue-200",
@@ -665,7 +683,7 @@ function ExpenseManagementPage() {
                           damping: 25,
                         },
                       }}
-                      className={`bg-gradient-to-br ${item.bgGradient} rounded-2xl p-6 border ${item.borderColor} text-center group cursor-pointer relative overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300`}
+                      className={`bg-gradient-to-br ${item.bgGradient} rounded-2xl p-5 border ${item.borderColor} text-center group cursor-pointer relative overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300`}
                     >
                       {/* 카드 내부 장식 */}
                       <div className="absolute top-3 right-3 opacity-20 text-3xl">
@@ -715,12 +733,23 @@ function ExpenseManagementPage() {
                   className="mb-8 p-6 bg-gradient-to-r from-gray-50/80 to-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-sm"
                 >
                   <div className="flex justify-between items-center mb-4">
-                    <div className="flex items-center">
-                      <span className="text-2xl mr-3">📊</span>
-                      <p className="text-lg font-semibold text-gray-700">
-                        예산 사용률
+                    <div className="flex flex-row gap-4">
+                      <div className="flex items-center">
+                        <span className="text-2xl mr-3">📊</span>
+                        <p className="text-lg font-semibold text-gray-700">
+                          예산 사용률
+                        </p>
+                      </div>{" "}
+                      <p className="text-sm text-emerald-600 font-medium bg-emerald-100/60 px-3 py-1.5 rounded-full inline-block">
+                        {new Date(
+                          new Date().getFullYear(),
+                          new Date().getMonth() + 1,
+                          0
+                        ).getDate()}
+                        일 중 {new Date().getDate() + 1}일 남음
                       </p>
                     </div>
+
                     <div className="text-right">
                       <motion.p
                         key={budget.spent}
@@ -784,7 +813,7 @@ function ExpenseManagementPage() {
                 </motion.div>
 
                 {/* 하단 정보 카드들 */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1  gap-6">
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -812,7 +841,7 @@ function ExpenseManagementPage() {
                           color: "text-purple-600",
                         },
                         {
-                          label: "가장 많이 지출한 카테고리",
+                          label: "최다 지출 분류",
                           value:
                             Object.entries(categoryStats).sort(
                               (a, b) => b[1].total - a[1].total
@@ -846,10 +875,54 @@ function ExpenseManagementPage() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 1.1 }}
-                    className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-6 border border-emerald-200/50 relative overflow-hidden shadow-sm"
+                    className="bg--white backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 overflow-hidden shadow-sm"
                   >
                     {/* 장식적 배경 */}
                     <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-200/20 rounded-full -translate-y-12 translate-x-12"></div>
+
+                    {/* <div className="relative z-10">
+                      <div className="flex items-center mb-6">
+                        <motion.span
+                          className="text-2xl mr-3"
+                          animate={{ rotateZ: [0, 10, -10, 0] }}
+                          transition={{ duration: 3, repeat: Infinity }}
+                        >
+                          📅
+                        </motion.span>
+                        <h3 className="text-lg font-semibold text-gray-700">
+                          최근 지출 내역
+                        </h3>
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        {expenses
+                          .slice(Math.min(3, expenses.length))
+                          .map((item, idx) => (
+                            <div key={idx} className="flex-1">
+                              <div className="flex items-center gap-3 mb-2">
+                                <span
+                                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                                    categoryConfig[item.category]?.bg ||
+                                    "bg-gray-50"
+                                  } ${
+                                    categoryConfig[item.category]?.text ||
+                                    "text-gray-700"
+                                  } ${
+                                    categoryConfig[item.category]?.border ||
+                                    "border-gray-200"
+                                  }`}
+                                >
+                                  {item.category}
+                                </span>
+                                <span className="text-xl font-bold text-neutral-black">
+                                  {formatAmount(item.amount)}
+                                </span>
+                              </div>
+                              <p className="text-sm text-gray-500">
+                                {formatDate(item.expenseDate)}
+                              </p>
+                            </div>
+                          ))}
+                      </div>                    </div> */}
 
                     <div className="relative z-10">
                       <div className="flex items-center mb-6">
@@ -860,26 +933,36 @@ function ExpenseManagementPage() {
                         >
                           📅
                         </motion.span>
-                        <h3 className="text-lg font-semibold text-emerald-800">
-                          일일 허용 금액
+                        <h3 className="text-lg font-semibold text-gray-700">
+                          최근 지출 내역
                         </h3>
                       </div>
-                      <motion.p
-                        key={budget.remaining}
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        className="text-3xl md:text-4xl font-bold text-emerald-600 mb-3"
-                      >
-                        {budget.remaining > 0
-                          ? Math.floor(
-                              budget.remaining / (31 - new Date().getDate() + 1)
-                            ).toLocaleString()
-                          : 0}
-                        원
-                      </motion.p>
-                      <p className="text-sm text-emerald-600 font-medium bg-emerald-100/60 px-3 py-1.5 rounded-full inline-block">
-                        남은 {31 - new Date().getDate() + 1}일 기준
-                      </p>
+
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        {expenses.slice(0, 6).map((item, idx) => (
+                          <div
+                            key={idx}
+                            className="flex flex-col justify-between rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow-md transition"
+                          >
+                            <div className="flex items-center gap-3 mb-2">
+                              <span
+                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border 
+              ${categoryConfig[item.category]?.bg ?? "bg-gray-50"} 
+              ${categoryConfig[item.category]?.text ?? "text-gray-700"} 
+              ${categoryConfig[item.category]?.border ?? "border-gray-200"}`}
+                              >
+                                {item.category}
+                              </span>
+                              <span className="text-xl font-bold text-neutral-black">
+                                {formatAmount(item.amount)}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-500">
+                              {formatDate(item.expenseDate)}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </motion.div>
                 </div>
@@ -941,7 +1024,7 @@ function ExpenseManagementPage() {
                       />
                     </motion.div>
 
-                    <div className="space-y-3">
+                    {/* <div className="space-y-3">
                       {Object.entries(categoryStats).map(
                         ([category, stats], index) => (
                           <motion.div
@@ -973,7 +1056,46 @@ function ExpenseManagementPage() {
                                 {((stats.total / budget.spent) * 100).toFixed(
                                   1
                                 )}
-                                %
+                                % / {stats.count}건
+                              </div>
+                            </div>
+                          </motion.div>
+                        )
+                      )}
+                    </div> */}
+                    <div className="grid grid-cols-1 sm:grid-col-2   lg:grid-cols-1 gap-4">
+                      {Object.entries(categoryStats).map(
+                        ([category, stats], index) => (
+                          <motion.div
+                            key={category}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.8 + index * 0.1 }}
+                            className="flex justify-between items-center p-4 bg-gray-50/80 rounded-xl border border-gray-100/50 hover:bg-white/80 transition-all duration-200 group"
+                          >
+                            <div className="flex items-center">
+                              <motion.div
+                                whileHover={{ scale: 1.2 }}
+                                className="w-4 h-4 rounded-full mr-3 shadow-sm"
+                                style={{
+                                  backgroundColor:
+                                    categoryConfig[category]?.color ??
+                                    "#9CA3AF", // fallback to gray-400
+                                }}
+                              />
+                              <span className="text-sm font-medium text-gray-700 group-hover:text-gray-800 transition-colors">
+                                {category}
+                              </span>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-sm font-semibold text-gray-800">
+                                {stats.total.toLocaleString()}원
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {((stats.total / budget.spent) * 100).toFixed(
+                                  1
+                                )}
+                                % / {stats.count}건
                               </div>
                             </div>
                           </motion.div>

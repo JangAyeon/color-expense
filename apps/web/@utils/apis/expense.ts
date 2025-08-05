@@ -20,31 +20,31 @@ export type ExpensesStatsResponse = {
   expenses: ExpenseRecord[];
 };
 
-export async function fetchExpenseStatus(
-  year: string,
-  month: string,
-  day: string,
-  type: ExpensePeriodProps,
-  access_token: string
-): Promise<ExpensesStatsResponse | null> {
-  const baseUrl = access_token
-    ? process.env.NEXT_API_BASE_URL || "http://localhost:3030"
-    : "/api";
-  const date = `${year}-${month}-${day.toString().padStart(2, "0")}`;
+// export async function fetchExpenseStatus(
+//   year: string,
+//   month: string,
+//   day: string,
+//   type: ExpensePeriodProps,
+//   access_token: string
+// ): Promise<ExpensesStatsResponse | null> {
+//   const baseUrl = access_token
+//     ? process.env.NEXT_API_BASE_URL || "http://localhost:3030"
+//     : "/api";
+//   const date = `${year}-${month}-${day.toString().padStart(2, "0")}`;
 
-  console.log(
-    "fetchExpenseStatus",
-    `${baseUrl}/expenses/stats/${type}?date=${date}`
-  );
-  const res = await fetch(`${baseUrl}/expenses/stats/${type}?date=${date}`, {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-  });
-  const data = await res.json();
-  if (!data) return null;
-  return data;
-}
+//   console.log(
+//     "fetchExpenseStatus",
+//     `${baseUrl}/expenses/stats/${type}?date=${date}`
+//   );
+//   const res = await fetch(`${baseUrl}/expenses/stats/${type}?date=${date}`, {
+//     headers: {
+//       Authorization: `Bearer ${access_token}`,
+//     },
+//   });
+//   const data = await res.json();
+//   if (!data) return null;
+//   return data;
+// }
 
 export async function getExpense({
   access_token,
