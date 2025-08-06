@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   createExpense,
   deleteExpense,
-  fetchExpenseStatus,
+  // fetchExpenseStatus,
   getExpense,
   updateExpense,
 } from "../@utils/apis/expense";
@@ -16,17 +16,17 @@ export type UpsertExpenseInput = {
   day: string;
 };
 
-export function useExpensesStatus(
-  type: ExpensePeriodProps,
-  year: string,
-  month: string,
-  day: string
-) {
-  return useQuery({
-    queryKey: [`expenses`, type, year, month, day],
-    queryFn: () => fetchExpenseStatus(year, month, day, type, ""),
-  });
-}
+// export function useExpensesStatus(
+//   type: ExpensePeriodProps,
+//   year: string,
+//   month: string,
+//   day: string
+// ) {
+//   return useQuery({
+//     queryKey: [`expenses`, type, year, month, day],
+//     queryFn: () => fetchExpenseStatus(year, month, day, type, ""),
+//   });
+// }
 
 // 📌 지출 통계 조회
 export function useExpenses(

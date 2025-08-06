@@ -14,8 +14,9 @@ import {
   LineElement,
 } from "chart.js";
 import { Doughnut, Bar, Line } from "react-chartjs-2";
-import { BlockieFace, BlockieBottom } from "@repo/ui";
+import { BlockieFace, BlockieBottom, Button } from "@repo/ui";
 import { categoryConfig } from "@constant/expense.category";
+import Card from "@component/common/card";
 
 // Chart.js 등록
 ChartJS.register(
@@ -30,53 +31,53 @@ ChartJS.register(
 );
 
 // 내장 아이콘 컴포넌트들
-const PlusIcon = ({ className }: { className: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M12 4v16m8-8H4"
-    />
-  </svg>
-);
+// const PlusIcon = ({ className }: { className: string }) => (
+//   <svg
+//     className={className}
+//     fill="none"
+//     stroke="currentColor"
+//     viewBox="0 0 24 24"
+//   >
+//     <path
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//       strokeWidth={2}
+//       d="M12 4v16m8-8H4"
+//     />
+//   </svg>
+// );
 
-const EditIcon = ({ className }: { className: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-    />
-  </svg>
-);
+// const EditIcon = ({ className }: { className: string }) => (
+//   <svg
+//     className="w-4 h-4"
+//     fill="none"
+//     stroke="currentColor"
+//     viewBox="0 0 24 24"
+//   >
+//     <path
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//       strokeWidth={2}
+//       d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+//     />
+//   </svg>
+// );
 
-const TrashIcon = ({ className }: { className: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-    />
-  </svg>
-);
+// const TrashIcon = ({ className }: { className: string }) => (
+//   <svg
+//     className="w-4 h-4"
+//     fill="none"
+//     stroke="currentColor"
+//     viewBox="0 0 24 24"
+//   >
+//     <path
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//       strokeWidth={2}
+//       d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+//     />
+//   </svg>
+// );
 
 // 애니메이션 배리언트
 const pageVariants = {
@@ -159,22 +160,22 @@ const initialBudget = {
 };
 
 // 컴포넌트: 카드
-const Card = ({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <motion.div
-    className={`bg-white rounded-lg shadow-lg p-6 ${className}`}
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3 }}
-  >
-    {children}
-  </motion.div>
-);
+// const Card = ({
+//   children,
+//   className = "",
+// }: {
+//   children: React.ReactNode;
+//   className?: string;
+// }) => (
+//   <motion.div
+//     className={`bg-white rounded-lg shadow-lg p-6 ${className}`}
+//     initial={{ opacity: 0, y: 20 }}
+//     animate={{ opacity: 1, y: 0 }}
+//     transition={{ duration: 0.3 }}
+//   >
+//     {children}
+//   </motion.div>
+// );
 
 // 커스텀 훅: 탭 변경 애니메이션
 function useExpenseTab() {
@@ -386,6 +387,7 @@ function ExpenseManagementPage() {
 
     setEditingExpense(null);
   };
+  // const firstExpense = expenses[0];
 
   // 차트 데이터 준비
   const doughnutData = {
@@ -436,7 +438,7 @@ function ExpenseManagementPage() {
           <BlockieFace size={60} emotion="neutral" />
           <BlockieBottom size={60} />
         </div>
-        <p className="mt-4 text-gray-600 animate-pulse">
+        <p className="mt-4 text-neutral-dark-gray animate-pulse">
           지출 정보를 불러오는 중...
         </p>
       </div>
@@ -452,7 +454,7 @@ function ExpenseManagementPage() {
         className="mb-8"
       >
         <h1 className="text-3xl font-bold text-center">지출 관리</h1>
-        <p className="text-center text-gray-500 mt-2">
+        <p className="text-center text-neutral-dark-gray mt-2">
           스마트한 지출 관리로 건강한 소비 습관을 만들어 보세요
         </p>
       </motion.div>
@@ -461,30 +463,30 @@ function ExpenseManagementPage() {
       <div className="flex justify-center mb-8">
         <nav className="bg-white shadow-md rounded-full px-1 py-1 inline-flex">
           <button
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`px-6 py-2 rounded-full text-body-2 font-medium transition-colors ${
               activeTab === "overview"
                 ? "bg-blockie-yellow text-neutral-black"
-                : "text-gray-500 hover:bg-gray-100"
+                : "text-neutral-dark-gray hover:bg-gray-100"
             }`}
             onClick={() => changeTab("overview")}
           >
             지출 현황
           </button>
           <button
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`px-6 py-2 rounded-full text-body-2 font-medium transition-colors ${
               activeTab === "list"
                 ? "bg-blockie-yellow text-neutral-black"
-                : "text-gray-500 hover:bg-gray-100"
+                : "text-neutral-dark-gray hover:bg-gray-100"
             }`}
             onClick={() => changeTab("list")}
           >
             지출 내역
           </button>
           <button
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`px-6 py-2 rounded-full text-body-2 font-medium transition-colors ${
               activeTab === "statistics"
                 ? "bg-blockie-yellow text-neutral-black"
-                : "text-gray-500 hover:bg-gray-100"
+                : "text-neutral-dark-gray hover:bg-gray-100"
             }`}
             onClick={() => changeTab("statistics")}
           >
@@ -548,7 +550,7 @@ function ExpenseManagementPage() {
                         }}
                         className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-white shadow-lg flex items-center justify-center border-2 border-gray-100"
                       >
-                        <span className="text-lg">
+                        <span className="text-title-3">
                           {budget.remaining >= 0 ? "✅" : "⚠️"}
                         </span>
                       </motion.div>
@@ -559,63 +561,92 @@ function ExpenseManagementPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 via-gray-700 to-gray-600 bg-clip-text text-transparent mb-2"
+                        className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-neutral-black via-neutral-dark-gray  to-neutral-dark-gray bg-clip-text text-transparent mb-2"
                       >
                         {budget.year}년 {budget.month}월 지출
                       </motion.h2>
-                      <motion.p
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4 }}
-                        className={`text-sm font-semibold px-4 py-2 rounded-full inline-flex items-center ${
-                          budget.remaining >= 0
-                            ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
-                            : "bg-red-100 text-red-700 border border-red-200"
-                        }`}
-                      >
-                        <motion.span
+                      <div className="flex flex-row gap-2">
+                        <motion.div
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.4 }}
+                          className={`text-body-2 font-semibold p-2 py-1.5 rounded-full  items-center ${
+                            budget.remaining >= 0
+                              ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
+                              : "bg-red-100 text-red-700 border border-red-200"
+                          }`}
+                        >
+                          {/* <motion.span
                           animate={{ scale: [1, 1.2, 1] }}
                           transition={{ duration: 2, repeat: Infinity }}
                           className="w-2 h-2 rounded-full bg-current mr-2"
-                        ></motion.span>
-                        {budget.remaining >= 0 ? "예산 내 지출" : "예산 초과"}
-                      </motion.p>
+                        ></motion.span> */}
+                          {budget.remaining >= 0 ? "예산 내 지출" : "예산 초과"}
+                        </motion.div>
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 0.6, type: "spring" }}
+                          whileHover={{
+                            scale: 1.05,
+                            boxShadow: "0 10px 30px -10px rgba(0,0,0,0.3)",
+                          }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => setShowAddForm(true)}
+                          className=" text-gray-800 rounded-xl font-semibold transition-all duration-200 flex flex-row items-center gap-3 shadow-lg hover:shadow-xl"
+                        >
+                          <Button
+                            variant="outline"
+                            color="warning"
+                            onClick={() => setShowAddForm(true)}
+                            className={`drop-shadow-sm transform hover:scale-105 transition-all duration-200 text-body-2 font-semibold flex items-center bg-white/60 backdrop-blur-sm px-2 py-1.5 rounded-full w-fit`}
+                          >
+                            <div className="flex flex-row gap-2">
+                              <motion.div
+                                animate={{ rotate: [0, 90, 0] }}
+                                transition={{
+                                  duration: 2,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                }}
+                              >
+                                {/* <PlusIcon className="w-5 h-5" /> */}
+                                <svg
+                                  className="w-5 h-5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M12 4v16m8-8H4"
+                                  />
+                                </svg>
+                              </motion.div>
+                              <div>지출 추가</div>
+                            </div>
+                          </Button>
+                        </motion.div>
+                      </div>
                     </div>
                   </div>
-
-                  <motion.button
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.6, type: "spring" }}
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: "0 10px 30px -10px rgba(0,0,0,0.3)",
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setShowAddForm(true)}
-                    className="bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-gray-800 px-6 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center gap-3 shadow-lg hover:shadow-xl"
-                  >
-                    <motion.div
-                      animate={{ rotate: [0, 90, 0] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <PlusIcon className="w-5 h-5" />
-                    </motion.div>
-                    지출 추가
-                  </motion.button>
                 </div>
 
                 {/* 예산 통계 카드들 */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                   {[
                     {
-                      label: "예산",
-                      value: budget.budget,
-                      icon: "🎯",
+                      label: "하루 권장 지출",
+                      value: `${
+                        budget.remaining > 0
+                          ? Math.floor(
+                              budget.remaining / (31 - new Date().getDate() + 1)
+                            ).toLocaleString()
+                          : 0
+                      }`,
+                      icon: "📅",
                       gradient: "from-blue-500 to-indigo-600",
                       bgGradient: "from-blue-50 to-indigo-50",
                       borderColor: "border-blue-200",
@@ -665,7 +696,7 @@ function ExpenseManagementPage() {
                           damping: 25,
                         },
                       }}
-                      className={`bg-gradient-to-br ${item.bgGradient} rounded-2xl p-6 border ${item.borderColor} text-center group cursor-pointer relative overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300`}
+                      className={`bg-gradient-to-br ${item.bgGradient} rounded-2xl p-5 border ${item.borderColor} text-center group cursor-pointer relative overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300`}
                     >
                       {/* 카드 내부 장식 */}
                       <div className="absolute top-3 right-3 opacity-20 text-3xl">
@@ -676,7 +707,7 @@ function ExpenseManagementPage() {
                       <div className="relative z-10">
                         <div className="flex items-center justify-start mb-4">
                           <motion.span
-                            className="text-2xl mr-3"
+                            className="text-title-1 mr-3"
                             animate={{ rotateY: [0, 360] }}
                             transition={{
                               duration: 4,
@@ -686,7 +717,7 @@ function ExpenseManagementPage() {
                           >
                             {item.icon}
                           </motion.span>
-                          <p className="text-sm font-semibold text-gray-600 group-hover:text-gray-700 transition-colors">
+                          <p className="text-body-2 font-semibold text-neutral-dark-gray group-hover:text-neutral-black transition-colors">
                             {item.label}
                           </p>
                         </div>
@@ -695,7 +726,7 @@ function ExpenseManagementPage() {
                           initial={{ scale: 0.8, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ delay: 0.5 + index * 0.1 }}
-                          className={`font-bold text-2xl md:text-3xl bg-gradient-to-r ${item.gradient} bg-clip-text text-transparent`}
+                          className={`font-bold text-title-1 md:text-3xl bg-gradient-to-r ${item.gradient} bg-clip-text text-transparent`}
                         >
                           {item.value.toLocaleString()}원
                         </motion.p>
@@ -715,22 +746,35 @@ function ExpenseManagementPage() {
                   className="mb-8 p-6 bg-gradient-to-r from-gray-50/80 to-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-sm"
                 >
                   <div className="flex justify-between items-center mb-4">
-                    <div className="flex items-center">
-                      <span className="text-2xl mr-3">📊</span>
-                      <p className="text-lg font-semibold text-gray-700">
-                        예산 사용률
+                    <div className="flex flex-row gap-4">
+                      <div className="flex items-center">
+                        <span className="text-title-1 mr-3">📊</span>
+                        <p className="text-title-3 font-semibold text-neutral-black">
+                          예산 사용률
+                        </p>
+                      </div>{" "}
+                      <p className="text-body-2 text-emerald-600 font-medium bg-emerald-100/60 px-3 py-1.5 rounded-full inline-block">
+                        {new Date(
+                          new Date().getFullYear(),
+                          new Date().getMonth() + 1,
+                          0
+                        ).getDate()}
+                        일 중 {new Date().getDate() + 1}일 남음
                       </p>
                     </div>
+
                     <div className="text-right">
                       <motion.p
                         key={budget.spent}
                         initial={{ scale: 0.8 }}
                         animate={{ scale: 1 }}
-                        className="text-2xl font-bold text-gray-800 mb-1"
+                        className="text-title-1 font-bold text-gray-800 mb-1"
                       >
                         {Math.round((budget.spent / budget.budget) * 100)}%
                       </motion.p>
-                      <p className="text-xs text-gray-500">목표 대비 달성률</p>
+                      <p className="text-xs text-neutral-dark-gray">
+                        목표 대비 달성률
+                      </p>
                     </div>
                   </div>
 
@@ -784,7 +828,7 @@ function ExpenseManagementPage() {
                 </motion.div>
 
                 {/* 하단 정보 카드들 */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1  gap-6">
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -792,8 +836,8 @@ function ExpenseManagementPage() {
                     className="bg-gradient-to-br from-slate-50/80 to-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 shadow-sm"
                   >
                     <div className="flex items-center mb-6">
-                      <span className="text-2xl mr-3">📈</span>
-                      <h3 className="text-lg font-semibold text-gray-700">
+                      <span className="text-title-1 mr-3">📈</span>
+                      <h3 className="text-title-3 font-semibold text-neutral-black">
                         이번 달 요약
                       </h3>
                     </div>
@@ -812,7 +856,7 @@ function ExpenseManagementPage() {
                           color: "text-purple-600",
                         },
                         {
-                          label: "가장 많이 지출한 카테고리",
+                          label: "최다 지출 분류",
                           value:
                             Object.entries(categoryStats).sort(
                               (a, b) => b[1].total - a[1].total
@@ -829,8 +873,10 @@ function ExpenseManagementPage() {
                           className="flex justify-between items-center p-3 bg-white/60 rounded-xl border border-gray-100/50"
                         >
                           <div className="flex items-center">
-                            <span className="text-lg mr-3">{item.icon}</span>
-                            <span className="text-sm text-gray-600">
+                            <span className="text-title-3 mr-3">
+                              {item.icon}
+                            </span>
+                            <span className="text-body-2 text-neutral-dark-gray">
                               {item.label}
                             </span>
                           </div>
@@ -846,12 +892,12 @@ function ExpenseManagementPage() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 1.1 }}
-                    className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-6 border border-emerald-200/50 relative overflow-hidden shadow-sm"
+                    className="bg--white backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 overflow-hidden shadow-sm"
                   >
                     {/* 장식적 배경 */}
                     <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-200/20 rounded-full -translate-y-12 translate-x-12"></div>
 
-                    <div className="relative z-10">
+                    {/* <div className="relative z-10">
                       <div className="flex items-center mb-6">
                         <motion.span
                           className="text-2xl mr-3"
@@ -860,26 +906,80 @@ function ExpenseManagementPage() {
                         >
                           📅
                         </motion.span>
-                        <h3 className="text-lg font-semibold text-emerald-800">
-                          일일 허용 금액
+                        <h3 className="text-lg font-semibold text-gray-700">
+                          최근 지출 내역
                         </h3>
                       </div>
-                      <motion.p
-                        key={budget.remaining}
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        className="text-3xl md:text-4xl font-bold text-emerald-600 mb-3"
-                      >
-                        {budget.remaining > 0
-                          ? Math.floor(
-                              budget.remaining / (31 - new Date().getDate() + 1)
-                            ).toLocaleString()
-                          : 0}
-                        원
-                      </motion.p>
-                      <p className="text-sm text-emerald-600 font-medium bg-emerald-100/60 px-3 py-1.5 rounded-full inline-block">
-                        남은 {31 - new Date().getDate() + 1}일 기준
-                      </p>
+                      <div className="flex flex-col gap-3">
+                        {expenses
+                          .slice(Math.min(3, expenses.length))
+                          .map((item, idx) => (
+                            <div key={idx} className="flex-1">
+                              <div className="flex items-center gap-3 mb-2">
+                                <span
+                                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                                    categoryConfig[item.category]?.bg ||
+                                    "bg-gray-50"
+                                  } ${
+                                    categoryConfig[item.category]?.text ||
+                                    "text-gray-700"
+                                  } ${
+                                    categoryConfig[item.category]?.border ||
+                                    "border-gray-200"
+                                  }`}
+                                >
+                                  {item.category}
+                                </span>
+                                <span className="text-xl font-bold text-neutral-black">
+                                  {formatAmount(item.amount)}
+                                </span>
+                              </div>
+                              <p className="text-sm text-gray-500">
+                                {formatDate(item.expenseDate)}
+                              </p>
+                            </div>
+                          ))}
+                      </div>                    </div> */}
+
+                    <div className="relative z-10">
+                      <div className="flex items-center mb-6">
+                        <motion.span
+                          className="text-title-1 mr-3"
+                          animate={{ rotateZ: [0, 10, -10, 0] }}
+                          transition={{ duration: 3, repeat: Infinity }}
+                        >
+                          📅
+                        </motion.span>
+                        <h3 className="text-title-3 font-semibold text-neutral-black">
+                          최근 지출 내역
+                        </h3>
+                      </div>
+
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        {expenses.slice(0, 6).map((item, idx) => (
+                          <div
+                            key={idx}
+                            className="flex flex-col justify-between rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow-md transition"
+                          >
+                            <div className="flex items-center gap-3 mb-2">
+                              <span
+                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border 
+              ${categoryConfig[item.category]?.bg ?? "bg-gray-50"} 
+              ${categoryConfig[item.category]?.text ?? "text-neutral-black"} 
+              ${categoryConfig[item.category]?.border ?? "border-gray-200"}`}
+                              >
+                                {item.category}
+                              </span>
+                              <span className="text-title-2 font-bold text-neutral-black">
+                                {formatAmount(item.amount)}
+                              </span>
+                            </div>
+                            <p className="text-body-2 text-neutral-dark-gray0">
+                              {formatDate(item.expenseDate)}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </motion.div>
                 </div>
@@ -894,7 +994,7 @@ function ExpenseManagementPage() {
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
                   <motion.span
-                    className="text-2xl mr-3"
+                    className="text-title-1 mr-3"
                     animate={{ rotateY: [0, 180, 360] }}
                     transition={{
                       duration: 4,
@@ -904,7 +1004,7 @@ function ExpenseManagementPage() {
                   >
                     🍩
                   </motion.span>
-                  <h3 className="text-xl font-semibold text-gray-800">
+                  <h3 className="text-title-2 font-semibold text-gray-800">
                     카테고리별 지출
                   </h3>
                 </div>
@@ -941,7 +1041,7 @@ function ExpenseManagementPage() {
                       />
                     </motion.div>
 
-                    <div className="space-y-3">
+                    {/* <div className="space-y-3">
                       {Object.entries(categoryStats).map(
                         ([category, stats], index) => (
                           <motion.div
@@ -973,7 +1073,46 @@ function ExpenseManagementPage() {
                                 {((stats.total / budget.spent) * 100).toFixed(
                                   1
                                 )}
-                                %
+                                % / {stats.count}건
+                              </div>
+                            </div>
+                          </motion.div>
+                        )
+                      )}
+                    </div> */}
+                    <div className="grid grid-cols-1 sm:grid-col-2   lg:grid-cols-1 gap-4">
+                      {Object.entries(categoryStats).map(
+                        ([category, stats], index) => (
+                          <motion.div
+                            key={category}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.8 + index * 0.1 }}
+                            className="flex justify-between items-center p-4 bg-gray-50/80 rounded-xl border border-gray-100/50 hover:bg-white/80 transition-all duration-200 group"
+                          >
+                            <div className="flex items-center">
+                              <motion.div
+                                whileHover={{ scale: 1.2 }}
+                                className="w-4 h-4 rounded-full mr-3 shadow-sm"
+                                style={{
+                                  backgroundColor:
+                                    categoryConfig[category]?.color ??
+                                    "#9CA3AF", // fallback to gray-400
+                                }}
+                              />
+                              <span className="text-body-2 font-medium text-neutral-black group-hover:text-gray-800 transition-colors">
+                                {category}
+                              </span>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-body-2 font-semibold text-gray-800">
+                                {stats.total.toLocaleString()}원
+                              </div>
+                              <div className="text-xs text-neutral-dark-gray">
+                                {((stats.total / budget.spent) * 100).toFixed(
+                                  1
+                                )}
+                                % / {stats.count}건
                               </div>
                             </div>
                           </motion.div>
@@ -985,7 +1124,7 @@ function ExpenseManagementPage() {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col items-center justify-center h-60 text-gray-400"
+                    className="flex flex-col items-center justify-center h-60 text-neutral-medium-gray"
                   >
                     <motion.div
                       className="flex flex-col items-center mb-6"
@@ -999,10 +1138,10 @@ function ExpenseManagementPage() {
                       <BlockieFace size={50} emotion="neutral" />
                       <BlockieBottom size={50} />
                     </motion.div>
-                    <p className="text-lg font-medium">
+                    <p className="text-title-3 font-medium">
                       카테고리 데이터가 없습니다
                     </p>
-                    <p className="text-sm text-center mt-2">
+                    <p className="text-body-2 text-center mt-2">
                       지출을 추가하여
                       <br />
                       카테고리별 분석을 확인해보세요
@@ -1027,8 +1166,8 @@ function ExpenseManagementPage() {
             <Card>
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                 <div>
-                  <h2 className="text-xl font-semibold">지출 내역</h2>
-                  <p className="text-gray-500">
+                  <h2 className="text-title-2 font-semibold">지출 내역</h2>
+                  <p className="text-neutral-dark-gray">
                     총 {filteredExpenses.length}건의 지출
                   </p>
                 </div>
@@ -1036,7 +1175,20 @@ function ExpenseManagementPage() {
                   onClick={() => setShowAddForm(true)}
                   className="mt-4 md:mt-0 bg-blockie-yellow text-neutral-black px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:scale-95 flex items-center gap-2"
                 >
-                  <PlusIcon className="w-4 h-4" />
+                  {/* <PlusIcon className="w-4 h-4" /> */}
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v16m8-8H4"
+                    />
+                  </svg>
                   지출 추가
                 </button>
               </div>
@@ -1044,7 +1196,7 @@ function ExpenseManagementPage() {
               {/* 필터 섹션 */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     기간
                   </label>
                   <select
@@ -1060,7 +1212,7 @@ function ExpenseManagementPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     카테고리
                   </label>
                   <select
@@ -1086,10 +1238,12 @@ function ExpenseManagementPage() {
                       <BlockieFace size={80} emotion="neutral" />
                       <BlockieBottom size={80} />
                     </div>
-                    <h4 className="text-lg font-medium text-gray-700 mb-2">
+                    <h4 className="text-title-3 font-medium text-neutral-black mb-2">
                       지출 내역이 없습니다
                     </h4>
-                    <p className="text-gray-500">새로운 지출을 추가해보세요</p>
+                    <p className="text-neutral-dark-gray">
+                      새로운 지출을 추가해보세요
+                    </p>
                   </div>
                 ) : (
                   filteredExpenses.map((expense, index) => (
@@ -1109,7 +1263,7 @@ function ExpenseManagementPage() {
                                 "bg-gray-50"
                               } ${
                                 categoryConfig[expense.category]?.text ||
-                                "text-gray-700"
+                                "text-neutral-black"
                               } ${
                                 categoryConfig[expense.category]?.border ||
                                 "border-gray-200"
@@ -1117,11 +1271,11 @@ function ExpenseManagementPage() {
                             >
                               {expense.category}
                             </span>
-                            <span className="text-xl font-bold text-neutral-black">
+                            <span className="text-title-2 font-bold text-neutral-black">
                               {formatAmount(expense.amount)}
                             </span>
                           </div>
-                          <p className="text-sm text-gray-500">
+                          <p className="text-body-2 text-neutral-dark-gray">
                             {formatDate(expense.expenseDate)}
                           </p>
                         </div>
@@ -1129,15 +1283,42 @@ function ExpenseManagementPage() {
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => handleEditExpense(expense)}
-                            className="p-2 text-gray-400 hover:text-blockie-blue hover:bg-blue-50 rounded-lg transition-colors"
+                            className="p-2 text-neutral-medium-gray hover:text-blockie-blue hover:bg-blue-50 rounded-lg transition-colors"
                           >
-                            <EditIcon className="w-4 h-4" />
+                            {/* <EditIcon className="w-4 h-4" /> */}
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                              />
+                            </svg>
+                            );
                           </button>
                           <button
                             onClick={() => handleDeleteExpense(expense.id)}
-                            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            className="p-2 text-neutral-medium-gray hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                           >
-                            <TrashIcon className="w-4 h-4" />
+                            {/* <TrashIcon className="w-4 h-4" /> */}
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
+                            </svg>
                           </button>
                         </div>
                       </div>
@@ -1161,7 +1342,7 @@ function ExpenseManagementPage() {
             className="grid grid-cols-1 lg:grid-cols-2 gap-6"
           >
             <Card>
-              <h3 className="text-lg font-medium mb-4">주간 지출 추이</h3>
+              <h3 className="text-title-3 font-medium mb-4">주간 지출 추이</h3>
               <div className="h-64 mb-4">
                 <Bar
                   data={barData}
@@ -1195,20 +1376,20 @@ function ExpenseManagementPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-blue-50 rounded-lg p-4">
-                  <p className="text-sm text-blue-700 mb-1">주간 평균</p>
-                  <p className="text-xl font-bold">
+                  <p className="text-body-2 text-blue-700 mb-1">주간 평균</p>
+                  <p className="text-title-2 font-bold">
                     {((120000 + 95000 + 110000 + 85000) / 4).toLocaleString()}원
                   </p>
                 </div>
                 <div className="bg-green-50 rounded-lg p-4">
-                  <p className="text-sm text-green-700 mb-1">이번 주</p>
-                  <p className="text-xl font-bold">120,000원</p>
+                  <p className="text-body-2 text-green-700 mb-1">이번 주</p>
+                  <p className="text-title-2 font-bold">120,000원</p>
                 </div>
               </div>
             </Card>
 
             <Card>
-              <h3 className="text-lg font-medium mb-4">월별 지출 추이</h3>
+              <h3 className="text-title-3 font-medium mb-4">월별 지출 추이</h3>
               <div className="h-64 mb-4">
                 <Line
                   data={lineData}
@@ -1241,8 +1422,10 @@ function ExpenseManagementPage() {
               </div>
 
               <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="text-sm font-medium mb-2">지출 트렌드 분석</h4>
-                <p className="text-sm text-gray-600">
+                <h4 className="text-body-2 font-medium mb-2">
+                  지출 트렌드 분석
+                </h4>
+                <p className="text-body-2 text-neutral-dark-gray">
                   지난 6개월 동안 평균적으로 안정적인 지출 패턴을 보이고
                   있습니다. 이번 달은 예산 범위 내에서 잘 관리되고 있습니다.
                 </p>
@@ -1250,7 +1433,9 @@ function ExpenseManagementPage() {
             </Card>
 
             <Card className="lg:col-span-2">
-              <h3 className="text-lg font-medium mb-4">카테고리별 상세 분석</h3>
+              <h3 className="text-title-3 font-medium mb-4">
+                카테고리별 상세 분석
+              </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {Object.entries(categoryStats).map(([category, stats]) => (
@@ -1266,14 +1451,14 @@ function ExpenseManagementPage() {
                         />
                         <span className="font-medium">{category}</span>
                       </div>
-                      <span className="text-sm text-gray-500">
+                      <span className="text-body-2 text-neutral-dark-gray">
                         {stats.count}건
                       </span>
                     </div>
-                    <p className="text-xl font-bold text-neutral-black mb-1">
+                    <p className="text-title-2 font-bold text-neutral-black mb-1">
                       {stats.total.toLocaleString()}원
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-body-2 text-neutral-dark-gray">
                       평균{" "}
                       {Math.round(stats.total / stats.count).toLocaleString()}원
                     </p>
@@ -1288,7 +1473,7 @@ function ExpenseManagementPage() {
                           }}
                         />
                       </div>
-                      <p className="text-xs text-gray-500 mt-1 text-right">
+                      <p className="text-xs text-neutral-dark-gray mt-1 text-right">
                         전체의 {Math.round((stats.total / budget.spent) * 100)}%
                       </p>
                     </div>
@@ -1313,10 +1498,10 @@ function ExpenseManagementPage() {
                     </svg>
                   </div>
                   <div className="ml-3">
-                    <h4 className="text-sm font-medium text-blockie-yellow">
+                    <h4 className="text-body-2 font-medium text-blockie-yellow">
                       지출 패턴 분석
                     </h4>
-                    <p className="text-sm mt-1">
+                    <p className="text-body-2 mt-1">
                       가장 많이 지출하는 카테고리는{" "}
                       <strong>
                         {
@@ -1364,11 +1549,11 @@ function ExpenseManagementPage() {
               className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-semibold mb-4">새 지출 추가</h3>
+              <h3 className="text-title-2 font-semibold mb-4">새 지출 추가</h3>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     금액
                   </label>
                   <div className="relative">
@@ -1382,13 +1567,13 @@ function ExpenseManagementPage() {
                       placeholder="예: 15000"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                      <span className="text-gray-500">원</span>
+                      <span className="text-neutral-dark-gray">원</span>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     카테고리
                   </label>
                   <select
@@ -1410,7 +1595,7 @@ function ExpenseManagementPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     지출 날짜
                   </label>
                   <input
@@ -1430,7 +1615,7 @@ function ExpenseManagementPage() {
               <div className="flex gap-2 mt-6">
                 <button
                   onClick={() => setShowAddForm(false)}
-                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-4 py-3 border border-gray-300 text-neutral-black rounded-lg font-medium hover:bg-gray-50 transition-colors"
                 >
                   취소
                 </button>
@@ -1465,11 +1650,11 @@ function ExpenseManagementPage() {
               className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-semibold mb-4">지출 수정</h3>
+              <h3 className="text-title-2 font-semibold mb-4">지출 수정</h3>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     금액
                   </label>
                   <div className="relative">
@@ -1486,13 +1671,13 @@ function ExpenseManagementPage() {
                       placeholder="예: 15000"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                      <span className="text-gray-500">원</span>
+                      <span className="text-neutral-dark-gray">원</span>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     카테고리
                   </label>
                   <select
@@ -1517,7 +1702,7 @@ function ExpenseManagementPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     지출 날짜
                   </label>
                   <input
@@ -1537,7 +1722,7 @@ function ExpenseManagementPage() {
               <div className="flex gap-2 mt-6">
                 <button
                   onClick={() => setEditingExpense(null)}
-                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-4 py-3 border border-gray-300 text-neutral-black rounded-lg font-medium hover:bg-gray-50 transition-colors"
                 >
                   취소
                 </button>
@@ -1554,7 +1739,7 @@ function ExpenseManagementPage() {
         )}
       </AnimatePresence>
 
-      <footer className="mt-12 text-center text-sm text-gray-500">
+      <footer className="mt-12 text-center text-body-2 text-neutral-dark-gray">
         <p>스마트한 지출 관리로 건강한 소비 습관을 만들어 보세요.</p>
         <p className="mt-1">© 2025 Blockie - 모든 권리 보유</p>
       </footer>
