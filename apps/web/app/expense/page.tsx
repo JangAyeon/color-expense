@@ -438,7 +438,7 @@ function ExpenseManagementPage() {
           <BlockieFace size={60} emotion="neutral" />
           <BlockieBottom size={60} />
         </div>
-        <p className="mt-4 text-gray-600 animate-pulse">
+        <p className="mt-4 text-neutral-dark-gray animate-pulse">
           지출 정보를 불러오는 중...
         </p>
       </div>
@@ -454,7 +454,7 @@ function ExpenseManagementPage() {
         className="mb-8"
       >
         <h1 className="text-3xl font-bold text-center">지출 관리</h1>
-        <p className="text-center text-gray-500 mt-2">
+        <p className="text-center text-neutral-dark-gray mt-2">
           스마트한 지출 관리로 건강한 소비 습관을 만들어 보세요
         </p>
       </motion.div>
@@ -463,30 +463,30 @@ function ExpenseManagementPage() {
       <div className="flex justify-center mb-8">
         <nav className="bg-white shadow-md rounded-full px-1 py-1 inline-flex">
           <button
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`px-6 py-2 rounded-full text-body-2 font-medium transition-colors ${
               activeTab === "overview"
                 ? "bg-blockie-yellow text-neutral-black"
-                : "text-gray-500 hover:bg-gray-100"
+                : "text-neutral-dark-gray hover:bg-gray-100"
             }`}
             onClick={() => changeTab("overview")}
           >
             지출 현황
           </button>
           <button
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`px-6 py-2 rounded-full text-body-2 font-medium transition-colors ${
               activeTab === "list"
                 ? "bg-blockie-yellow text-neutral-black"
-                : "text-gray-500 hover:bg-gray-100"
+                : "text-neutral-dark-gray hover:bg-gray-100"
             }`}
             onClick={() => changeTab("list")}
           >
             지출 내역
           </button>
           <button
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`px-6 py-2 rounded-full text-body-2 font-medium transition-colors ${
               activeTab === "statistics"
                 ? "bg-blockie-yellow text-neutral-black"
-                : "text-gray-500 hover:bg-gray-100"
+                : "text-neutral-dark-gray hover:bg-gray-100"
             }`}
             onClick={() => changeTab("statistics")}
           >
@@ -550,7 +550,7 @@ function ExpenseManagementPage() {
                         }}
                         className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-white shadow-lg flex items-center justify-center border-2 border-gray-100"
                       >
-                        <span className="text-lg">
+                        <span className="text-title-3">
                           {budget.remaining >= 0 ? "✅" : "⚠️"}
                         </span>
                       </motion.div>
@@ -561,7 +561,7 @@ function ExpenseManagementPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 via-gray-700 to-gray-600 bg-clip-text text-transparent mb-2"
+                        className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-neutral-black via-neutral-dark-gray  to-neutral-dark-gray bg-clip-text text-transparent mb-2"
                       >
                         {budget.year}년 {budget.month}월 지출
                       </motion.h2>
@@ -570,7 +570,7 @@ function ExpenseManagementPage() {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.4 }}
-                          className={`text-sm font-semibold p-2 py-1.5 rounded-full  items-center ${
+                          className={`text-body-2 font-semibold p-2 py-1.5 rounded-full  items-center ${
                             budget.remaining >= 0
                               ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
                               : "bg-red-100 text-red-700 border border-red-200"
@@ -599,7 +599,7 @@ function ExpenseManagementPage() {
                             variant="outline"
                             color="warning"
                             onClick={() => setShowAddForm(true)}
-                            className={`drop-shadow-sm transform hover:scale-105 transition-all duration-200 text-sm font-semibold flex items-center bg-white/60 backdrop-blur-sm px-2 py-1.5 rounded-full w-fit`}
+                            className={`drop-shadow-sm transform hover:scale-105 transition-all duration-200 text-body-2 font-semibold flex items-center bg-white/60 backdrop-blur-sm px-2 py-1.5 rounded-full w-fit`}
                           >
                             <div className="flex flex-row gap-2">
                               <motion.div
@@ -707,7 +707,7 @@ function ExpenseManagementPage() {
                       <div className="relative z-10">
                         <div className="flex items-center justify-start mb-4">
                           <motion.span
-                            className="text-2xl mr-3"
+                            className="text-title-1 mr-3"
                             animate={{ rotateY: [0, 360] }}
                             transition={{
                               duration: 4,
@@ -717,7 +717,7 @@ function ExpenseManagementPage() {
                           >
                             {item.icon}
                           </motion.span>
-                          <p className="text-sm font-semibold text-gray-600 group-hover:text-gray-700 transition-colors">
+                          <p className="text-body-2 font-semibold text-neutral-dark-gray group-hover:text-neutral-black transition-colors">
                             {item.label}
                           </p>
                         </div>
@@ -726,7 +726,7 @@ function ExpenseManagementPage() {
                           initial={{ scale: 0.8, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ delay: 0.5 + index * 0.1 }}
-                          className={`font-bold text-2xl md:text-3xl bg-gradient-to-r ${item.gradient} bg-clip-text text-transparent`}
+                          className={`font-bold text-title-1 md:text-3xl bg-gradient-to-r ${item.gradient} bg-clip-text text-transparent`}
                         >
                           {item.value.toLocaleString()}원
                         </motion.p>
@@ -748,12 +748,12 @@ function ExpenseManagementPage() {
                   <div className="flex justify-between items-center mb-4">
                     <div className="flex flex-row gap-4">
                       <div className="flex items-center">
-                        <span className="text-2xl mr-3">📊</span>
-                        <p className="text-lg font-semibold text-gray-700">
+                        <span className="text-title-1 mr-3">📊</span>
+                        <p className="text-title-3 font-semibold text-neutral-black">
                           예산 사용률
                         </p>
                       </div>{" "}
-                      <p className="text-sm text-emerald-600 font-medium bg-emerald-100/60 px-3 py-1.5 rounded-full inline-block">
+                      <p className="text-body-2 text-emerald-600 font-medium bg-emerald-100/60 px-3 py-1.5 rounded-full inline-block">
                         {new Date(
                           new Date().getFullYear(),
                           new Date().getMonth() + 1,
@@ -768,11 +768,13 @@ function ExpenseManagementPage() {
                         key={budget.spent}
                         initial={{ scale: 0.8 }}
                         animate={{ scale: 1 }}
-                        className="text-2xl font-bold text-gray-800 mb-1"
+                        className="text-title-1 font-bold text-gray-800 mb-1"
                       >
                         {Math.round((budget.spent / budget.budget) * 100)}%
                       </motion.p>
-                      <p className="text-xs text-gray-500">목표 대비 달성률</p>
+                      <p className="text-xs text-neutral-dark-gray">
+                        목표 대비 달성률
+                      </p>
                     </div>
                   </div>
 
@@ -834,8 +836,8 @@ function ExpenseManagementPage() {
                     className="bg-gradient-to-br from-slate-50/80 to-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 shadow-sm"
                   >
                     <div className="flex items-center mb-6">
-                      <span className="text-2xl mr-3">📈</span>
-                      <h3 className="text-lg font-semibold text-gray-700">
+                      <span className="text-title-1 mr-3">📈</span>
+                      <h3 className="text-title-3 font-semibold text-neutral-black">
                         이번 달 요약
                       </h3>
                     </div>
@@ -871,8 +873,10 @@ function ExpenseManagementPage() {
                           className="flex justify-between items-center p-3 bg-white/60 rounded-xl border border-gray-100/50"
                         >
                           <div className="flex items-center">
-                            <span className="text-lg mr-3">{item.icon}</span>
-                            <span className="text-sm text-gray-600">
+                            <span className="text-title-3 mr-3">
+                              {item.icon}
+                            </span>
+                            <span className="text-body-2 text-neutral-dark-gray">
                               {item.label}
                             </span>
                           </div>
@@ -940,13 +944,13 @@ function ExpenseManagementPage() {
                     <div className="relative z-10">
                       <div className="flex items-center mb-6">
                         <motion.span
-                          className="text-2xl mr-3"
+                          className="text-title-1 mr-3"
                           animate={{ rotateZ: [0, 10, -10, 0] }}
                           transition={{ duration: 3, repeat: Infinity }}
                         >
                           📅
                         </motion.span>
-                        <h3 className="text-lg font-semibold text-gray-700">
+                        <h3 className="text-title-3 font-semibold text-neutral-black">
                           최근 지출 내역
                         </h3>
                       </div>
@@ -961,16 +965,16 @@ function ExpenseManagementPage() {
                               <span
                                 className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border 
               ${categoryConfig[item.category]?.bg ?? "bg-gray-50"} 
-              ${categoryConfig[item.category]?.text ?? "text-gray-700"} 
+              ${categoryConfig[item.category]?.text ?? "text-neutral-black"} 
               ${categoryConfig[item.category]?.border ?? "border-gray-200"}`}
                               >
                                 {item.category}
                               </span>
-                              <span className="text-xl font-bold text-neutral-black">
+                              <span className="text-title-2 font-bold text-neutral-black">
                                 {formatAmount(item.amount)}
                               </span>
                             </div>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-body-2 text-neutral-dark-gray0">
                               {formatDate(item.expenseDate)}
                             </p>
                           </div>
@@ -990,7 +994,7 @@ function ExpenseManagementPage() {
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
                   <motion.span
-                    className="text-2xl mr-3"
+                    className="text-title-1 mr-3"
                     animate={{ rotateY: [0, 180, 360] }}
                     transition={{
                       duration: 4,
@@ -1000,7 +1004,7 @@ function ExpenseManagementPage() {
                   >
                     🍩
                   </motion.span>
-                  <h3 className="text-xl font-semibold text-gray-800">
+                  <h3 className="text-title-2 font-semibold text-gray-800">
                     카테고리별 지출
                   </h3>
                 </div>
@@ -1096,15 +1100,15 @@ function ExpenseManagementPage() {
                                     "#9CA3AF", // fallback to gray-400
                                 }}
                               />
-                              <span className="text-sm font-medium text-gray-700 group-hover:text-gray-800 transition-colors">
+                              <span className="text-body-2 font-medium text-neutral-black group-hover:text-gray-800 transition-colors">
                                 {category}
                               </span>
                             </div>
                             <div className="text-right">
-                              <div className="text-sm font-semibold text-gray-800">
+                              <div className="text-body-2 font-semibold text-gray-800">
                                 {stats.total.toLocaleString()}원
                               </div>
-                              <div className="text-xs text-gray-500">
+                              <div className="text-xs text-neutral-dark-gray">
                                 {((stats.total / budget.spent) * 100).toFixed(
                                   1
                                 )}
@@ -1120,7 +1124,7 @@ function ExpenseManagementPage() {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col items-center justify-center h-60 text-gray-400"
+                    className="flex flex-col items-center justify-center h-60 text-neutral-medium-gray"
                   >
                     <motion.div
                       className="flex flex-col items-center mb-6"
@@ -1134,10 +1138,10 @@ function ExpenseManagementPage() {
                       <BlockieFace size={50} emotion="neutral" />
                       <BlockieBottom size={50} />
                     </motion.div>
-                    <p className="text-lg font-medium">
+                    <p className="text-title-3 font-medium">
                       카테고리 데이터가 없습니다
                     </p>
-                    <p className="text-sm text-center mt-2">
+                    <p className="text-body-2 text-center mt-2">
                       지출을 추가하여
                       <br />
                       카테고리별 분석을 확인해보세요
@@ -1162,8 +1166,8 @@ function ExpenseManagementPage() {
             <Card>
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                 <div>
-                  <h2 className="text-xl font-semibold">지출 내역</h2>
-                  <p className="text-gray-500">
+                  <h2 className="text-title-2 font-semibold">지출 내역</h2>
+                  <p className="text-neutral-dark-gray">
                     총 {filteredExpenses.length}건의 지출
                   </p>
                 </div>
@@ -1192,7 +1196,7 @@ function ExpenseManagementPage() {
               {/* 필터 섹션 */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     기간
                   </label>
                   <select
@@ -1208,7 +1212,7 @@ function ExpenseManagementPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     카테고리
                   </label>
                   <select
@@ -1234,10 +1238,12 @@ function ExpenseManagementPage() {
                       <BlockieFace size={80} emotion="neutral" />
                       <BlockieBottom size={80} />
                     </div>
-                    <h4 className="text-lg font-medium text-gray-700 mb-2">
+                    <h4 className="text-title-3 font-medium text-neutral-black mb-2">
                       지출 내역이 없습니다
                     </h4>
-                    <p className="text-gray-500">새로운 지출을 추가해보세요</p>
+                    <p className="text-neutral-dark-gray">
+                      새로운 지출을 추가해보세요
+                    </p>
                   </div>
                 ) : (
                   filteredExpenses.map((expense, index) => (
@@ -1257,7 +1263,7 @@ function ExpenseManagementPage() {
                                 "bg-gray-50"
                               } ${
                                 categoryConfig[expense.category]?.text ||
-                                "text-gray-700"
+                                "text-neutral-black"
                               } ${
                                 categoryConfig[expense.category]?.border ||
                                 "border-gray-200"
@@ -1265,11 +1271,11 @@ function ExpenseManagementPage() {
                             >
                               {expense.category}
                             </span>
-                            <span className="text-xl font-bold text-neutral-black">
+                            <span className="text-title-2 font-bold text-neutral-black">
                               {formatAmount(expense.amount)}
                             </span>
                           </div>
-                          <p className="text-sm text-gray-500">
+                          <p className="text-body-2 text-neutral-dark-gray">
                             {formatDate(expense.expenseDate)}
                           </p>
                         </div>
@@ -1277,7 +1283,7 @@ function ExpenseManagementPage() {
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => handleEditExpense(expense)}
-                            className="p-2 text-gray-400 hover:text-blockie-blue hover:bg-blue-50 rounded-lg transition-colors"
+                            className="p-2 text-neutral-medium-gray hover:text-blockie-blue hover:bg-blue-50 rounded-lg transition-colors"
                           >
                             {/* <EditIcon className="w-4 h-4" /> */}
                             <svg
@@ -1297,7 +1303,7 @@ function ExpenseManagementPage() {
                           </button>
                           <button
                             onClick={() => handleDeleteExpense(expense.id)}
-                            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            className="p-2 text-neutral-medium-gray hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                           >
                             {/* <TrashIcon className="w-4 h-4" /> */}
                             <svg
@@ -1336,7 +1342,7 @@ function ExpenseManagementPage() {
             className="grid grid-cols-1 lg:grid-cols-2 gap-6"
           >
             <Card>
-              <h3 className="text-lg font-medium mb-4">주간 지출 추이</h3>
+              <h3 className="text-title-3 font-medium mb-4">주간 지출 추이</h3>
               <div className="h-64 mb-4">
                 <Bar
                   data={barData}
@@ -1370,20 +1376,20 @@ function ExpenseManagementPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-blue-50 rounded-lg p-4">
-                  <p className="text-sm text-blue-700 mb-1">주간 평균</p>
-                  <p className="text-xl font-bold">
+                  <p className="text-body-2 text-blue-700 mb-1">주간 평균</p>
+                  <p className="text-title-2 font-bold">
                     {((120000 + 95000 + 110000 + 85000) / 4).toLocaleString()}원
                   </p>
                 </div>
                 <div className="bg-green-50 rounded-lg p-4">
-                  <p className="text-sm text-green-700 mb-1">이번 주</p>
-                  <p className="text-xl font-bold">120,000원</p>
+                  <p className="text-body-2 text-green-700 mb-1">이번 주</p>
+                  <p className="text-title-2 font-bold">120,000원</p>
                 </div>
               </div>
             </Card>
 
             <Card>
-              <h3 className="text-lg font-medium mb-4">월별 지출 추이</h3>
+              <h3 className="text-title-3 font-medium mb-4">월별 지출 추이</h3>
               <div className="h-64 mb-4">
                 <Line
                   data={lineData}
@@ -1416,8 +1422,10 @@ function ExpenseManagementPage() {
               </div>
 
               <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="text-sm font-medium mb-2">지출 트렌드 분석</h4>
-                <p className="text-sm text-gray-600">
+                <h4 className="text-body-2 font-medium mb-2">
+                  지출 트렌드 분석
+                </h4>
+                <p className="text-body-2 text-neutral-dark-gray">
                   지난 6개월 동안 평균적으로 안정적인 지출 패턴을 보이고
                   있습니다. 이번 달은 예산 범위 내에서 잘 관리되고 있습니다.
                 </p>
@@ -1425,7 +1433,9 @@ function ExpenseManagementPage() {
             </Card>
 
             <Card className="lg:col-span-2">
-              <h3 className="text-lg font-medium mb-4">카테고리별 상세 분석</h3>
+              <h3 className="text-title-3 font-medium mb-4">
+                카테고리별 상세 분석
+              </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {Object.entries(categoryStats).map(([category, stats]) => (
@@ -1441,14 +1451,14 @@ function ExpenseManagementPage() {
                         />
                         <span className="font-medium">{category}</span>
                       </div>
-                      <span className="text-sm text-gray-500">
+                      <span className="text-body-2 text-neutral-dark-gray">
                         {stats.count}건
                       </span>
                     </div>
-                    <p className="text-xl font-bold text-neutral-black mb-1">
+                    <p className="text-title-2 font-bold text-neutral-black mb-1">
                       {stats.total.toLocaleString()}원
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-body-2 text-neutral-dark-gray">
                       평균{" "}
                       {Math.round(stats.total / stats.count).toLocaleString()}원
                     </p>
@@ -1463,7 +1473,7 @@ function ExpenseManagementPage() {
                           }}
                         />
                       </div>
-                      <p className="text-xs text-gray-500 mt-1 text-right">
+                      <p className="text-xs text-neutral-dark-gray mt-1 text-right">
                         전체의 {Math.round((stats.total / budget.spent) * 100)}%
                       </p>
                     </div>
@@ -1488,10 +1498,10 @@ function ExpenseManagementPage() {
                     </svg>
                   </div>
                   <div className="ml-3">
-                    <h4 className="text-sm font-medium text-blockie-yellow">
+                    <h4 className="text-body-2 font-medium text-blockie-yellow">
                       지출 패턴 분석
                     </h4>
-                    <p className="text-sm mt-1">
+                    <p className="text-body-2 mt-1">
                       가장 많이 지출하는 카테고리는{" "}
                       <strong>
                         {
@@ -1539,11 +1549,11 @@ function ExpenseManagementPage() {
               className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-semibold mb-4">새 지출 추가</h3>
+              <h3 className="text-title-2 font-semibold mb-4">새 지출 추가</h3>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     금액
                   </label>
                   <div className="relative">
@@ -1557,13 +1567,13 @@ function ExpenseManagementPage() {
                       placeholder="예: 15000"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                      <span className="text-gray-500">원</span>
+                      <span className="text-neutral-dark-gray">원</span>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     카테고리
                   </label>
                   <select
@@ -1585,7 +1595,7 @@ function ExpenseManagementPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     지출 날짜
                   </label>
                   <input
@@ -1605,7 +1615,7 @@ function ExpenseManagementPage() {
               <div className="flex gap-2 mt-6">
                 <button
                   onClick={() => setShowAddForm(false)}
-                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-4 py-3 border border-gray-300 text-neutral-black rounded-lg font-medium hover:bg-gray-50 transition-colors"
                 >
                   취소
                 </button>
@@ -1640,11 +1650,11 @@ function ExpenseManagementPage() {
               className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-semibold mb-4">지출 수정</h3>
+              <h3 className="text-title-2 font-semibold mb-4">지출 수정</h3>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     금액
                   </label>
                   <div className="relative">
@@ -1661,13 +1671,13 @@ function ExpenseManagementPage() {
                       placeholder="예: 15000"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                      <span className="text-gray-500">원</span>
+                      <span className="text-neutral-dark-gray">원</span>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     카테고리
                   </label>
                   <select
@@ -1692,7 +1702,7 @@ function ExpenseManagementPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-body-2 font-medium text-neutral-black mb-2">
                     지출 날짜
                   </label>
                   <input
@@ -1712,7 +1722,7 @@ function ExpenseManagementPage() {
               <div className="flex gap-2 mt-6">
                 <button
                   onClick={() => setEditingExpense(null)}
-                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-4 py-3 border border-gray-300 text-neutral-black rounded-lg font-medium hover:bg-gray-50 transition-colors"
                 >
                   취소
                 </button>
@@ -1729,7 +1739,7 @@ function ExpenseManagementPage() {
         )}
       </AnimatePresence>
 
-      <footer className="mt-12 text-center text-sm text-gray-500">
+      <footer className="mt-12 text-center text-body-2 text-neutral-dark-gray">
         <p>스마트한 지출 관리로 건강한 소비 습관을 만들어 보세요.</p>
         <p className="mt-1">© 2025 Blockie - 모든 권리 보유</p>
       </footer>
